@@ -1,10 +1,14 @@
-import 'package:fii_app/app.dart';
+import 'package:fii_app/shared/interfaces/navigator_service_interface.dart';
+import 'package:fii_app/shared/services/navigator_service.dart';
 import 'package:fii_app/shared/stores/reit_store.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
+import 'routes.dart';
+
 void main() {
   GetIt.I.registerLazySingleton(() => ReitStore());
+  GetIt.I.registerLazySingleton<INavigatorService>(() => NavigatorService());
 
   runApp(MyApp());
 }
@@ -17,9 +21,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      routes: {
-        '/': (_) => App(),
-      },
+      navigatorKey: GetIt.I.get<NavigatorService>().navigatorKey,
+      routes: appRoutes,
     );
   }
 }
