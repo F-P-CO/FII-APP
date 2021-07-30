@@ -7,7 +7,7 @@ import 'package:mobx/mobx.dart';
 import 'shared/stores/reit_store.dart';
 
 class App extends StatefulWidget {
-  App({Key? key}) : super(key: key);
+  const App({Key? key}) : super(key: key);
 
   @override
   _AppState createState() => _AppState();
