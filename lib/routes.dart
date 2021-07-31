@@ -3,5 +3,5 @@ import 'package:flutter/material.dart';
 import 'app.dart';
 
 Map<String, WidgetBuilder> appRoutes = {
-  '/': (_) => App(),
+  '/': (_) => const App(),
 };
