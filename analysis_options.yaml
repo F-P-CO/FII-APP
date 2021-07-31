@@ -1,3 +1,7 @@
 include: package:lint/analysis_options.yaml
 analyzer:
   exclude: [lib/**.g.dart]
+
+linter:
+  rules:
+    - directives_ordering
