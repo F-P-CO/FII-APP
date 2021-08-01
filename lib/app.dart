@@ -48,23 +48,26 @@ class _AppState extends State<App> {
           children: [
             Observer(
               builder: (_) {
-                if (store.isListLoading) return const CircularProgressIndicator();
+                if (store.isListLoading) {
+                  return const CircularProgressIndicator();
+                }
+
                 return Container(
                   padding: const EdgeInsets.all(16),
                   child: Column(
                     children: [
                       MaterialButton(
-                        onPressed: () {
-                          store.list();
-                        },
-                        child: Text(
+                        onPressed: store.loadReitsList,
+                        child: const Text(
                           'Listar',
                         ),
                       ),
                       Column(
-                        children: store.reits.map((reit) {
-                        return Text('${reit.symbol} |  ${reit.currentPrice == -9999999999 ? 'N/A': reit.currentPrice}');
-                      }).toList(),
+                        children: store.reits
+                            .map((reit) => Text(
+                                  '${reit.symbol} |  ${reit.currentPrice ?? 'N/A'}',
+                                ))
+                            .toList(),
                       )
                     ],
                   ),

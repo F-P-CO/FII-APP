@@ -1,4 +1,3 @@
-import 'package:fii_app/shared/datasources/funds_explorer_datasource.dart';
 import 'package:fii_app/shared/hooks/use_navigator_service_hook.dart';
 import 'package:fii_app/shared/models/reit.dart';
 import 'package:fii_app/shared/repositories/reit_repository.dart';
@@ -13,8 +12,10 @@ abstract class _ReitStoreBase with Store {
 
   @observable
   bool hasError = false;
+
   @observable
   List<Reit> reits = [];
+
   @observable
   bool isListLoading = false;
 
@@ -22,17 +23,10 @@ abstract class _ReitStoreBase with Store {
   final navigator = useNavigatorService();
 
   @action
-  list() async {
+  Future<void> loadReitsList() async {
     try {
       isListLoading = true;
-      Future.delayed(
-        const Duration(seconds: 2),
-      );
-      final reitsList = await repository.getAll();
-      reits = reitsList;
-    } catch (e) {
-      print(e);
-      rethrow;
+      reits = await repository.getAll();
     } finally {
       isListLoading = false;
     }
