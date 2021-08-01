@@ -43,18 +43,39 @@ class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          Container(),
-          Observer(
-            builder: (_) {
-              return Container(
-                padding: const EdgeInsets.all(16),
-                child: Text(store.text, style: const TextStyle(fontSize: 36)),
-              );
-            },
-          ),
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Observer(
+              builder: (_) {
+                if (store.isListLoading) {
+                  return const CircularProgressIndicator();
+                }
+
+                return Container(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    children: [
+                      MaterialButton(
+                        onPressed: store.loadReitsList,
+                        child: const Text(
+                          'Listar',
+                        ),
+                      ),
+                      Column(
+                        children: store.reits
+                            .map((reit) => Text(
+                                  '${reit.symbol} |  ${reit.currentPrice ?? 'N/A'}',
+                                ))
+                            .toList(),
+                      )
+                    ],
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
