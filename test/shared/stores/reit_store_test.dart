@@ -3,16 +3,21 @@ import 'package:fii_app/shared/stores/reit_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
+import 'package:mockito/mockito.dart';
 
-class NavigatorServiceMock implements INavigatorService {
+class MockNavigatorService extends Mock implements NavigatorService {
   @override
   NavigatorState? get currentState => NavigatorState();
 }
 
 void main() {
-  test("ReitStore 'text' attribute should be 'Hello World'", () {
-    GetIt.I.registerSingleton<INavigatorService>(NavigatorServiceMock());
+  setUpAll(() {
+    GetIt.I.registerLazySingleton<NavigatorService>(
+      () => MockNavigatorService(),
+    );
+  });
 
+  test("ReitStore 'text' attribute should be 'Hello World'", () {
     final ReitStore reitStore = ReitStore();
     expect(reitStore.text, equals('Hello World'));
   });

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
-abstract class INavigatorService {
+abstract class NavigatorService {
+  late GlobalKey<NavigatorState> navigatorKey;
   NavigatorState? get currentState;
 }
