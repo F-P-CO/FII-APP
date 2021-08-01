@@ -1,5 +1,7 @@
 import 'package:fii_app/shared/hooks/use_format_currency_hook.dart';
 import 'package:fii_app/shared/models/reit.dart';
+import 'package:fii_app/shared/themes/app_colors.dart';
+import 'package:fii_app/shared/themes/app_text_styles.dart';
 import 'package:flutter/material.dart';
 
 class ReitCardComponent extends StatelessWidget {
@@ -16,7 +18,7 @@ class ReitCardComponent extends StatelessWidget {
         Expanded(
           child: Container(
             decoration: BoxDecoration(
-              color: const Color(0xFFE9DCD3),
+              color: AppColors.cardBackground,
               borderRadius: BorderRadius.circular(8.0),
             ),
             padding: const EdgeInsets.all(12.0),
@@ -26,28 +28,23 @@ class ReitCardComponent extends StatelessWidget {
               children: [
                 Text(
                   reit.symbol,
-                  style: const TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 24.0),
+                  style: AppTextStyles.title,
                 ),
                 Text(
                   currencyFormatter.format(reit.currentPrice),
-                  style: const TextStyle(
-                      fontWeight: FontWeight.w500, fontSize: 18.0),
+                  style: AppTextStyles.subtitle,
                 ),
-                const SizedBox(
-                  height: 10.0,
-                ),
+                const SizedBox(height: 10.0),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text(
+                    Text(
                       'Patrimônio total',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 18.0),
+                      style: AppTextStyles.captionHeader,
                     ),
                     Text(
                       currencyFormatter.format(reit.netWorth),
-                      style: const TextStyle(fontSize: 18.0),
+                      style: AppTextStyles.captionBody,
                     ),
                   ],
                 )
