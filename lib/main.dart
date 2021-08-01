@@ -1,4 +1,6 @@
+import 'package:dio/dio.dart';
 import 'package:fii_app/shared/interfaces/navigator_service_interface.dart';
+import 'package:fii_app/shared/repositories/reit_repository.dart';
 import 'package:fii_app/shared/services/navigator_service.dart';
 import 'package:fii_app/shared/stores/reit_store.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +10,10 @@ import 'routes.dart';
 
 void main() {
   GetIt.I.registerLazySingleton(() => ReitStore());
-  GetIt.I.registerLazySingleton<INavigatorService>(() => NavigatorService());
+  GetIt.I.registerSingleton(NavigatorService());
+  GetIt.I.registerLazySingleton(() => Dio());
+  GetIt.I.registerLazySingleton(() => ReitRepository());
+  
 
   runApp(MyApp());
 }
