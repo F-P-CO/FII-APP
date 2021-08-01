@@ -19,6 +19,14 @@ abstract class _ReitStoreBase with Store {
   @observable
   bool isListLoading = false;
 
+  @computed
+  List<Reit> get reitsByNetWorth {
+    final localReits = reits;
+    localReits.sort((a, b) => b.netWorth?.compareTo(a.netWorth ?? 0) ?? 0);
+    return localReits.sublist(
+        0, localReits.length >= 10 ? 9 : localReits.length);
+  }
+
   final String text = 'Hello World';
   final navigator = useNavigatorService();
 
