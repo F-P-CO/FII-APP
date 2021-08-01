@@ -62,11 +62,12 @@ mixin _$ReitStore on _ReitStoreBase, Store {
     });
   }
 
-  final _$listAsyncAction = AsyncAction('_ReitStoreBase.list');
+  final _$loadReitsListAsyncAction =
+      AsyncAction('_ReitStoreBase.loadReitsList');
 
   @override
-  Future list() {
-    return _$listAsyncAction.run(() => super.list());
+  Future<void> loadReitsList() {
+    return _$loadReitsListAsyncAction.run(() => super.loadReitsList());
   }
 
   @override

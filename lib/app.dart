@@ -52,15 +52,14 @@ class _AppState extends State<App> {
                 if (store.isListLoading) {
                   return const CircularProgressIndicator();
                 }
+
                 return Container(
                   padding: const EdgeInsets.all(16),
                   child: Column(
                     children: [
                       MaterialButton(
-                        onPressed: () {
-                          store.list();
-                        },
-                        child: Text(
+                        onPressed: store.loadReitsList,
+                        child: const Text(
                           'Listar',
                         ),
                       ),
