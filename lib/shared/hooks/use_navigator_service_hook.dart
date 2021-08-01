@@ -1,4 +1,4 @@
-import 'package:fii_app/shared/services/navigator_service.dart';
+import 'package:fii_app/shared/interfaces/navigator_service_interface.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
