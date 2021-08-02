@@ -43,7 +43,7 @@ class ReitCardComponent extends StatelessWidget {
                       style: AppTextStyles.captionHeader,
                     ),
                     Text(
-                      currencyFormatter.format(reit.netWorth),
+                      currencyFormatter.format(reit.assetsAmount),
                       style: AppTextStyles.captionBody,
                     ),
                   ],

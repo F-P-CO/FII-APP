@@ -1,6 +1,7 @@
 import 'package:fii_app/modules/home/components/reit_card_component.dart';
 import 'package:fii_app/shared/components/bottom_sheet_component.dart';
 import 'package:fii_app/shared/hooks/use_navigator_service_hook.dart';
+import 'package:fii_app/shared/models/reit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
@@ -19,11 +20,14 @@ class _AppState extends State<App> {
   final store = GetIt.I.get<ReitStore>();
   final navigator = useNavigatorService();
   String? currentValue = '1';
+  Map<String, List<Reit>> currentReitList = {};
 
   @override
   void initState() {
     super.initState();
-
+    currentReitList['1'] = store.reitsByNetWorth;
+    currentReitList['2'] = store.reitsByDividendYield;
+    currentReitList['3'] = store.reitsByaAssetsAmount;
     // após cadastrar paciente:
     // TODO: limpar filtros;
     // TODO: Retornar para '/';
@@ -41,6 +45,18 @@ class _AppState extends State<App> {
     */
 
     autorun((_) => {});
+  }
+
+  List<Reit> getCurrentReitList(String currentReit) {
+    switch (currentReit) {
+      case '1':
+        return store.reitsByNetWorth;
+      case '2':
+        return store.reitsByDividendYield;
+      case '3':
+        return store.reitsByaAssetsAmount;
+    }
+    return store.reitsByNetWorth;
   }
 
   @override
@@ -87,6 +103,7 @@ class _AppState extends State<App> {
                                   id: '2',
                                   onPressed: (String? newValue) {
                                     setState(() {
+                                      print(newValue);
                                       currentValue = newValue;
                                     });
                                   },
@@ -107,7 +124,8 @@ class _AppState extends State<App> {
                         ),
                       ),
                       Column(
-                        children: store.reitsByNetWorth.map((reit) {
+                        children: getCurrentReitList(currentValue.toString())
+                            .map((reit) {
                           return ReitCardComponent(reit: reit);
                         }).toList(),
                       )

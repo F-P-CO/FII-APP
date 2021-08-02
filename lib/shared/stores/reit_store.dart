@@ -27,6 +27,23 @@ abstract class _ReitStoreBase with Store {
         0, localReits.length >= 10 ? 9 : localReits.length);
   }
 
+  @computed
+  List<Reit> get reitsByDividendYield {
+    final localReits = reits;
+    localReits.sort((a, b) =>
+        b.currentDividendYield?.compareTo(a.currentDividendYield ?? 0) ?? 0);
+    return localReits.sublist(
+        0, localReits.length >= 10 ? 9 : localReits.length);
+  }
+
+  @computed
+  List<Reit> get reitsByaAssetsAmount {
+    final localReits = reits;
+    localReits.sort((a, b) => b.assetsAmount.compareTo(a.assetsAmount));
+    return localReits.sublist(
+        0, localReits.length >= 10 ? 9 : localReits.length);
+  }
+
   final String text = 'Hello World';
   final navigator = useNavigatorService();
 

@@ -25,22 +25,32 @@ Future showModalSheet({required ModalBottomSheetConfiguration config}) {
   return showModalBottomSheet(
       context: config.context,
       builder: (context) {
-        return Column(
-          mainAxisSize: MainAxisSize.min,
-          children: config.options.map((option) {
-            return ListTile(
-              title: Text(option.label),
-              onTap: () {
-                print(option.id);
-                Navigator.pop(context);
-              },
-              trailing: Radio(
-                value: option.id,
-                onChanged: option.onPressed,
-                groupValue: config.currentValue,
-              ),
+        String? currentValue = config.currentValue;
+        return StatefulBuilder(
+          builder: (BuildContext context, StateSetter setState) {
+            return Column(
+              mainAxisSize: MainAxisSize.min,
+              children: config.options.map((option) {
+                return ListTile(
+                  title: Text(option.label),
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  trailing: Radio(
+                    value: option.id,
+                    onChanged: (String? newValue) {
+                      option.onPressed(newValue);
+                      setState(() {
+                        currentValue = newValue;
+                      });
+                      Navigator.pop(context);
+                    },
+                    groupValue: currentValue,
+                  ),
+                );
+              }).toList(),
             );
-          }).toList(),
+          },
         );
       });
 }
