@@ -35,7 +35,7 @@ class _ReitsListComponentState extends State<ReitsListComponent> {
   late ModalBottomSheetOrderingOption currentOrderingOption =
       orderingOptions.first;
 
-  void _showOrderingBottomSheet(BuildContext context) {
+  void _showOrderingBottomSheet() {
     showModalBottomSheet(
       context: context,
       builder: (_) => StatefulBuilder(
@@ -80,7 +80,7 @@ class _ReitsListComponentState extends State<ReitsListComponent> {
                   ),
                 ),
                 ElevatedButton(
-                  onPressed: () => _showOrderingBottomSheet(context),
+                  onPressed: _showOrderingBottomSheet,
                   child: const Text(
                     'Ordenar',
                   ),
