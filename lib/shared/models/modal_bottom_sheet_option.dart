@@ -1,11 +1,9 @@
-import 'package:fii_app/shared/models/reit.dart';
-
 class ModalBottomSheetOrderingOption {
   final String label;
-  final List<Reit> Function() orderedList;
+  final dynamic orderBy;
 
   ModalBottomSheetOrderingOption({
     required this.label,
-    required this.orderedList,
+    required this.orderBy,
   });
 }

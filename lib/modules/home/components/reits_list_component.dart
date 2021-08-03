@@ -1,8 +1,8 @@
+import 'package:fii_app/modules/home/blocs/reit_list/reit_list_bloc.dart';
 import 'package:fii_app/shared/components/ordering_bottom_sheet_component.dart';
 import 'package:fii_app/shared/models/modal_bottom_sheet_option.dart';
-import 'package:fii_app/shared/stores/reit_store.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 
 import 'reit_card_component.dart';
@@ -15,41 +15,45 @@ class ReitsListComponent extends StatefulWidget {
 }
 
 class _ReitsListComponentState extends State<ReitsListComponent> {
-  final reitStore = GetIt.I.get<ReitStore>();
+  final bloc = GetIt.I.get<ReitListBloc>();
 
-  late final List<ModalBottomSheetOrderingOption> orderingOptions;
+  final List<ModalBottomSheetOrderingOption> orderingOptions = [
+    ModalBottomSheetOrderingOption(
+      label: 'Valor patrimonial',
+      orderBy: ReitListOrderOption.netWorth,
+    ),
+    ModalBottomSheetOrderingOption(
+      label: 'Dividend Yield',
+      orderBy: ReitListOrderOption.currentDividendYield,
+    ),
+    ModalBottomSheetOrderingOption(
+      label: 'Quantidade de ativos',
+      orderBy: ReitListOrderOption.assetsAmount,
+    ),
+  ];
 
-  late ModalBottomSheetOrderingOption currentOrderingOption;
+  late ModalBottomSheetOrderingOption currentOrderingOption =
+      orderingOptions.first;
 
-  @override
-  void initState() {
-    super.initState();
-
-    orderingOptions = [
-      ModalBottomSheetOrderingOption(
-        label: 'Valor patrimonial',
-        orderedList: () => reitStore.reitsByNetWorth,
-      ),
-      ModalBottomSheetOrderingOption(
-        label: 'Dividend Yield',
-        orderedList: () => reitStore.reitsByDividendYield,
-      ),
-      ModalBottomSheetOrderingOption(
-        label: 'Patrimônios',
-        orderedList: () => reitStore.reitsByAssetsAmount,
-      ),
-    ];
-
-    currentOrderingOption = orderingOptions.first;
-  }
-
-  void _showOrderingBottomSheet() {
+  void _showOrderingBottomSheet(BuildContext context) {
     showModalBottomSheet(
       context: context,
-      builder: (_) => OrderingBottomSheetComponent(
-        options: orderingOptions,
-        activeOption: currentOrderingOption,
-        onChange: (option) => setState(() => currentOrderingOption = option),
+      builder: (_) => StatefulBuilder(
+        builder: (__, StateSetter setState) {
+          return OrderingBottomSheetComponent(
+            options: orderingOptions,
+            activeOption: currentOrderingOption,
+            onChange: (option) {
+              bloc.add(
+                ReitListLoaded(
+                  orderBy: option.orderBy as ReitListOrderOption,
+                ),
+              );
+
+              setState(() => currentOrderingOption = option);
+            },
+          );
+        },
       ),
     );
   }
@@ -65,13 +69,18 @@ class _ReitsListComponentState extends State<ReitsListComponent> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 ElevatedButton(
-                  onPressed: reitStore.loadReitsList,
+                  onPressed: () => bloc.add(
+                    ReitListLoaded(
+                      orderBy:
+                          currentOrderingOption.orderBy as ReitListOrderOption,
+                    ),
+                  ),
                   child: const Text(
                     'Listar',
                   ),
                 ),
                 ElevatedButton(
-                  onPressed: _showOrderingBottomSheet,
+                  onPressed: () => _showOrderingBottomSheet(context),
                   child: const Text(
                     'Ordenar',
                   ),
@@ -80,19 +89,32 @@ class _ReitsListComponentState extends State<ReitsListComponent> {
             ),
           ),
           const SizedBox(height: 8),
-          Observer(
-            builder: (_) {
-              if (reitStore.isListLoading) {
+          BlocBuilder<ReitListBloc, ReitListState>(
+            bloc: bloc,
+            builder: (context, state) {
+              if (state is ReitListInitial) {
+                return const Center(
+                  child:
+                      Text("Clique no botão Listar para carregar os fundos."),
+                );
+              } else if (state is ReitListLoadInProgress) {
                 return const Center(
                   child: CircularProgressIndicator(),
                 );
+              } else if (state is ReitListLoadSuccess) {
+                return Column(
+                  children: state.reits
+                      .map((reit) => ReitCardComponent(reit: reit))
+                      .toList(),
+                );
+              } else if (state is ReitListLoadError) {
+                return Center(
+                  child: Text(state.message),
+                );
               }
 
-              final reits = currentOrderingOption.orderedList();
-
-              return Column(
-                children:
-                    reits.map((reit) => ReitCardComponent(reit: reit)).toList(),
+              return const Center(
+                child: Text("Erro interno no app."),
               );
             },
           )

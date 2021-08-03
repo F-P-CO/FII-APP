@@ -31,7 +31,9 @@ class ReitCardComponent extends StatelessWidget {
                   style: AppTextStyles.title,
                 ),
                 Text(
-                  currencyFormatter.format(reit.currentPrice),
+                  reit.currentPrice == null
+                      ? 'N/A'
+                      : currencyFormatter.format(reit.currentPrice),
                   style: AppTextStyles.subtitle,
                 ),
                 const SizedBox(height: 10.0),
