@@ -4,4 +4,5 @@ analyzer:
 
 linter:
   rules:
-    - directives_ordering
+    sort_pub_dependencies: false
+    directives_ordering: true

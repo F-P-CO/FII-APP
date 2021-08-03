@@ -37,7 +37,7 @@ abstract class _ReitStoreBase with Store {
   }
 
   @computed
-  List<Reit> get reitsByaAssetsAmount {
+  List<Reit> get reitsByAssetsAmount {
     final localReits = reits;
     localReits.sort((a, b) => b.assetsAmount.compareTo(a.assetsAmount));
     return localReits.sublist(

@@ -12,7 +12,7 @@ void main() {
   GetIt.I.registerLazySingleton(() => ReitStore());
   GetIt.I.registerLazySingleton(() => Dio());
   GetIt.I.registerLazySingleton(() => ReitRepository());
-  
+
   GetIt.I.registerLazySingleton<NavigatorService>(
     () => AppNavigatorService(),
   );
@@ -29,6 +29,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       navigatorKey: GetIt.I.get<NavigatorService>().navigatorKey,
+      initialRoute: '/home',
       routes: appRoutes,
     );
   }
