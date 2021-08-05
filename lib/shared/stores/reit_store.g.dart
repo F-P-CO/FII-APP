@@ -9,12 +9,12 @@ part of 'reit_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$ReitStore on _ReitStoreBase, Store {
-  Computed<List<Reit>>? _$reitsByNetWorthComputed;
+  Computed<List<Reit>>? _$currentReitListComputed;
 
   @override
-  List<Reit> get reitsByNetWorth => (_$reitsByNetWorthComputed ??=
-          Computed<List<Reit>>(() => super.reitsByNetWorth,
-              name: '_ReitStoreBase.reitsByNetWorth'))
+  List<Reit> get currentReitList => (_$currentReitListComputed ??=
+          Computed<List<Reit>>(() => super.currentReitList,
+              name: '_ReitStoreBase.currentReitList'))
       .value;
 
   final _$hasErrorAtom = Atom(name: '_ReitStoreBase.hasError');
@@ -62,6 +62,22 @@ mixin _$ReitStore on _ReitStoreBase, Store {
     });
   }
 
+  final _$_currentSortOptionAtom =
+      Atom(name: '_ReitStoreBase._currentSortOption');
+
+  @override
+  ReitListSortOption get _currentSortOption {
+    _$_currentSortOptionAtom.reportRead();
+    return super._currentSortOption;
+  }
+
+  @override
+  set _currentSortOption(ReitListSortOption value) {
+    _$_currentSortOptionAtom.reportWrite(value, super._currentSortOption, () {
+      super._currentSortOption = value;
+    });
+  }
+
   final _$loadReitsListAsyncAction =
       AsyncAction('_ReitStoreBase.loadReitsList');
 
@@ -76,7 +92,7 @@ mixin _$ReitStore on _ReitStoreBase, Store {
 hasError: ${hasError},
 reits: ${reits},
 isListLoading: ${isListLoading},
-reitsByNetWorth: ${reitsByNetWorth}
+currentReitList: ${currentReitList}
     ''';
   }
 }

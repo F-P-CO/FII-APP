@@ -1,42 +1,42 @@
 import 'package:fii_app/shared/hooks/use_navigator_service_hook.dart';
-import 'package:fii_app/shared/models/modal_bottom_sheet_option.dart';
+import 'package:fii_app/shared/stores/reit_store.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:get_it/get_it.dart';
 
 class OrderingBottomSheetComponent extends StatelessWidget {
-  final List<ModalBottomSheetOrderingOption> options;
-  final ModalBottomSheetOrderingOption activeOption;
-  final Function(ModalBottomSheetOrderingOption) onChange;
+  final reitStore = GetIt.I.get<ReitStore>();
 
-  const OrderingBottomSheetComponent({
+  OrderingBottomSheetComponent({
     Key? key,
-    required this.options,
-    required this.activeOption,
-    required this.onChange,
   }) : super(key: key);
 
-  void _changeOption(ModalBottomSheetOrderingOption newOption) {
+  void _changeOption(ReitListSortOption newOption) {
     useNavigatorService().pop();
-    onChange(newOption);
+    reitStore.currentSortOption = newOption;
   }
 
   @override
   Widget build(BuildContext context) {
+    const options = ReitListSortOption.values;
     return ListView.separated(
       shrinkWrap: true,
       itemCount: options.length,
       separatorBuilder: (_, __) => const Divider(height: 1),
       itemBuilder: (_, index) => ListTile(
-        title: Text(options[index].label),
+        title: Text(options[index].toString()),
         onTap: () => _changeOption(options[index]),
-        trailing: Radio(
-          value: options[index],
-          groupValue: activeOption,
-          onChanged: (ModalBottomSheetOrderingOption? option) {
-            if (option != null) {
-              _changeOption(option);
-            }
-          },
-        ),
+        trailing: Observer(builder: (_) {
+          return Radio(
+            value: options[index],
+            groupValue: reitStore.getCurrentSortOption,
+            onChanged: (ReitListSortOption? option) {
+              if (option != null) {
+                _changeOption(option);
+              }
+            },
+          );
+        }),
       ),
     );
   }
