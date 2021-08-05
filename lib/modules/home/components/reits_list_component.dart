@@ -1,5 +1,5 @@
-import 'package:fii_app/shared/components/ordering_bottom_sheet_component.dart';
-import 'package:fii_app/shared/stores/reit_store.dart';
+import 'package:fii_app/modules/home/stores/reit_list_store.dart';
+import 'package:fii_app/modules/home/components/ordering_bottom_sheet_component.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
@@ -14,7 +14,7 @@ class ReitsListComponent extends StatefulWidget {
 }
 
 class _ReitsListComponentState extends State<ReitsListComponent> {
-  final reitStore = GetIt.I.get<ReitStore>();
+  final reitListStore = GetIt.I.get<ReitListStore>();
 
   @override
   void initState() {
@@ -39,7 +39,7 @@ class _ReitsListComponentState extends State<ReitsListComponent> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 ElevatedButton(
-                  onPressed: reitStore.loadReitsList,
+                  onPressed: reitListStore.fetchAll,
                   child: const Text(
                     'Listar',
                   ),
@@ -56,23 +56,16 @@ class _ReitsListComponentState extends State<ReitsListComponent> {
           const SizedBox(height: 8),
           Observer(
             builder: (_) {
-              if (reitStore.isListLoading) {
+              if (reitListStore.isLoading) {
                 return const Center(
                   child: CircularProgressIndicator(),
                 );
               }
 
-              final reits = reitStore.currentReitList;
-
               return Column(
-                children: [
-                  Text(reitStore.getCurrentSortOption.toString()),
-                  Column(
-                    children: reits
-                        .map((reit) => ReitCardComponent(reit: reit))
-                        .toList(),
-                  ),
-                ],
+                children: reitListStore.sortedReits
+                    .map((reit) => ReitCardComponent(reit: reit))
+                    .toList(),
               );
             },
           )
