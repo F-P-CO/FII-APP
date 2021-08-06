@@ -37,6 +37,7 @@ void main() {
 
         final reits = await datasource.getAll();
         expect(reits, isA<List<Reit>>());
+        expect(reits.length, 1);
 
         expect(reits.first.symbol, 'FIVN11');
         expect(reits.first.name, 'FIVN11');
