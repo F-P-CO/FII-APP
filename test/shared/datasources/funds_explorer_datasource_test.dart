@@ -18,17 +18,20 @@ class MockHttpService implements HttpService {
 void main() {
   final dio = Dio(BaseOptions());
   final dioAdapter = DioAdapter(dio: dio);
+  late FundsExplorerDatasource datasource;
 
   setUpAll(() {
     GetIt.I.registerSingleton<HttpService>(MockHttpService(dio));
+  });
+
+  setUp(() {
+    datasource = FundsExplorerDatasource();
   });
 
   group('funds explorer datasource', () {
     group("getAll", () {
       test('parses each table cell to its corresponding Reit attribute',
           () async {
-        final datasource = FundsExplorerDatasource();
-
         dioAdapter.onGet(
           datasource.url,
           (server) => server.reply(200,
@@ -54,8 +57,6 @@ void main() {
       });
 
       test('throws if no table-ranking is found', () async {
-        final datasource = FundsExplorerDatasource();
-
         dioAdapter.onGet(
           datasource.url,
           (server) =>
@@ -67,8 +68,6 @@ void main() {
       });
 
       test('throws if no tbody tr is found', () async {
-        final datasource = FundsExplorerDatasource();
-
         dioAdapter.onGet(
           datasource.url,
           (server) => server.reply(200, '<table id="table-ranking"></table>'),

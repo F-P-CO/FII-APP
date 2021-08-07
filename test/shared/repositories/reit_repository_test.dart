@@ -10,9 +10,11 @@ import 'reit_repository_test.mocks.dart';
 
 @GenerateMocks([FundsExplorerDatasource])
 void main() {
-  final mockDatasource = MockFundsExplorerDatasource();
+  late MockFundsExplorerDatasource mockDatasource;
+  late ReitRepository repository;
 
   setUpAll(() {
+    mockDatasource = MockFundsExplorerDatasource();
     GetIt.I.registerSingleton<FundsExplorerDatasource>(mockDatasource);
 
     when(mockDatasource.getAll()).thenAnswer(
@@ -49,9 +51,12 @@ void main() {
     );
   });
 
+  setUp(() {
+    repository = ReitRepository();
+  });
+
   group('getAll', () {
     test('should return a Reit List with correct length', () async {
-      final repository = ReitRepository();
       final reits = await repository.getAll();
 
       expect(reits, isA<List<Reit>>());
@@ -59,7 +64,6 @@ void main() {
     });
 
     test('returned List must match datasource data', () async {
-      final repository = ReitRepository();
       final reits = await repository.getAll();
 
       expect(reits.first.symbol, 'Mock Symbol');
