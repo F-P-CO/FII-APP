@@ -1,6 +1,7 @@
-import 'package:dio/dio.dart';
+import 'package:fii_app/shared/exceptions/datasources/no_table_ranking_exception.dart';
+import 'package:fii_app/shared/exceptions/datasources/no_tbody_tr_exception.dart';
+import 'package:fii_app/shared/hooks/use_http_service_hook.dart';
 import 'package:fii_app/shared/models/reit.dart';
-import 'package:get_it/get_it.dart';
 import 'package:html/dom.dart';
 import 'package:html/parser.dart' show parse;
 
@@ -9,7 +10,7 @@ abstract class IFundsExplorerDatasource {
 }
 
 class FundsExplorerDatasource implements IFundsExplorerDatasource {
-  final dio = GetIt.I.get<Dio>();
+  final http = useHttpService();
   final url = 'https://www.fundsexplorer.com.br/ranking';
 
   List<Reit>? _allReits;
@@ -17,10 +18,7 @@ class FundsExplorerDatasource implements IFundsExplorerDatasource {
   @override
   Future<List<Reit>> getAll() async {
     if (_allReits == null) {
-      final response = await dio.get(
-        url,
-        options: Options(responseType: ResponseType.plain),
-      );
+      final response = await http.get(url);
 
       final sourceHtml = response.data as String;
       final Document document = parse(sourceHtml);
@@ -35,15 +33,13 @@ class FundsExplorerDatasource implements IFundsExplorerDatasource {
     final table = document.getElementById('table-ranking');
 
     if (table == null) {
-      throw Exception(
-          "Element 'table-ranking' not found on FundsExplorer page.");
+      throw NoTableRankingException();
     }
 
     final rows = table.getElementsByTagName('tbody tr');
 
     if (rows.isEmpty) {
-      throw Exception(
-          "No elements with tag name 'tbody tr' found inside 'table-ranking' on FundsExplorer page.");
+      throw NoTbodyTrException();
     }
 
     final List<Reit> reits = [];

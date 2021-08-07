@@ -1,0 +1,1 @@
+class NoTbodyTrException implements Exception {}
