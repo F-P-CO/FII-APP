@@ -34,7 +34,7 @@ abstract class _ReitListStoreBase with Store {
       type: ReitListSortOptionType.currentDividendYield,
     ),
     ReitListSortOption(
-      label: "Qantidade de Ativos",
+      label: "Quantidade de Ativos",
       type: ReitListSortOptionType.assetsAmount,
     ),
   ];
