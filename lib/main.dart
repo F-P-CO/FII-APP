@@ -1,3 +1,4 @@
+import 'package:fii_app/shared/datasources/funds_explorer_datasource.dart';
 import 'package:fii_app/shared/interfaces/http_service_interface.dart';
 import 'package:fii_app/shared/interfaces/navigator_service_interface.dart';
 import 'package:fii_app/shared/repositories/reit_repository.dart';
@@ -10,8 +11,10 @@ import 'modules/home/stores/reit_list_store.dart';
 import 'routes.dart';
 
 void main() {
-  GetIt.I.registerLazySingleton(() => ReitListStore());
+  GetIt.I.registerLazySingleton(() => FundsExplorerDatasource());
   GetIt.I.registerLazySingleton(() => ReitRepository());
+
+  GetIt.I.registerLazySingleton(() => ReitListStore());
 
   GetIt.I.registerLazySingleton<NavigatorService>(
     () => AppNavigatorService(),
