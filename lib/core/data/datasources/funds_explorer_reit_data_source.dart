@@ -9,7 +9,7 @@ import 'reit_data_source.dart';
 
 class FundsExplorerReitDataSource implements ReitDataSource {
   final HttpClient httpClient;
-  final url = 'https://www.fundsexplorer.com.br/rankingggg';
+  final url = 'https://www.fundsexplorer.com.br/ranking';
 
   FundsExplorerReitDataSource({required this.httpClient});
 
