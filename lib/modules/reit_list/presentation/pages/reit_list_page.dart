@@ -52,6 +52,12 @@ class ReitListPage extends StatelessWidget {
                 );
               }
 
+              if (reitListStore.hasError) {
+                return Center(
+                  child: Text(reitListStore.errorMessage),
+                );
+              }
+
               return Column(
                 children: reitListStore.sortedReits
                     .map((reit) => ReitCardComponent(reit: reit))

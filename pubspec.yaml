@@ -18,6 +18,8 @@ dependencies:
   intl: ^0.17.0
   html: ^0.15.0
   google_fonts: ^2.1.0
+  either_dart: ^0.1.2
+  equatable: ^2.0.3
 
 dev_dependencies:
   flutter_test:

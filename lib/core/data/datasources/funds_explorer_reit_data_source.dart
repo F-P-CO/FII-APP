@@ -1,3 +1,4 @@
+import 'package:fii_app/core/errors/http_client_exceptions.dart';
 import 'package:html/dom.dart';
 import 'package:html/parser.dart';
 
@@ -8,21 +9,25 @@ import 'reit_data_source.dart';
 
 class FundsExplorerReitDataSource implements ReitDataSource {
   final HttpClient httpClient;
-  final url = 'https://www.fundsexplorer.com.br/ranking';
+  final url = 'https://www.fundsexplorer.com.br/rankingggg';
 
   FundsExplorerReitDataSource({required this.httpClient});
 
   @override
   Future<List<ReitModel>> getAll() async {
-    final response = await httpClient.get(url);
+    try {
+      final response = await httpClient.get(url);
 
-    if (response.statusCode == 200) {
-      final sourceHtml = response.data as String;
-      final Document document = parse(sourceHtml);
+      if (response.statusCode == 200) {
+        final sourceHtml = response.data as String;
+        final Document document = parse(sourceHtml);
 
-      final List<ReitModel> list = _mapDocumentToReitList(document);
-      return list;
-    } else {
+        final List<ReitModel> list = _mapDocumentToReitList(document);
+        return list;
+      } else {
+        throw ServerException(message: "Status code is not 200 for {$url}");
+      }
+    } on HttpClientException {
       throw ServerException();
     }
   }

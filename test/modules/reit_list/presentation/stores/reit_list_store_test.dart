@@ -1,4 +1,6 @@
+import 'package:either_dart/either.dart';
 import 'package:fii_app/core/domain/entities/reit.dart';
+import 'package:fii_app/core/errors/failures.dart';
 import 'package:fii_app/modules/reit_list/domain/usecases/get_all_reits.dart';
 import 'package:fii_app/modules/reit_list/presentation/stores/reit_list_store.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -9,20 +11,20 @@ import 'reit_list_store_test.mocks.dart';
 
 @GenerateMocks([GetAllReits])
 void main() {
-  late GetAllReits getAllReits;
+  late GetAllReits mockGetAllReits;
   late ReitListStore store;
 
   setUpAll(() {
-    getAllReits = MockGetAllReits();
+    mockGetAllReits = MockGetAllReits();
   });
 
   setUp(() {
-    store = ReitListStore(getAllReits: getAllReits);
+    store = ReitListStore(getAllReits: mockGetAllReits);
   });
 
   void _mockLoadReitList() {
-    when(getAllReits()).thenAnswer(
-      (_) async => [
+    when(mockGetAllReits()).thenAnswer(
+      (_) async => Right(<Reit>[
         Reit(
           symbol: 'Mock Symbol',
           name: 'Mock Name',
@@ -65,7 +67,7 @@ void main() {
           vacancy: 3,
           assetsAmount: 3,
         )
-      ],
+      ]),
     );
   }
 
@@ -88,6 +90,16 @@ void main() {
       await store.loadReitList();
 
       expect(store.isLoading, false);
+    });
+
+    test("should set [errorMessage] to a string when usecase fails", () async {
+      when(mockGetAllReits())
+          .thenAnswer((_) async => Left(ServerFailure(exception: Exception())));
+
+      await store.loadReitList();
+
+      expect(store.errorMessage, isA<String>());
+      expect(store.errorMessage, isNotEmpty);
     });
   });
 

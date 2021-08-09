@@ -1,3 +1,7 @@
+import 'package:either_dart/either.dart';
+import 'package:fii_app/core/errors/datasource_exceptions.dart';
+import 'package:fii_app/core/errors/failures.dart';
+
 import '../../domain/entities/reit.dart';
 import '../../domain/repositories/reit_repository.dart';
 import '../datasources/reit_data_source.dart';
@@ -8,8 +12,14 @@ class DefaultReitRepository implements ReitRepository {
   DefaultReitRepository({required this.datasource});
 
   @override
-  Future<List<Reit>> getAll() async {
-    final reits = await datasource.getAll();
-    return reits;
+  Future<Either<Failure, List<Reit>>> getAll() async {
+    try {
+      final reits = await datasource.getAll();
+      return Right(reits);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(exception: e));
+    } on Exception catch (e) {
+      return Left(UnexpectedFailure(exception: e));
+    }
   }
 }

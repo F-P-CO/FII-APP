@@ -1,5 +1,8 @@
+import 'package:either_dart/either.dart';
+import 'package:fii_app/core/errors/failures.dart';
+
 import '../entities/reit.dart';
 
 abstract class ReitRepository {
-  Future<List<Reit>> getAll();
+  Future<Either<Failure, List<Reit>>> getAll();
 }

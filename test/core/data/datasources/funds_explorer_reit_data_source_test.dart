@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:fii_app/core/data/datasources/funds_explorer_reit_data_source.dart';
 import 'package:fii_app/core/data/models/reit_model.dart';
 import 'package:fii_app/core/errors/datasource_exceptions.dart';
+import 'package:fii_app/core/errors/http_client_exceptions.dart';
 import 'package:fii_app/core/network/http_client.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http_mock_adapter/http_mock_adapter.dart';
@@ -85,6 +86,13 @@ void main() {
 
       expect(
           () async => datasource.getAll(), throwsA(isA<NoTbodyTrException>()));
+    });
+
+    test('should throw [ServerException] when http client throws exception',
+        () async {
+      when(mockHttpClient.get(any)).thenThrow(HttpClientException());
+
+      expect(() async => datasource.getAll(), throwsA(isA<ServerException>()));
     });
   });
 }

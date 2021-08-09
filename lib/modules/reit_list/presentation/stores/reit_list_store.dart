@@ -1,3 +1,4 @@
+import 'package:fii_app/core/errors/failures.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../../../core/domain/entities/reit.dart';
@@ -26,6 +27,12 @@ abstract class _ReitListStoreBase with Store {
 
   @observable
   bool isLoading = false;
+
+  @observable
+  String errorMessage = '';
+
+  @computed
+  bool get hasError => errorMessage.isNotEmpty;
 
   @observable
   List<Reit> reits = [];
@@ -64,7 +71,20 @@ abstract class _ReitListStoreBase with Store {
   Future<void> loadReitList() async {
     try {
       isLoading = true;
-      reits = await getAllReits();
+
+      final reitsOrFailure = await getAllReits();
+
+      reitsOrFailure.fold(
+        (failure) {
+          if (failure is ServerFailure) {
+            errorMessage =
+                'Ocorreu um erro ao buscar as informações no servidor';
+          } else if (failure is UnexpectedFailure) {
+            errorMessage = 'Ocorreu um erro inesperado.';
+          }
+        },
+        (list) => reits = list,
+      );
     } finally {
       isLoading = false;
     }

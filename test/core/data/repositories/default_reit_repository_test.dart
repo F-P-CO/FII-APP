@@ -1,7 +1,7 @@
+import 'package:either_dart/either.dart';
 import 'package:fii_app/core/data/datasources/reit_data_source.dart';
 import 'package:fii_app/core/data/models/reit_model.dart';
 import 'package:fii_app/core/data/repositories/default_reit_repository.dart';
-import 'package:fii_app/core/domain/entities/reit.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
@@ -56,28 +56,28 @@ void main() {
     });
 
     test('should return a [Reit] list with proper type and length', () async {
-      final reits = await repository.getAll();
+      final reitsOrFailure = await repository.getAll();
 
-      expect(reits, isA<List<Reit>>());
-      expect(reits.length, 2);
+      expect(reitsOrFailure, isA<Right>());
+      expect(reitsOrFailure.right.length, 2);
     });
 
     test('should return a [Reit] list with proper content on the elements',
         () async {
-      final reits = await repository.getAll();
+      final reitsOrFailure = await repository.getAll();
 
-      expect(reits.first.symbol, 'Mock Symbol');
-      expect(reits.first.name, 'Mock Name');
-      expect(reits.first.sector, 'Mock Sector');
-      expect(reits.first.currentPrice, 1);
-      expect(reits.first.dailyLiquidity, 1);
-      expect(reits.first.currentDividend, 1);
-      expect(reits.first.currentDividendYield, 1);
-      expect(reits.first.netWorth, 1);
-      expect(reits.first.vpa, 1);
-      expect(reits.first.pvpa, 1);
-      expect(reits.first.vacancy, 1);
-      expect(reits.first.assetsAmount, 1);
+      expect(reitsOrFailure.right.first.symbol, 'Mock Symbol');
+      expect(reitsOrFailure.right.first.name, 'Mock Name');
+      expect(reitsOrFailure.right.first.sector, 'Mock Sector');
+      expect(reitsOrFailure.right.first.currentPrice, 1);
+      expect(reitsOrFailure.right.first.dailyLiquidity, 1);
+      expect(reitsOrFailure.right.first.currentDividend, 1);
+      expect(reitsOrFailure.right.first.currentDividendYield, 1);
+      expect(reitsOrFailure.right.first.netWorth, 1);
+      expect(reitsOrFailure.right.first.vpa, 1);
+      expect(reitsOrFailure.right.first.pvpa, 1);
+      expect(reitsOrFailure.right.first.vacancy, 1);
+      expect(reitsOrFailure.right.first.assetsAmount, 1);
     });
   });
 }
