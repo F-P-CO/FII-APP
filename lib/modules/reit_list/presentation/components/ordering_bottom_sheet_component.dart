@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
+import 'package:fii_app/core/navigation/navigator_service.dart';
 
-import '../../../../core/navigation/navigator_service.dart';
 import '../stores/reit_list_store.dart';
 
 class OrderingBottomSheetComponent extends StatelessWidget {

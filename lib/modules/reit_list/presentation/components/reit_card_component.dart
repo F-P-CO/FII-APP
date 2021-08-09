@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
-
-import '../../../../core/domain/entities/reit.dart';
-import '../../../../core/presentation/themes/app_colors.dart';
-import '../../../../core/presentation/themes/app_text_styles.dart';
+import 'package:fii_app/core/domain/entities/reit.dart';
+import 'package:fii_app/core/presentation/themes/app_colors.dart';
+import 'package:fii_app/core/presentation/themes/app_text_styles.dart';
 
 class ReitCardComponent extends StatelessWidget {
   final Reit reit;

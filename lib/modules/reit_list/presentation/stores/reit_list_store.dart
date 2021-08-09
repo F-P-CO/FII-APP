@@ -1,7 +1,7 @@
 import 'package:fii_app/core/errors/failures.dart';
 import 'package:mobx/mobx.dart';
 
-import '../../../../core/domain/entities/reit.dart';
+import 'package:fii_app/core/domain/entities/reit.dart';
 import '../../domain/usecases/get_all_reits.dart';
 
 part 'reit_list_store.g.dart';

@@ -6,10 +6,10 @@ import '../../domain/entities/reit.dart';
 import '../../domain/repositories/reit_repository.dart';
 import '../datasources/reit_data_source.dart';
 
-class DefaultReitRepository implements ReitRepository {
+class ReitRepository {
   final ReitDataSource datasource;
 
-  DefaultReitRepository({required this.datasource});
+  ReitRepository({required this.datasource});
 
   @override
   Future<Either<Failure, List<Reit>>> getAll() async {
