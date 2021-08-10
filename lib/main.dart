@@ -1,29 +1,12 @@
-import 'package:fii_app/shared/datasources/funds_explorer_datasource.dart';
-import 'package:fii_app/shared/interfaces/http_service_interface.dart';
-import 'package:fii_app/shared/interfaces/navigator_service_interface.dart';
-import 'package:fii_app/shared/repositories/reit_repository.dart';
-import 'package:fii_app/shared/services/app_http_service.dart';
-import 'package:fii_app/shared/services/app_navigator_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
-import 'modules/home/stores/reit_list_store.dart';
-import 'routes.dart';
+import 'core/di/injections.dart' as di;
+import 'core/navigation/navigator_service.dart';
+import 'core/navigation/routes.dart' as routes;
 
 void main() {
-  GetIt.I.registerLazySingleton(() => FundsExplorerDatasource());
-  GetIt.I.registerLazySingleton(() => ReitRepository());
-
-  GetIt.I.registerLazySingleton(() => ReitListStore());
-
-  GetIt.I.registerLazySingleton<NavigatorService>(
-    () => AppNavigatorService(),
-  );
-
-  GetIt.I.registerLazySingleton<HttpService>(
-    () => AppHttpService(),
-  );
-
+  di.init();
   runApp(MyApp());
 }
 
@@ -36,8 +19,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       navigatorKey: GetIt.I.get<NavigatorService>().navigatorKey,
-      initialRoute: '/home',
-      routes: appRoutes,
+      routes: routes.list,
     );
   }
 }
