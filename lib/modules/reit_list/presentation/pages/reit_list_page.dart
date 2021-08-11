@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 
-import '../components/sort_bottom_sheet_component.dart';
 import '../components/reit_card_component.dart';
+import '../components/sort_bottom_sheet_component.dart';
 import '../stores/reit_list_store.dart';
 
 class ReitListPage extends StatelessWidget {
