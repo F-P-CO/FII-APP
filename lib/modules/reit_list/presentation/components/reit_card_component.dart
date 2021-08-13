@@ -1,3 +1,4 @@
+import 'package:fii_app/modules/reit_list/presentation/stores/reit_list_store.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
@@ -6,11 +7,16 @@ import 'package:fii_app/core/presentation/themes/app_colors.dart';
 import 'package:fii_app/core/presentation/themes/app_text_styles.dart';
 
 class ReitCardComponent extends StatelessWidget {
-  final Reit reit;
-
-  ReitCardComponent({Key? key, required this.reit}) : super(key: key);
-
   final currencyFormatter = GetIt.I.get<NumberFormat>();
+
+  final Reit reit;
+  final ReitListSortOption currentSortOption;
+
+  ReitCardComponent({
+    Key? key,
+    required this.reit,
+    required this.currentSortOption,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -39,14 +45,32 @@ class ReitCardComponent extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      'Patrimônio total',
-                      style: AppTextStyles.captionTitle,
+                    Flexible(
+                      child: Text(
+                        currentSortOption.label,
+                        style: AppTextStyles.captionTitle,
+                      ),
                     ),
-                    Text(
-                      currencyFormatter.format(reit.netWorth),
-                      style: AppTextStyles.captionBody,
-                    ),
+                    if (currentSortOption.type ==
+                        ReitListSortOptionType.netWorth)
+                      Text(
+                        currencyFormatter.format(reit.netWorth),
+                        style: AppTextStyles.captionBody,
+                      ),
+                    if (currentSortOption.type ==
+                        ReitListSortOptionType.currentDividendYield)
+                      Text(
+                        reit.currentDividendYield != null
+                            ? "${reit.currentDividendYield!.toStringAsFixed(2)}%"
+                            : '-',
+                        style: AppTextStyles.captionBody,
+                      ),
+                    if (currentSortOption.type ==
+                        ReitListSortOptionType.assetsAmount)
+                      Text(
+                        reit.assetsAmount.toString(),
+                        style: AppTextStyles.captionBody,
+                      ),
                   ],
                 )
               ],

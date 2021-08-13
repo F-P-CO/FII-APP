@@ -23,12 +23,12 @@ mixin _$ReitListStore on _ReitListStoreBase, Store {
       (_$sortedReitsComputed ??= Computed<List<Reit>>(() => super.sortedReits,
               name: '_ReitListStoreBase.sortedReits'))
           .value;
-  Computed<String>? _$currentSortOptionLabelComputed;
+  Computed<ReitListSortOption>? _$currentSortOptionComputed;
 
   @override
-  String get currentSortOptionLabel => (_$currentSortOptionLabelComputed ??=
-          Computed<String>(() => super.currentSortOptionLabel,
-              name: '_ReitListStoreBase.currentSortOptionLabel'))
+  ReitListSortOption get currentSortOption => (_$currentSortOptionComputed ??=
+          Computed<ReitListSortOption>(() => super.currentSortOption,
+              name: '_ReitListStoreBase.currentSortOption'))
       .value;
 
   final _$isLoadingAtom = Atom(name: '_ReitListStoreBase.isLoading');
@@ -76,19 +76,20 @@ mixin _$ReitListStore on _ReitListStoreBase, Store {
     });
   }
 
-  final _$currentSortOptionAtom =
-      Atom(name: '_ReitListStoreBase.currentSortOption');
+  final _$currentSortOptionTypeAtom =
+      Atom(name: '_ReitListStoreBase.currentSortOptionType');
 
   @override
-  ReitListSortOptionType get currentSortOption {
-    _$currentSortOptionAtom.reportRead();
-    return super.currentSortOption;
+  ReitListSortOptionType get currentSortOptionType {
+    _$currentSortOptionTypeAtom.reportRead();
+    return super.currentSortOptionType;
   }
 
   @override
-  set currentSortOption(ReitListSortOptionType value) {
-    _$currentSortOptionAtom.reportWrite(value, super.currentSortOption, () {
-      super.currentSortOption = value;
+  set currentSortOptionType(ReitListSortOptionType value) {
+    _$currentSortOptionTypeAtom.reportWrite(value, super.currentSortOptionType,
+        () {
+      super.currentSortOptionType = value;
     });
   }
 
@@ -152,12 +153,12 @@ mixin _$ReitListStore on _ReitListStoreBase, Store {
 isLoading: ${isLoading},
 errorMessage: ${errorMessage},
 reits: ${reits},
-currentSortOption: ${currentSortOption},
+currentSortOptionType: ${currentSortOptionType},
 limit: ${limit},
 isSortBottomSheetOpened: ${isSortBottomSheetOpened},
 hasError: ${hasError},
 sortedReits: ${sortedReits},
-currentSortOptionLabel: ${currentSortOptionLabel}
+currentSortOption: ${currentSortOption}
     ''';
   }
 }
