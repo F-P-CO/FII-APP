@@ -23,6 +23,13 @@ mixin _$ReitListStore on _ReitListStoreBase, Store {
       (_$sortedReitsComputed ??= Computed<List<Reit>>(() => super.sortedReits,
               name: '_ReitListStoreBase.sortedReits'))
           .value;
+  Computed<String>? _$currentSortOptionLabelComputed;
+
+  @override
+  String get currentSortOptionLabel => (_$currentSortOptionLabelComputed ??=
+          Computed<String>(() => super.currentSortOptionLabel,
+              name: '_ReitListStoreBase.currentSortOptionLabel'))
+      .value;
 
   final _$isLoadingAtom = Atom(name: '_ReitListStoreBase.isLoading');
 
@@ -117,7 +124,8 @@ reits: ${reits},
 currentSortOption: ${currentSortOption},
 limit: ${limit},
 hasError: ${hasError},
-sortedReits: ${sortedReits}
+sortedReits: ${sortedReits},
+currentSortOptionLabel: ${currentSortOptionLabel}
     ''';
   }
 }

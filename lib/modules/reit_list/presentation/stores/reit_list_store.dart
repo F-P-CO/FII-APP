@@ -106,4 +106,9 @@ abstract class _ReitListStoreBase with Store {
   ];
 
   List<ReitListSortOption> get sortOptions => _sortOptions;
+
+  @computed
+  String get currentSortOptionLabel => _sortOptions
+      .singleWhere((option) => option.type == currentSortOption)
+      .label;
 }

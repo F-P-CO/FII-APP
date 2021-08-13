@@ -52,7 +52,7 @@ void _registerFeatureServices() {
   _getIt.registerLazySingleton(
     () => ReitListStore(
       getAllReits: _getIt(),
-    ),
+    )..loadReitList(),
   );
 
   // ! Use cases

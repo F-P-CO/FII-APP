@@ -34,7 +34,7 @@ abstract class AppTextStyles {
     fontWeight: primaryFontWeightMedium,
   );
 
-  static final captionHeader = primaryFont.copyWith(
+  static final captionTitle = primaryFont.copyWith(
     fontSize: 18.0,
     fontWeight: primaryFontWeightMedium,
   );
@@ -52,5 +52,10 @@ abstract class AppTextStyles {
   static final buttonText = secondaryFont.copyWith(
     fontSize: 13.0,
     color: AppColors.grey,
+  );
+
+  static final semiboldText = primaryFont.copyWith(
+    fontSize: 14.0,
+    fontWeight: primaryFontWeightSemibold,
   );
 }

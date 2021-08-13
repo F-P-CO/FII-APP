@@ -2,7 +2,8 @@ import 'package:fii_app/core/presentation/themes/app_colors.dart';
 import 'package:fii_app/core/presentation/themes/app_text_styles.dart';
 import 'package:flutter/material.dart';
 
-class HeaderAppBar extends StatelessWidget implements PreferredSizeWidget {
+class HeaderAppBarComponent extends StatelessWidget
+    implements PreferredSizeWidget {
   final String title;
   final String? buttonLabel;
   final void Function()? buttonOnPressed;
@@ -13,7 +14,7 @@ class HeaderAppBar extends StatelessWidget implements PreferredSizeWidget {
       ? const Size.fromHeight(110)
       : const Size.fromHeight(kToolbarHeight);
 
-  const HeaderAppBar({
+  const HeaderAppBarComponent({
     Key? key,
     required this.title,
     this.buttonLabel,
