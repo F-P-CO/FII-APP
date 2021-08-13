@@ -11,11 +11,15 @@ class SortOptionPickerComponent extends StatelessWidget {
 
   SortOptionPickerComponent({Key? key}) : super(key: key);
 
-  void _showOrderingBottomSheet(BuildContext context) {
-    showModalBottomSheet(
+  Future<void> _showOrderingBottomSheet(BuildContext context) async {
+    reitListStore.toggleSortBottomSheetOpened();
+
+    await showModalBottomSheet(
       context: context,
       builder: (_) => SortBottomSheetComponent(),
     );
+
+    reitListStore.toggleSortBottomSheetOpened();
   }
 
   @override
@@ -32,7 +36,10 @@ class SortOptionPickerComponent extends StatelessWidget {
                 style: AppTextStyles.semiboldText,
               ),
             ),
-            const Icon(Icons.unfold_more)
+            if (reitListStore.isSortBottomSheetOpened)
+              const Icon(Icons.unfold_less)
+            else
+              const Icon(Icons.unfold_more)
           ],
         ),
       ),

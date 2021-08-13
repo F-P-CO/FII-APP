@@ -43,6 +43,9 @@ abstract class _ReitListStoreBase with Store {
   @observable
   int limit = 10;
 
+  @observable
+  bool isSortBottomSheetOpened = false;
+
   @computed
   List<Reit> get sortedReits {
     final List<Reit> localReits = reits;
@@ -111,4 +114,8 @@ abstract class _ReitListStoreBase with Store {
   String get currentSortOptionLabel => _sortOptions
       .singleWhere((option) => option.type == currentSortOption)
       .label;
+
+  @action
+  void toggleSortBottomSheetOpened() =>
+      isSortBottomSheetOpened = !isSortBottomSheetOpened;
 }
