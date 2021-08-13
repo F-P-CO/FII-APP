@@ -1,3 +1,5 @@
+import 'package:fii_app/core/presentation/components/header_app_bar.dart';
+import 'package:fii_app/core/presentation/themes/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
@@ -20,52 +22,62 @@ class ReitListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        children: [
-          Center(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                ElevatedButton(
-                  onPressed: reitListStore.loadReitList,
-                  child: const Text(
-                    'Listar',
-                  ),
+    return Scaffold(
+      backgroundColor: AppColors.background,
+      appBar: HeaderAppBar(
+        title: 'Fundos Imobiliários',
+        buttonLabel: 'Ver todos',
+        buttonOnPressed: () {},
+      ),
+      body: SingleChildScrollView(
+        child: Container(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            children: [
+              Center(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    ElevatedButton(
+                      onPressed: reitListStore.loadReitList,
+                      child: const Text(
+                        'Listar',
+                      ),
+                    ),
+                    ElevatedButton(
+                      onPressed: () => _showOrderingBottomSheet(context),
+                      child: const Text(
+                        'Ordenar',
+                      ),
+                    ),
+                  ],
                 ),
-                ElevatedButton(
-                  onPressed: () => _showOrderingBottomSheet(context),
-                  child: const Text(
-                    'Ordenar',
-                  ),
-                ),
-              ],
-            ),
+              ),
+              const SizedBox(height: 8),
+              Observer(
+                builder: (_) {
+                  if (reitListStore.isLoading) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+
+                  if (reitListStore.hasError) {
+                    return Center(
+                      child: Text(reitListStore.errorMessage),
+                    );
+                  }
+
+                  return Column(
+                    children: reitListStore.sortedReits
+                        .map((reit) => ReitCardComponent(reit: reit))
+                        .toList(),
+                  );
+                },
+              )
+            ],
           ),
-          const SizedBox(height: 8),
-          Observer(
-            builder: (_) {
-              if (reitListStore.isLoading) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-
-              if (reitListStore.hasError) {
-                return Center(
-                  child: Text(reitListStore.errorMessage),
-                );
-              }
-
-              return Column(
-                children: reitListStore.sortedReits
-                    .map((reit) => ReitCardComponent(reit: reit))
-                    .toList(),
-              );
-            },
-          )
-        ],
+        ),
       ),
     );
   }
