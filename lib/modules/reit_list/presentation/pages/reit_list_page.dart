@@ -1,3 +1,4 @@
+import 'package:fii_app/core/presentation/components/header_app_bar.dart';
 import 'package:fii_app/core/presentation/themes/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -22,9 +23,11 @@ class ReitListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: AppColors.primary,
-        title: const Text("Home"),
+      backgroundColor: AppColors.background,
+      appBar: HeaderAppBar(
+        title: 'Fundos Imobiliários',
+        buttonLabel: 'Ver todos',
+        buttonOnPressed: () {},
       ),
       body: SingleChildScrollView(
         child: Container(

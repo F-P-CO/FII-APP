@@ -17,6 +17,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'FII',
       theme: ThemeData(
+        primarySwatch: Colors.indigo,
         primaryColor: AppColors.primary,
       ),
       navigatorKey: GetIt.I.get<NavigatorService>().navigatorKey,

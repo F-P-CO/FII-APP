@@ -25,7 +25,7 @@ class HomePage extends StatelessWidget {
       ),
       bottomNavigationBar: Observer(
         builder: (_) => BottomNavigationBar(
-          backgroundColor: const Color(0xFFF9F9F9),
+          backgroundColor: AppColors.lightgray,
           unselectedFontSize: 13,
           selectedItemColor: AppColors.primary,
           selectedLabelStyle: AppTextStyles.secondaryFont,
