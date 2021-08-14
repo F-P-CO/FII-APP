@@ -41,7 +41,7 @@ flutter_icons:
   image_path: "assets/images/icons/launcher_icon.png"
 
 flutter_native_splash:
-  color: "#181697"
+  color: "#0084FF"
   image: "assets/images/icons/splash_icon.png"
 
 executables:
