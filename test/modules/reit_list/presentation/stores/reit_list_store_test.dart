@@ -108,11 +108,11 @@ void main() {
       _mockLoadReitList();
       await store.loadReitList();
 
-      store.currentSortOption = ReitListSortOptionType.assetsAmount;
+      store.currentSortOptionType = ReitListSortOptionType.assetsAmount;
       expect(store.sortedReits.first.assetsAmount, 3);
       expect(store.sortedReits.last.assetsAmount, 1);
 
-      store.currentSortOption = ReitListSortOptionType.currentDividendYield;
+      store.currentSortOptionType = ReitListSortOptionType.currentDividendYield;
       expect(store.sortedReits.first.currentDividendYield, 3);
       expect(store.sortedReits.last.currentDividendYield, 1);
     });

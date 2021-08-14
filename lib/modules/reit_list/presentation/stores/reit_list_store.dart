@@ -14,10 +14,7 @@ class ReitListSortOption {
   final String label;
   final ReitListSortOptionType type;
 
-  const ReitListSortOption({
-    required this.label,
-    required this.type,
-  });
+  const ReitListSortOption({required this.label, required this.type});
 }
 
 abstract class _ReitListStoreBase with Store {
@@ -38,7 +35,8 @@ abstract class _ReitListStoreBase with Store {
   List<Reit> reits = [];
 
   @observable
-  ReitListSortOptionType currentSortOption = ReitListSortOptionType.netWorth;
+  ReitListSortOptionType currentSortOptionType =
+      ReitListSortOptionType.netWorth;
 
   @observable
   int limit = 10;
@@ -50,7 +48,7 @@ abstract class _ReitListStoreBase with Store {
   List<Reit> get sortedReits {
     final List<Reit> localReits = reits;
 
-    switch (currentSortOption) {
+    switch (currentSortOptionType) {
       case ReitListSortOptionType.assetsAmount:
         localReits.sort((a, b) => b.assetsAmount.compareTo(a.assetsAmount));
         break;
@@ -95,13 +93,10 @@ abstract class _ReitListStoreBase with Store {
 
   static const _sortOptions = [
     ReitListSortOption(
-      label: "Patrimônio Liquído",
-      type: ReitListSortOptionType.netWorth,
-    ),
+        label: "Patrimônio Liquído", type: ReitListSortOptionType.netWorth),
     ReitListSortOption(
-      label: "Dividend Yield Atual",
-      type: ReitListSortOptionType.currentDividendYield,
-    ),
+        label: "Dividend Yield Atual",
+        type: ReitListSortOptionType.currentDividendYield),
     ReitListSortOption(
       label: "Quantidade de Ativos",
       type: ReitListSortOptionType.assetsAmount,
@@ -111,9 +106,8 @@ abstract class _ReitListStoreBase with Store {
   List<ReitListSortOption> get sortOptions => _sortOptions;
 
   @computed
-  String get currentSortOptionLabel => _sortOptions
-      .singleWhere((option) => option.type == currentSortOption)
-      .label;
+  ReitListSortOption get currentSortOption => _sortOptions
+      .singleWhere((option) => option.type == currentSortOptionType);
 
   @action
   void toggleSortBottomSheetOpened() =>

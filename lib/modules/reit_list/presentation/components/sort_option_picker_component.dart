@@ -32,7 +32,7 @@ class SortOptionPickerComponent extends StatelessWidget {
           children: [
             Flexible(
               child: Text(
-                "Os 10 fundos com maior ${reitListStore.currentSortOptionLabel.toLowerCase()}",
+                "Os 10 fundos com maior ${reitListStore.currentSortOption.label.toLowerCase()}",
                 style: AppTextStyles.semiboldText,
               ),
             ),

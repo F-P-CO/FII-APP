@@ -31,7 +31,12 @@ class ReitListComponent extends StatelessWidget {
 
         return Column(
           children: reitListStore.sortedReits
-              .map((reit) => ReitCardComponent(reit: reit))
+              .map(
+                (reit) => ReitCardComponent(
+                  reit: reit,
+                  currentSortOption: reitListStore.currentSortOption,
+                ),
+              )
               .toList(),
         );
       },

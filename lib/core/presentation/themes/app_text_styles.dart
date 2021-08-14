@@ -35,12 +35,12 @@ abstract class AppTextStyles {
   );
 
   static final captionTitle = primaryFont.copyWith(
-    fontSize: 18.0,
+    fontSize: 16.0,
     fontWeight: primaryFontWeightMedium,
   );
 
   static final captionBody = primaryFont.copyWith(
-    fontSize: 18.0,
+    fontSize: 16.0,
     fontWeight: primaryFontWeightRegular,
   );
 

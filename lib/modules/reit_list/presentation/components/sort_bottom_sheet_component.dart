@@ -15,7 +15,7 @@ class SortBottomSheetComponent extends StatelessWidget {
 
   void _changeOption(ReitListSortOptionType newOption) {
     GetIt.I.get<NavigatorService>().currentState!.pop();
-    reitListStore.currentSortOption = newOption;
+    reitListStore.currentSortOptionType = newOption;
   }
 
   @override
@@ -60,7 +60,7 @@ class SortBottomSheetComponent extends StatelessWidget {
                           scale: 1.2,
                           child: Radio(
                             value: option.type,
-                            groupValue: reitListStore.currentSortOption,
+                            groupValue: reitListStore.currentSortOptionType,
                             onChanged: (ReitListSortOptionType? option) {
                               if (option != null) {
                                 _changeOption(option);
