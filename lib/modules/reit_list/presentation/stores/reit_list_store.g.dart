@@ -23,6 +23,13 @@ mixin _$ReitListStore on _ReitListStoreBase, Store {
       (_$sortedReitsComputed ??= Computed<List<Reit>>(() => super.sortedReits,
               name: '_ReitListStoreBase.sortedReits'))
           .value;
+  Computed<String>? _$currentSortOptionLabelComputed;
+
+  @override
+  String get currentSortOptionLabel => (_$currentSortOptionLabelComputed ??=
+          Computed<String>(() => super.currentSortOptionLabel,
+              name: '_ReitListStoreBase.currentSortOptionLabel'))
+      .value;
 
   final _$isLoadingAtom = Atom(name: '_ReitListStoreBase.isLoading');
 
@@ -100,12 +107,43 @@ mixin _$ReitListStore on _ReitListStoreBase, Store {
     });
   }
 
+  final _$isSortBottomSheetOpenedAtom =
+      Atom(name: '_ReitListStoreBase.isSortBottomSheetOpened');
+
+  @override
+  bool get isSortBottomSheetOpened {
+    _$isSortBottomSheetOpenedAtom.reportRead();
+    return super.isSortBottomSheetOpened;
+  }
+
+  @override
+  set isSortBottomSheetOpened(bool value) {
+    _$isSortBottomSheetOpenedAtom
+        .reportWrite(value, super.isSortBottomSheetOpened, () {
+      super.isSortBottomSheetOpened = value;
+    });
+  }
+
   final _$loadReitListAsyncAction =
       AsyncAction('_ReitListStoreBase.loadReitList');
 
   @override
   Future<void> loadReitList() {
     return _$loadReitListAsyncAction.run(() => super.loadReitList());
+  }
+
+  final _$_ReitListStoreBaseActionController =
+      ActionController(name: '_ReitListStoreBase');
+
+  @override
+  void toggleSortBottomSheetOpened() {
+    final _$actionInfo = _$_ReitListStoreBaseActionController.startAction(
+        name: '_ReitListStoreBase.toggleSortBottomSheetOpened');
+    try {
+      return super.toggleSortBottomSheetOpened();
+    } finally {
+      _$_ReitListStoreBaseActionController.endAction(_$actionInfo);
+    }
   }
 
   @override
@@ -116,8 +154,10 @@ errorMessage: ${errorMessage},
 reits: ${reits},
 currentSortOption: ${currentSortOption},
 limit: ${limit},
+isSortBottomSheetOpened: ${isSortBottomSheetOpened},
 hasError: ${hasError},
-sortedReits: ${sortedReits}
+sortedReits: ${sortedReits},
+currentSortOptionLabel: ${currentSortOptionLabel}
     ''';
   }
 }

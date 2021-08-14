@@ -41,7 +41,7 @@ class ReitCardComponent extends StatelessWidget {
                   children: [
                     Text(
                       'Patrimônio total',
-                      style: AppTextStyles.captionHeader,
+                      style: AppTextStyles.captionTitle,
                     ),
                     Text(
                       currencyFormatter.format(reit.netWorth),
