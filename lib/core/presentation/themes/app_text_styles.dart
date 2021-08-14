@@ -19,6 +19,11 @@ abstract class AppTextStyles {
 
   static final secondaryFontWeightRegular = FontWeight.w400;
 
+  static final largeHeader = primaryFont.copyWith(
+    fontSize: 20,
+    fontWeight: primaryFontWeightSemibold,
+  );
+
   static final header = primaryFont.copyWith(
     fontSize: 20.0,
     fontWeight: primaryFontWeightBold,

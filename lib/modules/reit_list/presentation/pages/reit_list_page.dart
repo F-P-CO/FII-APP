@@ -18,12 +18,20 @@ class ReitListPage extends StatelessWidget {
       backgroundColor: AppColors.background,
       appBar: HeaderAppBarComponent(
         title: 'Fundos Imobiliários',
-        buttonLabel: 'Ver todos',
-        buttonOnPressed: () {},
+        settingsOnPressed: () {},
+        favoritesOnPressed: () {},
+        searchOnPressed: () {},
       ),
       body: SingleChildScrollView(
         child: Container(
           padding: const EdgeInsets.all(16.0),
+          decoration: const BoxDecoration(
+            color: AppColors.scaffoldBackground,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(25),
+              topRight: Radius.circular(25),
+            ),
+          ),
           child: Column(
             children: [
               SortOptionPickerComponent(),

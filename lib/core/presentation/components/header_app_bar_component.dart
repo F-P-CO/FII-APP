@@ -5,73 +5,60 @@ import 'package:flutter/material.dart';
 class HeaderAppBarComponent extends StatelessWidget
     implements PreferredSizeWidget {
   final String title;
-  final String? buttonLabel;
-  final void Function()? buttonOnPressed;
-  final bool showSearch;
+  final void Function()? settingsOnPressed;
+  final void Function()? favoritesOnPressed;
+  final void Function()? searchOnPressed;
+
+  // @override
+  // Size get preferredSize => showSearch
+  //     ? const Size.fromHeight(110)
+  //     : const Size.fromHeight(kToolbarHeight);
 
   @override
-  Size get preferredSize => showSearch
-      ? const Size.fromHeight(110)
-      : const Size.fromHeight(kToolbarHeight);
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 
   const HeaderAppBarComponent({
     Key? key,
     required this.title,
-    this.buttonLabel,
-    this.buttonOnPressed,
-    this.showSearch = true,
+    this.settingsOnPressed,
+    this.favoritesOnPressed,
+    this.searchOnPressed,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
       backgroundColor: AppColors.background,
-      elevation: 5.0,
-      shadowColor: AppColors.grey.withOpacity(0.2),
-      toolbarHeight: 110,
-      title: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                title,
-                style: AppTextStyles.header.copyWith(
-                  color: Colors.black,
-                ),
-              ),
-              if (buttonLabel != null && buttonOnPressed != null)
-                TextButton(
-                  onPressed: buttonOnPressed,
-                  child: Text(
-                    buttonLabel!,
-                    style: AppTextStyles.buttonLabel
-                        .copyWith(color: AppColors.primary),
-                  ),
-                ),
-            ],
-          ),
-          if (showSearch)
-            Container(
-              decoration: BoxDecoration(
-                color: AppColors.lightgray,
-                borderRadius: BorderRadius.circular(8.0),
-              ),
-              height: 40,
-              margin: const EdgeInsets.only(bottom: 10),
-              child: TextField(
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  prefixIcon: const Icon(Icons.search),
-                  hintStyle: AppTextStyles.buttonText,
-                  contentPadding:
-                      const EdgeInsets.only(top: 6, bottom: 6, right: 10),
-                  hintText: 'Buscar',
-                ),
-              ),
-            ),
-        ],
+      elevation: 0,
+      title: Text(
+        title,
+        style: AppTextStyles.largeHeader.copyWith(
+          color: AppColors.black,
+        ),
       ),
+      actions: [
+        if (settingsOnPressed != null)
+          IconButton(
+            onPressed: settingsOnPressed,
+            icon: const Icon(Icons.tune),
+            color: AppColors.grey,
+            splashRadius: 20,
+          ),
+        if (favoritesOnPressed != null)
+          IconButton(
+            onPressed: favoritesOnPressed,
+            icon: const Icon(Icons.favorite_border),
+            color: AppColors.grey,
+            splashRadius: 20,
+          ),
+        if (searchOnPressed != null)
+          IconButton(
+            onPressed: searchOnPressed,
+            icon: const Icon(Icons.search),
+            color: AppColors.grey,
+            splashRadius: 20,
+          ),
+      ],
     );
   }
 }
