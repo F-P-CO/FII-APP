@@ -37,9 +37,6 @@ abstract class _ReitListStoreBase with Store {
   @observable
   int limit = 5;
 
-  @observable
-  bool isSortBottomSheetOpened = false;
-
   static const _sortOptions = [
     ReitListSortOption(
       label: "Patrimônio Liquído",
@@ -135,8 +132,4 @@ abstract class _ReitListStoreBase with Store {
           reitsSortedByCurrentDividendYield,
     };
   }
-
-  @action
-  void toggleSortBottomSheetOpened() =>
-      isSortBottomSheetOpened = !isSortBottomSheetOpened;
 }
