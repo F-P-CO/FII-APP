@@ -1,7 +1,7 @@
 import 'package:fii_app/core/presentation/components/header_app_bar_component.dart';
 import 'package:fii_app/core/presentation/themes/app_colors.dart';
+import 'package:fii_app/core/presentation/themes/no_scroll_glow_behavior.dart';
 import 'package:fii_app/modules/reit_list/presentation/components/reit_list_component.dart';
-import 'package:fii_app/modules/reit_list/presentation/components/sort_option_picker_component.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
@@ -22,22 +22,29 @@ class ReitListPage extends StatelessWidget {
         favoritesOnPressed: () {},
         searchOnPressed: () {},
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          padding: const EdgeInsets.all(16.0),
-          decoration: const BoxDecoration(
-            color: AppColors.scaffoldBackground,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(25),
-              topRight: Radius.circular(25),
-            ),
+      body: Container(
+        decoration: const BoxDecoration(
+          color: AppColors.scaffoldBackground,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(25),
+            topRight: Radius.circular(25),
           ),
-          child: Column(
-            children: [
-              SortOptionPickerComponent(),
-              const SizedBox(height: 8),
-              ReitListComponent(),
-            ],
+        ),
+        child: ScrollConfiguration(
+          behavior: NoScrollGlowBehavior(),
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                children: reitListStore.sortOptions
+                    .map(
+                      (option) => ReitListComponent(
+                        sortOption: option,
+                      ),
+                    )
+                    .toList(),
+              ),
+            ),
           ),
         ),
       ),

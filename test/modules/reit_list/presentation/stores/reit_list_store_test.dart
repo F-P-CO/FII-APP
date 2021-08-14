@@ -103,18 +103,13 @@ void main() {
     });
   });
 
-  group('sortedReits', () {
-    test("should return a [Reit] list sorted by [currentSortOption]", () async {
+  group('reitsSortedByNetWorth', () {
+    test("should return a [Reit] list sorted by net worth", () async {
       _mockLoadReitList();
       await store.loadReitList();
 
-      store.currentSortOptionType = ReitListSortOptionType.assetsAmount;
-      expect(store.sortedReits.first.assetsAmount, 3);
-      expect(store.sortedReits.last.assetsAmount, 1);
-
-      store.currentSortOptionType = ReitListSortOptionType.currentDividendYield;
-      expect(store.sortedReits.first.currentDividendYield, 3);
-      expect(store.sortedReits.last.currentDividendYield, 1);
+      expect(store.reitsSortedByNetWorth.first.netWorth, 3);
+      expect(store.reitsSortedByNetWorth.last.netWorth, 1);
     });
 
     test("should return a [Reit] list limited by [limit]", () async {
@@ -122,10 +117,10 @@ void main() {
       await store.loadReitList();
 
       store.limit = 1;
-      expect(store.sortedReits.length, store.limit);
+      expect(store.reitsSortedByNetWorth.length, store.limit);
 
       store.limit = 2;
-      expect(store.sortedReits.length, store.limit);
+      expect(store.reitsSortedByNetWorth.length, store.limit);
     });
   });
 

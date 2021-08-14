@@ -32,9 +32,7 @@ class HeaderAppBarComponent extends StatelessWidget
       elevation: 0,
       title: Text(
         title,
-        style: AppTextStyles.largeHeader.copyWith(
-          color: AppColors.black,
-        ),
+        style: AppTextStyles.largeHeader,
       ),
       actions: [
         if (settingsOnPressed != null)
