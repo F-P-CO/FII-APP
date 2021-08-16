@@ -1,11 +1,14 @@
 import 'package:fii_app/core/domain/entities/reit.dart';
+import 'package:fii_app/core/presentation/themes/app_colors.dart';
 import 'package:fii_app/core/presentation/themes/app_text_styles.dart';
 import 'package:fii_app/modules/reit_list/presentation/stores/reit_list_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
+import 'package:shimmer/shimmer.dart';
 
 import 'reit_card_component.dart';
+import 'reit_shimmer_card_component.dart';
 
 class ReitListComponent extends StatelessWidget {
   final ReitListSortOption sortOption;
@@ -28,10 +31,10 @@ class ReitListComponent extends StatelessWidget {
           Observer(
             builder: (_) {
               if (reitListStore.isLoading) {
-                return const Center(
-                  child: Padding(
-                    padding: EdgeInsets.only(top: 24.0),
-                    child: CircularProgressIndicator(),
+                return Column(
+                  children: List.filled(
+                    reitListStore.limit,
+                    const ReitShimmerCardComponent(),
                   ),
                 );
               }
