@@ -1,7 +1,13 @@
 import 'package:dio/dio.dart';
+import 'package:fii_app/modules/reit_list/data/datasources/reit_list_settings_local_data_source.dart';
+import 'package:fii_app/modules/reit_list/data/repositories/default_reit_list_settings_repository.dart';
+import 'package:fii_app/modules/reit_list/domain/repositories/reit_list_settings_repository.dart';
+import 'package:fii_app/modules/reit_list/domain/usecases/get_enabled_lists.dart';
+import 'package:fii_app/modules/reit_list/domain/usecases/save_enabled_lists.dart';
 import 'package:fii_app/modules/reit_list/presentation/stores/reit_list_settings_store.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../modules/reit_list/domain/usecases/get_all_reits.dart';
 import '../../modules/reit_list/presentation/stores/reit_list_store.dart';
@@ -16,6 +22,7 @@ GetIt _getIt = GetIt.instance;
 
 void init() {
   _registerNetworkServices();
+  _registerStorageServices();
   _registerNavigationServices();
   _registerCoreServices();
   _registerFeatureServices();
@@ -26,6 +33,12 @@ void _registerNetworkServices() {
   _getIt.registerSingleton<Dio>(Dio());
 
   _getIt.registerSingleton(HttpClient(_getIt()));
+}
+
+void _registerStorageServices() {
+  _getIt.registerSingletonAsync<SharedPreferences>(
+    () => SharedPreferences.getInstance(),
+  );
 }
 
 void _registerNavigationServices() {
@@ -49,20 +62,58 @@ void _registerCoreServices() {
 }
 
 void _registerFeatureServices() {
-  // ! Stores
+  // ! Reit List - Datasources
+  _getIt.registerSingletonWithDependencies<ReitSettingsLocalDataSource>(
+    () => ReitSettingsLocalDataSource(sharedPreferences: _getIt()),
+    dependsOn: [
+      SharedPreferences,
+    ],
+  );
+
+  // ! Reit List - Repositories
+  _getIt.registerSingletonWithDependencies<ReitListSettingsRepository>(
+    () => DefaultReitListSettingsRepository(
+      reitSettingsLocalDataSource: _getIt(),
+    ),
+    dependsOn: [
+      ReitSettingsLocalDataSource,
+    ],
+  );
+
+  // ! Reit List - Use cases
+  _getIt.registerLazySingleton<GetAllReits>(
+    () => GetAllReits(reitRepository: _getIt()),
+  );
+
+  _getIt.registerSingletonWithDependencies<GetEnabledLists>(
+    () => GetEnabledLists(reitListSettingsRepository: _getIt()),
+    dependsOn: [
+      ReitListSettingsRepository,
+    ],
+  );
+
+  _getIt.registerSingletonWithDependencies<SaveEnabledLists>(
+    () => SaveEnabledLists(reitListSettingsRepository: _getIt()),
+    dependsOn: [
+      ReitListSettingsRepository,
+    ],
+  );
+
+  // ! Reit List - Stores
   _getIt.registerLazySingleton(
     () => ReitListStore(
       getAllReits: _getIt(),
     )..loadReitList(),
   );
 
-  _getIt.registerLazySingleton(
-    () => ReitListSettingsStore(),
-  );
-
-  // ! Use cases
-  _getIt.registerLazySingleton<GetAllReits>(
-    () => GetAllReits(reitRepository: _getIt()),
+  _getIt.registerSingletonWithDependencies(
+    () => ReitListSettingsStore(
+      getEnabledLists: _getIt(),
+      saveEnabledLists: _getIt(),
+    )..init(),
+    dependsOn: [
+      SaveEnabledLists,
+    ],
   );
 }
 

@@ -1,4 +1,5 @@
 import 'package:fii_app/core/errors/failures.dart';
+import 'package:fii_app/modules/reit_list/domain/entities/reit_list_sort_option.dart';
 import 'package:mobx/mobx.dart';
 
 import 'package:fii_app/core/domain/entities/reit.dart';
@@ -7,15 +8,6 @@ import '../../domain/usecases/get_all_reits.dart';
 part 'reit_list_store.g.dart';
 
 class ReitListStore = _ReitListStoreBase with _$ReitListStore;
-
-enum ReitListSortOptionType { netWorth, currentDividendYield, assetsAmount }
-
-class ReitListSortOption {
-  final String label;
-  final ReitListSortOptionType type;
-
-  const ReitListSortOption({required this.label, required this.type});
-}
 
 abstract class _ReitListStoreBase with Store {
   final GetAllReits getAllReits;

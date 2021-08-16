@@ -51,7 +51,7 @@ mixin _$ReitListSettingsStore on _ReitListSettingsStoreBase, Store {
   }
 
   @override
-  bool disableList(ReitListSortOptionType option) {
+  void disableList(ReitListSortOptionType option) {
     final _$actionInfo = _$_ReitListSettingsStoreBaseActionController
         .startAction(name: '_ReitListSettingsStoreBase.disableList');
     try {

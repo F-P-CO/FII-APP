@@ -14,14 +14,30 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'FII',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        primaryColor: AppColors.primary,
-      ),
-      navigatorKey: GetIt.I.get<NavigatorService>().navigatorKey,
-      routes: routes.list,
+    return FutureBuilder(
+      future: GetIt.I.allReady(),
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (snapshot.hasData) {
+          return MaterialApp(
+            title: 'FII',
+            theme: ThemeData(
+              primarySwatch: Colors.blue,
+              primaryColor: AppColors.primary,
+            ),
+            navigatorKey: GetIt.I.get<NavigatorService>().navigatorKey,
+            routes: routes.list,
+          );
+        } else {
+          return const MaterialApp(
+            title: "FII",
+            home: Scaffold(
+              body: Center(
+                child: CircularProgressIndicator(),
+              ),
+            ),
+          );
+        }
+      },
     );
   }
 }

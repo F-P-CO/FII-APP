@@ -1,5 +1,6 @@
 import 'package:fii_app/core/domain/entities/reit.dart';
 import 'package:fii_app/core/presentation/themes/app_text_styles.dart';
+import 'package:fii_app/modules/reit_list/domain/entities/reit_list_sort_option.dart';
 import 'package:fii_app/modules/reit_list/presentation/stores/reit_list_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
