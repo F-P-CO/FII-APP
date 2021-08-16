@@ -3,13 +3,16 @@ import 'package:fii_app/core/presentation/themes/app_colors.dart';
 import 'package:fii_app/core/presentation/themes/no_scroll_glow_behavior.dart';
 import 'package:fii_app/modules/reit_list/presentation/components/reit_list_component.dart';
 import 'package:fii_app/modules/reit_list/presentation/components/reit_list_settings_bottom_sheet_component.dart';
+import 'package:fii_app/modules/reit_list/presentation/stores/reit_list_settings_store.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 
 import '../stores/reit_list_store.dart';
 
 class ReitListPage extends StatelessWidget {
   final reitListStore = GetIt.I.get<ReitListStore>();
+  final reitListSettingsStore = GetIt.I.get<ReitListSettingsStore>();
 
   ReitListPage({Key? key}) : super(key: key);
 
@@ -43,14 +46,20 @@ class ReitListPage extends StatelessWidget {
           child: SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.all(16.0),
-              child: Column(
-                children: reitListStore.sortOptions
-                    .map(
-                      (option) => ReitListComponent(
-                        sortOption: option,
-                      ),
-                    )
-                    .toList(),
+              child: Observer(
+                builder: (_) {
+                  return Column(
+                    children: reitListStore.sortOptions
+                        .where((option) =>
+                            reitListSettingsStore.isEnabled(option.type))
+                        .map(
+                          (option) => ReitListComponent(
+                            sortOption: option,
+                          ),
+                        )
+                        .toList(),
+                  );
+                },
               ),
             ),
           ),

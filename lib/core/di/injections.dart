@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:fii_app/modules/reit_list/presentation/stores/reit_list_settings_store.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 
@@ -53,6 +54,10 @@ void _registerFeatureServices() {
     () => ReitListStore(
       getAllReits: _getIt(),
     )..loadReitList(),
+  );
+
+  _getIt.registerLazySingleton(
+    () => ReitListSettingsStore(),
   );
 
   // ! Use cases
