@@ -25,6 +25,13 @@ mixin _$ReitListSettingsStore on _ReitListSettingsStoreBase, Store {
     });
   }
 
+  final _$initAsyncAction = AsyncAction('_ReitListSettingsStoreBase.init');
+
+  @override
+  Future<void> init() {
+    return _$initAsyncAction.run(() => super.init());
+  }
+
   final _$_ReitListSettingsStoreBaseActionController =
       ActionController(name: '_ReitListSettingsStoreBase');
 

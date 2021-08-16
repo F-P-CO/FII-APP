@@ -29,21 +29,20 @@ abstract class _ReitListStoreBase with Store {
   @observable
   int limit = 5;
 
-  static const _sortOptions = [
-    ReitListSortOption(
+  final sortOptions = [
+    const ReitListSortOption(
       label: "Patrimônio Liquído",
       type: ReitListSortOptionType.netWorth,
     ),
-    ReitListSortOption(
-        label: "Dividend Yield Atual",
-        type: ReitListSortOptionType.currentDividendYield),
-    ReitListSortOption(
+    const ReitListSortOption(
+      label: "Dividend Yield Atual",
+      type: ReitListSortOptionType.currentDividendYield,
+    ),
+    const ReitListSortOption(
       label: "Quantidade de Ativos",
       type: ReitListSortOptionType.assetsAmount,
     ),
   ];
-
-  List<ReitListSortOption> get sortOptions => _sortOptions;
 
   @action
   Future<void> loadReitList() async {
@@ -105,23 +104,20 @@ abstract class _ReitListStoreBase with Store {
     }
   }
 
-  dynamic getReitsSortedBy(ReitListSortOption sortOption) {
-    final _mapRep = _getSortMap();
-    final key = sortOption.type.toString();
+  List<Reit> getReitsSortedBy(ReitListSortOptionType sortType) {
+    final key = sortType;
 
-    if (_mapRep.containsKey(key)) {
-      return _mapRep[key];
+    if (_mapSortTypeToReitList.containsKey(key)) {
+      return _mapSortTypeToReitList[key]!;
     }
 
     throw ArgumentError('Sort option not found on Sort Map.');
   }
 
-  Map<String, dynamic> _getSortMap() {
-    return {
-      ReitListSortOptionType.netWorth.toString(): reitsSortedByNetWorth,
-      ReitListSortOptionType.assetsAmount.toString(): reitsSortedByAssetsAmount,
-      ReitListSortOptionType.currentDividendYield.toString():
-          reitsSortedByCurrentDividendYield,
-    };
-  }
+  Map<ReitListSortOptionType, List<Reit>> get _mapSortTypeToReitList => {
+        ReitListSortOptionType.netWorth: reitsSortedByNetWorth,
+        ReitListSortOptionType.currentDividendYield:
+            reitsSortedByCurrentDividendYield,
+        ReitListSortOptionType.assetsAmount: reitsSortedByAssetsAmount,
+      };
 }

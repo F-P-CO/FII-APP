@@ -10,12 +10,12 @@ class ReitCardComponent extends StatelessWidget {
   final currencyFormatter = GetIt.I.get<NumberFormat>();
 
   final Reit reit;
-  final ReitListSortOption sortOption;
+  final ReitListSortOptionType sortType;
 
   ReitCardComponent({
     Key? key,
     required this.reit,
-    required this.sortOption,
+    required this.sortType,
   }) : super(key: key);
 
   @override
@@ -48,7 +48,7 @@ class ReitCardComponent extends StatelessWidget {
                   ),
                 ),
               ),
-              if (sortOption.type == ReitListSortOptionType.netWorth)
+              if (sortType == ReitListSortOptionType.netWorth)
                 Text(
                   currencyFormatter.format(reit.netWorth),
                   style: AppTextStyles.primaryFont.copyWith(
@@ -57,8 +57,7 @@ class ReitCardComponent extends StatelessWidget {
                     color: AppColors.blackGrey,
                   ),
                 ),
-              if (sortOption.type ==
-                  ReitListSortOptionType.currentDividendYield)
+              if (sortType == ReitListSortOptionType.currentDividendYield)
                 Text(
                   reit.currentDividendYield != null
                       ? "${reit.currentDividendYield!.toStringAsFixed(2)}%"
@@ -69,7 +68,7 @@ class ReitCardComponent extends StatelessWidget {
                     color: AppColors.blackGrey,
                   ),
                 ),
-              if (sortOption.type == ReitListSortOptionType.assetsAmount)
+              if (sortType == ReitListSortOptionType.assetsAmount)
                 Text(
                   "${reit.assetsAmount} ativos",
                   style: AppTextStyles.primaryFont.copyWith(

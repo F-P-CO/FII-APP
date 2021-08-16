@@ -49,12 +49,13 @@ class ReitListPage extends StatelessWidget {
               child: Observer(
                 builder: (_) {
                   return Column(
-                    children: reitListStore.sortOptions
-                        .where((option) =>
-                            reitListSettingsStore.isEnabled(option.type))
+                    children: reitListSettingsStore.enabledLists
                         .map(
                           (option) => ReitListComponent(
-                            sortOption: option,
+                            sortType: option,
+                            sortLabel: reitListStore.sortOptions
+                                .singleWhere((item) => item.type == option)
+                                .label,
                           ),
                         )
                         .toList(),
