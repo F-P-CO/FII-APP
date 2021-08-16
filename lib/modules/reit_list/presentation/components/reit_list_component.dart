@@ -1,4 +1,5 @@
 import 'package:fii_app/core/domain/entities/reit.dart';
+import 'package:fii_app/core/presentation/themes/app_colors.dart';
 import 'package:fii_app/core/presentation/themes/app_text_styles.dart';
 import 'package:fii_app/modules/reit_list/presentation/stores/reit_list_store.dart';
 import 'package:flutter/material.dart';
@@ -46,15 +47,45 @@ class ReitListComponent extends StatelessWidget {
               final reits =
                   reitListStore.getReitsSortedBy(sortOption) as List<Reit>;
 
+              final reitsCards = reits
+                  .map(
+                    (reit) => ReitCardComponent(
+                      reit: reit,
+                      sortOption: sortOption,
+                    ),
+                  )
+                  .toList();
+
               return Column(
-                children: reits
-                    .map(
-                      (reit) => ReitCardComponent(
-                        reit: reit,
-                        sortOption: sortOption,
+                children: [
+                  ...reitsCards,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      TextButton(
+                        onPressed: () {},
+                        style: ButtonStyle(
+                          overlayColor: MaterialStateColor.resolveWith(
+                            (states) => AppColors.lightgrey.withOpacity(0.5),
+                          ),
+                        ),
+                        child: Row(
+                          children: [
+                            Text(
+                              "ver lista completa",
+                              style: AppTextStyles.button,
+                            ),
+                            Icon(
+                              Icons.chevron_right,
+                              size: 20,
+                              color: AppTextStyles.button.color,
+                            ),
+                          ],
+                        ),
                       ),
-                    )
-                    .toList(),
+                    ],
+                  )
+                ],
               );
             },
           ),

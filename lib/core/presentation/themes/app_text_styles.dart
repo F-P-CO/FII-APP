@@ -31,38 +31,9 @@ abstract class AppTextStyles {
     color: AppColors.blackGrey,
   );
 
-  static final title = primaryFont.copyWith(
-    fontSize: 24.0,
-    fontWeight: primaryFontWeightBold,
-  );
-
-  static final subtitle = primaryFont.copyWith(
-    fontSize: 18.0,
-    fontWeight: primaryFontWeightMedium,
-  );
-
-  static final captionTitle = primaryFont.copyWith(
+  static final button = primaryFont.copyWith(
     fontSize: 16.0,
-    fontWeight: primaryFontWeightMedium,
-  );
-
-  static final captionBody = primaryFont.copyWith(
-    fontSize: 16.0,
-    fontWeight: primaryFontWeightRegular,
-  );
-
-  static final buttonLabel = primaryFont.copyWith(
-    fontSize: 14.0,
-    fontWeight: primaryFontWeightMedium,
-  );
-
-  static final buttonText = secondaryFont.copyWith(
-    fontSize: 13.0,
-    color: AppColors.grey,
-  );
-
-  static final semiboldText = primaryFont.copyWith(
-    fontSize: 14.0,
     fontWeight: primaryFontWeightSemibold,
+    color: AppColors.blackGrey,
   );
 }
