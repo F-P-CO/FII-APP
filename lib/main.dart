@@ -1,3 +1,4 @@
+import 'package:fii_app/modules/splash_screen/presentation/pages/splash_screen_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
@@ -28,14 +29,7 @@ class MyApp extends StatelessWidget {
             routes: routes.list,
           );
         } else {
-          return const MaterialApp(
-            title: "FII",
-            home: Scaffold(
-              body: Center(
-                child: CircularProgressIndicator(),
-              ),
-            ),
-          );
+          return const SplashScreenPage();
         }
       },
     );
