@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasData) {
           return MaterialApp(
-            title: 'FII',
+            title: 'Meu Fundo Imobiliário',
             theme: ThemeData(
               primarySwatch: Colors.blue,
               primaryColor: AppColors.primary,

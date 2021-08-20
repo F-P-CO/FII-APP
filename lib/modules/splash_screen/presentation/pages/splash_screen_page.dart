@@ -7,6 +7,7 @@ class SplashScreenPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
+      title: 'Meu Fundo Imobiliário',
       home: Scaffold(
         backgroundColor: AppColors.primary,
         body: Center(
