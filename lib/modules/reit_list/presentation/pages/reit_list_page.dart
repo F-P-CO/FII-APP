@@ -2,6 +2,7 @@ import 'package:fii_app/core/presentation/components/header_app_bar_component.da
 import 'package:fii_app/core/presentation/themes/app_colors.dart';
 import 'package:fii_app/core/presentation/themes/no_scroll_glow_behavior.dart';
 import 'package:fii_app/modules/reit_list/presentation/components/reit_list_component.dart';
+import 'package:fii_app/modules/reit_list/presentation/components/reit_list_settings_bottom_sheet_component.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
@@ -12,13 +13,20 @@ class ReitListPage extends StatelessWidget {
 
   ReitListPage({Key? key}) : super(key: key);
 
+  void _openListSettingsBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (_) => ReitListSettingsBottomSheetComponent(),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: HeaderAppBarComponent(
         title: 'Fundos Imobiliários',
-        settingsOnPressed: () {},
+        settingsOnPressed: () => _openListSettingsBottomSheet(context),
         favoritesOnPressed: () {},
         searchOnPressed: () {},
       ),

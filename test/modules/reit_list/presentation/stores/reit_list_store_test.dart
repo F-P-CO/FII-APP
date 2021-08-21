@@ -123,20 +123,4 @@ void main() {
       expect(store.reitsSortedByNetWorth.length, store.limit);
     });
   });
-
-  group('toggleSortBottomSheetOpened', () {
-    test("should start with [isSortBottomSheetOpened] being false", () {
-      expect(store.isSortBottomSheetOpened, false);
-    });
-
-    test(
-        "should change [isSortBottomSheetOpened] to its inverse boolean value when called",
-        () {
-      store.toggleSortBottomSheetOpened();
-      expect(store.isSortBottomSheetOpened, true);
-
-      store.toggleSortBottomSheetOpened();
-      expect(store.isSortBottomSheetOpened, false);
-    });
-  });
 }
