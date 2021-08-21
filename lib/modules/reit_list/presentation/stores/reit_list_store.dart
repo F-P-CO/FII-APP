@@ -35,38 +35,26 @@ abstract class _ReitListStoreBase with Store {
   List<Reit> reits = [];
 
   @observable
-  ReitListSortOptionType currentSortOptionType =
-      ReitListSortOptionType.netWorth;
-
-  @observable
-  int limit = 10;
+  int limit = 5;
 
   @observable
   bool isSortBottomSheetOpened = false;
 
-  @computed
-  List<Reit> get sortedReits {
-    final List<Reit> localReits = reits;
+  static const _sortOptions = [
+    ReitListSortOption(
+      label: "Patrimônio Liquído",
+      type: ReitListSortOptionType.netWorth,
+    ),
+    ReitListSortOption(
+        label: "Dividend Yield Atual",
+        type: ReitListSortOptionType.currentDividendYield),
+    ReitListSortOption(
+      label: "Quantidade de Ativos",
+      type: ReitListSortOptionType.assetsAmount,
+    ),
+  ];
 
-    switch (currentSortOptionType) {
-      case ReitListSortOptionType.assetsAmount:
-        localReits.sort((a, b) => b.assetsAmount.compareTo(a.assetsAmount));
-        break;
-      case ReitListSortOptionType.netWorth:
-        localReits.sort((a, b) => b.netWorth?.compareTo(a.netWorth ?? 0) ?? 0);
-        break;
-      default:
-        localReits.sort((a, b) =>
-            b.currentDividendYield?.compareTo(a.currentDividendYield ?? 0) ??
-            0);
-    }
-
-    if (limit == 0) {
-      return localReits;
-    } else {
-      return localReits.take(limit).toList();
-    }
-  }
+  List<ReitListSortOption> get sortOptions => _sortOptions;
 
   @action
   Future<void> loadReitList() async {
@@ -91,23 +79,62 @@ abstract class _ReitListStoreBase with Store {
     }
   }
 
-  static const _sortOptions = [
-    ReitListSortOption(
-        label: "Patrimônio Liquído", type: ReitListSortOptionType.netWorth),
-    ReitListSortOption(
-        label: "Dividend Yield Atual",
-        type: ReitListSortOptionType.currentDividendYield),
-    ReitListSortOption(
-      label: "Quantidade de Ativos",
-      type: ReitListSortOptionType.assetsAmount,
-    ),
-  ];
+  @computed
+  List<Reit> get reitsSortedByNetWorth {
+    final List<Reit> localReits = reits;
+    localReits.sort((a, b) => b.netWorth?.compareTo(a.netWorth ?? 0) ?? 0);
 
-  List<ReitListSortOption> get sortOptions => _sortOptions;
+    if (limit == 0) {
+      return localReits;
+    } else {
+      return localReits.take(limit).toList();
+    }
+  }
 
   @computed
-  ReitListSortOption get currentSortOption => _sortOptions
-      .singleWhere((option) => option.type == currentSortOptionType);
+  List<Reit> get reitsSortedByAssetsAmount {
+    final List<Reit> localReits = reits;
+    localReits.sort((a, b) => b.assetsAmount.compareTo(a.assetsAmount));
+
+    if (limit == 0) {
+      return localReits;
+    } else {
+      return localReits.take(limit).toList();
+    }
+  }
+
+  @computed
+  List<Reit> get reitsSortedByCurrentDividendYield {
+    final List<Reit> localReits = reits;
+    localReits.sort((a, b) =>
+        b.currentDividendYield?.compareTo(a.currentDividendYield ?? 0) ?? 0);
+
+    if (limit == 0) {
+      return localReits;
+    } else {
+      return localReits.take(limit).toList();
+    }
+  }
+
+  dynamic getReitsSortedBy(ReitListSortOption sortOption) {
+    final _mapRep = _getSortMap();
+    final key = sortOption.type.toString();
+
+    if (_mapRep.containsKey(key)) {
+      return _mapRep[key];
+    }
+
+    throw ArgumentError('Sort option not found on Sort Map.');
+  }
+
+  Map<String, dynamic> _getSortMap() {
+    return {
+      ReitListSortOptionType.netWorth.toString(): reitsSortedByNetWorth,
+      ReitListSortOptionType.assetsAmount.toString(): reitsSortedByAssetsAmount,
+      ReitListSortOptionType.currentDividendYield.toString():
+          reitsSortedByCurrentDividendYield,
+    };
+  }
 
   @action
   void toggleSortBottomSheetOpened() =>

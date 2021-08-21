@@ -22,11 +22,13 @@ abstract class AppTextStyles {
   static final largeHeader = primaryFont.copyWith(
     fontSize: 20,
     fontWeight: primaryFontWeightSemibold,
+    color: AppColors.black,
   );
 
   static final header = primaryFont.copyWith(
-    fontSize: 20.0,
-    fontWeight: primaryFontWeightBold,
+    fontSize: 18.0,
+    fontWeight: primaryFontWeightSemibold,
+    color: AppColors.blackGrey,
   );
 
   static final title = primaryFont.copyWith(

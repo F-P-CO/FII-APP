@@ -10,74 +10,114 @@ class ReitCardComponent extends StatelessWidget {
   final currencyFormatter = GetIt.I.get<NumberFormat>();
 
   final Reit reit;
-  final ReitListSortOption currentSortOption;
+  final ReitListSortOption sortOption;
 
   ReitCardComponent({
     Key? key,
     required this.reit,
-    required this.currentSortOption,
+    required this.sortOption,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: Container(
-            decoration: BoxDecoration(
-              color: AppColors.cardBackground,
-              borderRadius: BorderRadius.circular(8.0),
-            ),
-            padding: const EdgeInsets.all(12.0),
-            margin: const EdgeInsets.symmetric(vertical: 8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
+    return Container(
+      decoration: BoxDecoration(
+        color: AppColors.cardBackground,
+        borderRadius: BorderRadius.circular(8.0),
+      ),
+      padding: const EdgeInsets.only(top: 12.0, left: 12.0, right: 12.0),
+      margin: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: AppColors.primary,
+                  borderRadius: BorderRadius.circular(4.0),
+                ),
+                child: Text(
                   reit.symbol,
-                  style: AppTextStyles.title,
+                  style: AppTextStyles.primaryFont.copyWith(
+                    fontSize: 16,
+                    fontWeight: AppTextStyles.primaryFontWeightSemibold,
+                    color: AppColors.primaryText,
+                  ),
                 ),
+              ),
+              if (sortOption.type == ReitListSortOptionType.netWorth)
                 Text(
-                  currencyFormatter.format(reit.currentPrice),
-                  style: AppTextStyles.subtitle,
+                  currencyFormatter.format(reit.netWorth),
+                  style: AppTextStyles.primaryFont.copyWith(
+                    fontSize: 22,
+                    fontWeight: AppTextStyles.primaryFontWeightSemibold,
+                    color: AppColors.blackGrey,
+                  ),
                 ),
-                const SizedBox(height: 10.0),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Flexible(
-                      child: Text(
-                        currentSortOption.label,
-                        style: AppTextStyles.captionTitle,
-                      ),
-                    ),
-                    if (currentSortOption.type ==
-                        ReitListSortOptionType.netWorth)
-                      Text(
-                        currencyFormatter.format(reit.netWorth),
-                        style: AppTextStyles.captionBody,
-                      ),
-                    if (currentSortOption.type ==
-                        ReitListSortOptionType.currentDividendYield)
-                      Text(
-                        reit.currentDividendYield != null
-                            ? "${reit.currentDividendYield!.toStringAsFixed(2)}%"
-                            : '-',
-                        style: AppTextStyles.captionBody,
-                      ),
-                    if (currentSortOption.type ==
-                        ReitListSortOptionType.assetsAmount)
-                      Text(
-                        reit.assetsAmount.toString(),
-                        style: AppTextStyles.captionBody,
-                      ),
-                  ],
-                )
-              ],
-            ),
+              if (sortOption.type ==
+                  ReitListSortOptionType.currentDividendYield)
+                Text(
+                  reit.currentDividendYield != null
+                      ? "${reit.currentDividendYield!.toStringAsFixed(2)}%"
+                      : '-',
+                  style: AppTextStyles.primaryFont.copyWith(
+                    fontSize: 22,
+                    fontWeight: AppTextStyles.primaryFontWeightSemibold,
+                    color: AppColors.blackGrey,
+                  ),
+                ),
+              if (sortOption.type == ReitListSortOptionType.assetsAmount)
+                Text(
+                  "${reit.assetsAmount} ativos",
+                  style: AppTextStyles.primaryFont.copyWith(
+                    fontSize: 22,
+                    fontWeight: AppTextStyles.primaryFontWeightSemibold,
+                    color: AppColors.blackGrey,
+                  ),
+                ),
+            ],
           ),
-        )
-      ],
+          if (reit.currentPrice != null) ...[
+            const SizedBox(height: 8),
+            Text(
+              currencyFormatter.format(reit.currentPrice),
+              style: AppTextStyles.primaryFont.copyWith(
+                fontSize: 14,
+                color: AppColors.blackGrey,
+              ),
+            ),
+          ],
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                reit.sector,
+                style: AppTextStyles.primaryFont.copyWith(
+                  fontSize: 16,
+                  fontWeight: AppTextStyles.primaryFontWeightMedium,
+                  color: AppColors.blackGrey,
+                ),
+              ),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(100),
+                child: Material(
+                  color: Colors.transparent,
+                  child: IconButton(
+                    onPressed: () {},
+                    iconSize: 20,
+                    color: AppColors.primary,
+                    splashRadius: 15,
+                    icon: const Icon(Icons.favorite_border),
+                  ),
+                ),
+              )
+            ],
+          )
+        ],
+      ),
     );
   }
 }

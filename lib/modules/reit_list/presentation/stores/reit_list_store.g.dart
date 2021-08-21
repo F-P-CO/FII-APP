@@ -16,20 +16,29 @@ mixin _$ReitListStore on _ReitListStoreBase, Store {
       (_$hasErrorComputed ??= Computed<bool>(() => super.hasError,
               name: '_ReitListStoreBase.hasError'))
           .value;
-  Computed<List<Reit>>? _$sortedReitsComputed;
+  Computed<List<Reit>>? _$reitsSortedByNetWorthComputed;
 
   @override
-  List<Reit> get sortedReits =>
-      (_$sortedReitsComputed ??= Computed<List<Reit>>(() => super.sortedReits,
-              name: '_ReitListStoreBase.sortedReits'))
-          .value;
-  Computed<ReitListSortOption>? _$currentSortOptionComputed;
-
-  @override
-  ReitListSortOption get currentSortOption => (_$currentSortOptionComputed ??=
-          Computed<ReitListSortOption>(() => super.currentSortOption,
-              name: '_ReitListStoreBase.currentSortOption'))
+  List<Reit> get reitsSortedByNetWorth => (_$reitsSortedByNetWorthComputed ??=
+          Computed<List<Reit>>(() => super.reitsSortedByNetWorth,
+              name: '_ReitListStoreBase.reitsSortedByNetWorth'))
       .value;
+  Computed<List<Reit>>? _$reitsSortedByAssetsAmountComputed;
+
+  @override
+  List<Reit> get reitsSortedByAssetsAmount =>
+      (_$reitsSortedByAssetsAmountComputed ??= Computed<List<Reit>>(
+              () => super.reitsSortedByAssetsAmount,
+              name: '_ReitListStoreBase.reitsSortedByAssetsAmount'))
+          .value;
+  Computed<List<Reit>>? _$reitsSortedByCurrentDividendYieldComputed;
+
+  @override
+  List<Reit> get reitsSortedByCurrentDividendYield =>
+      (_$reitsSortedByCurrentDividendYieldComputed ??= Computed<List<Reit>>(
+              () => super.reitsSortedByCurrentDividendYield,
+              name: '_ReitListStoreBase.reitsSortedByCurrentDividendYield'))
+          .value;
 
   final _$isLoadingAtom = Atom(name: '_ReitListStoreBase.isLoading');
 
@@ -73,23 +82,6 @@ mixin _$ReitListStore on _ReitListStoreBase, Store {
   set reits(List<Reit> value) {
     _$reitsAtom.reportWrite(value, super.reits, () {
       super.reits = value;
-    });
-  }
-
-  final _$currentSortOptionTypeAtom =
-      Atom(name: '_ReitListStoreBase.currentSortOptionType');
-
-  @override
-  ReitListSortOptionType get currentSortOptionType {
-    _$currentSortOptionTypeAtom.reportRead();
-    return super.currentSortOptionType;
-  }
-
-  @override
-  set currentSortOptionType(ReitListSortOptionType value) {
-    _$currentSortOptionTypeAtom.reportWrite(value, super.currentSortOptionType,
-        () {
-      super.currentSortOptionType = value;
     });
   }
 
@@ -153,12 +145,12 @@ mixin _$ReitListStore on _ReitListStoreBase, Store {
 isLoading: ${isLoading},
 errorMessage: ${errorMessage},
 reits: ${reits},
-currentSortOptionType: ${currentSortOptionType},
 limit: ${limit},
 isSortBottomSheetOpened: ${isSortBottomSheetOpened},
 hasError: ${hasError},
-sortedReits: ${sortedReits},
-currentSortOption: ${currentSortOption}
+reitsSortedByNetWorth: ${reitsSortedByNetWorth},
+reitsSortedByAssetsAmount: ${reitsSortedByAssetsAmount},
+reitsSortedByCurrentDividendYield: ${reitsSortedByCurrentDividendYield}
     ''';
   }
 }
