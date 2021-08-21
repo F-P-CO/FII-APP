@@ -16,27 +16,35 @@ class FilterChipComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(100),
-      splashColor: AppColors.primary.withOpacity(0.1),
-      highlightColor: AppColors.primary.withOpacity(0.1),
-      child: Ink(
-        decoration: BoxDecoration(
-          color: active ? AppColors.primary : AppColors.primaryText,
-          borderRadius: BorderRadius.circular(100),
-          border: Border.all(
-            color: AppColors.primary,
-          ),
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 200),
+      decoration: BoxDecoration(
+        color: active ? AppColors.primary : Colors.transparent,
+        borderRadius: BorderRadius.circular(100),
+        border: Border.all(
+          color: AppColors.primary,
         ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 10.0),
-          child: Text(
-            label,
-            style: AppTextStyles.primaryFont.copyWith(
-              fontSize: 12,
-              fontWeight: AppTextStyles.primaryFontWeightSemibold,
-              color: active ? AppColors.primaryText : AppColors.primary,
+      ),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(100),
+        splashColor: active
+            ? AppColors.primaryText.withOpacity(0.1)
+            : AppColors.primaryText.withOpacity(0.1),
+        highlightColor: active
+            ? AppColors.primary.withOpacity(0.1)
+            : AppColors.primary.withOpacity(0.1),
+        child: Ink(
+          child: Padding(
+            padding:
+                const EdgeInsets.symmetric(vertical: 8.0, horizontal: 10.0),
+            child: Text(
+              label,
+              style: AppTextStyles.primaryFont.copyWith(
+                fontSize: 12,
+                fontWeight: AppTextStyles.primaryFontWeightSemibold,
+                color: active ? AppColors.primaryText : AppColors.primary,
+              ),
             ),
           ),
         ),

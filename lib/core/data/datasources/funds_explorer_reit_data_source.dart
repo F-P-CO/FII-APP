@@ -7,13 +7,6 @@ import '../../network/http_client.dart';
 import '../models/reit_model.dart';
 import 'reit_data_source.dart';
 
-class LocalStorageReitDataSource implements ReitDataSource {
-  @override
-  Future<List<ReitModel>> getAll() {
-    return Future.value([]);
-  }
-}
-
 class FundsExplorerReitDataSource implements ReitDataSource {
   final HttpClient httpClient;
   final url = 'https://www.fundsexplorer.com.br/ranking';
