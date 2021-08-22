@@ -40,6 +40,11 @@ abstract class AppTextStyles {
   static final smallHeader = primaryFont.copyWith(
     fontSize: 14.0,
     fontWeight: primaryFontWeightMedium,
+  );
+
+  static final button = primaryFont.copyWith(
+    fontSize: 16.0,
+    fontWeight: primaryFontWeightSemibold,
     color: AppColors.blackGrey,
   );
 }

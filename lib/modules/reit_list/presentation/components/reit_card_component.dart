@@ -25,59 +25,62 @@ class ReitCardComponent extends StatelessWidget {
         color: AppColors.cardBackground,
         borderRadius: BorderRadius.circular(8.0),
       ),
-      padding: const EdgeInsets.only(top: 12.0, left: 12.0, right: 12.0),
+      padding: const EdgeInsets.only(top: 12.0, left: 12.0),
       margin: const EdgeInsets.symmetric(vertical: 8.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: AppColors.primary,
-                  borderRadius: BorderRadius.circular(4.0),
-                ),
-                child: Text(
-                  reit.symbol,
-                  style: AppTextStyles.primaryFont.copyWith(
-                    fontSize: 16,
-                    fontWeight: AppTextStyles.primaryFontWeightSemibold,
-                    color: AppColors.primaryText,
+          Padding(
+            padding: const EdgeInsets.only(right: 12.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: AppColors.primary,
+                    borderRadius: BorderRadius.circular(4.0),
+                  ),
+                  child: Text(
+                    reit.symbol,
+                    style: AppTextStyles.primaryFont.copyWith(
+                      fontSize: 16,
+                      fontWeight: AppTextStyles.primaryFontWeightSemibold,
+                      color: AppColors.primaryText,
+                    ),
                   ),
                 ),
-              ),
-              if (sortType == ReitListSortOptionType.netWorth)
-                Text(
-                  currencyFormatter.format(reit.netWorth),
-                  style: AppTextStyles.primaryFont.copyWith(
-                    fontSize: 22,
-                    fontWeight: AppTextStyles.primaryFontWeightSemibold,
-                    color: AppColors.blackGrey,
+                if (sortType == ReitListSortOptionType.netWorth)
+                  Text(
+                    currencyFormatter.format(reit.netWorth),
+                    style: AppTextStyles.primaryFont.copyWith(
+                      fontSize: 22,
+                      fontWeight: AppTextStyles.primaryFontWeightSemibold,
+                      color: AppColors.blackGrey,
+                    ),
                   ),
-                ),
-              if (sortType == ReitListSortOptionType.currentDividendYield)
-                Text(
-                  reit.currentDividendYield != null
-                      ? "${reit.currentDividendYield!.toStringAsFixed(2)}%"
-                      : '-',
-                  style: AppTextStyles.primaryFont.copyWith(
-                    fontSize: 22,
-                    fontWeight: AppTextStyles.primaryFontWeightSemibold,
-                    color: AppColors.blackGrey,
+                if (sortType == ReitListSortOptionType.currentDividendYield)
+                  Text(
+                    reit.currentDividendYield != null
+                        ? "${reit.currentDividendYield!.toStringAsFixed(2)}%"
+                        : '-',
+                    style: AppTextStyles.primaryFont.copyWith(
+                      fontSize: 22,
+                      fontWeight: AppTextStyles.primaryFontWeightSemibold,
+                      color: AppColors.blackGrey,
+                    ),
                   ),
-                ),
-              if (sortType == ReitListSortOptionType.assetsAmount)
-                Text(
-                  "${reit.assetsAmount} ativos",
-                  style: AppTextStyles.primaryFont.copyWith(
-                    fontSize: 22,
-                    fontWeight: AppTextStyles.primaryFontWeightSemibold,
-                    color: AppColors.blackGrey,
+                if (sortType == ReitListSortOptionType.assetsAmount)
+                  Text(
+                    "${reit.assetsAmount} ativos",
+                    style: AppTextStyles.primaryFont.copyWith(
+                      fontSize: 22,
+                      fontWeight: AppTextStyles.primaryFontWeightSemibold,
+                      color: AppColors.blackGrey,
+                    ),
                   ),
-                ),
-            ],
+              ],
+            ),
           ),
           if (reit.currentPrice != null) ...[
             const SizedBox(height: 8),
