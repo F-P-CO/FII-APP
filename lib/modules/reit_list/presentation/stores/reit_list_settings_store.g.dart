@@ -25,15 +25,42 @@ mixin _$ReitListSettingsStore on _ReitListSettingsStoreBase, Store {
     });
   }
 
-  final _$initAsyncAction = AsyncAction('_ReitListSettingsStoreBase.init');
+  final _$limitAtom = Atom(name: '_ReitListSettingsStoreBase.limit');
 
   @override
-  Future<void> init() {
-    return _$initAsyncAction.run(() => super.init());
+  int get limit {
+    _$limitAtom.reportRead();
+    return super.limit;
+  }
+
+  @override
+  set limit(int value) {
+    _$limitAtom.reportWrite(value, super.limit, () {
+      super.limit = value;
+    });
+  }
+
+  final _$_initEnabledListsAsyncAction =
+      AsyncAction('_ReitListSettingsStoreBase._initEnabledLists');
+
+  @override
+  Future<void> _initEnabledLists() {
+    return _$_initEnabledListsAsyncAction.run(() => super._initEnabledLists());
   }
 
   final _$_ReitListSettingsStoreBaseActionController =
       ActionController(name: '_ReitListSettingsStoreBase');
+
+  @override
+  void _initListLimit() {
+    final _$actionInfo = _$_ReitListSettingsStoreBaseActionController
+        .startAction(name: '_ReitListSettingsStoreBase._initListLimit');
+    try {
+      return super._initListLimit();
+    } finally {
+      _$_ReitListSettingsStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
 
   @override
   void toggleList(ReitListSortOptionType option) {
@@ -69,9 +96,21 @@ mixin _$ReitListSettingsStore on _ReitListSettingsStoreBase, Store {
   }
 
   @override
+  void changeLimit(int newLimit) {
+    final _$actionInfo = _$_ReitListSettingsStoreBaseActionController
+        .startAction(name: '_ReitListSettingsStoreBase.changeLimit');
+    try {
+      return super.changeLimit(newLimit);
+    } finally {
+      _$_ReitListSettingsStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
-enabledLists: ${enabledLists}
+enabledLists: ${enabledLists},
+limit: ${limit}
     ''';
   }
 }

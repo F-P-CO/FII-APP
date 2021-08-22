@@ -1,9 +1,9 @@
-import 'package:fii_app/modules/reit_list/data/datasources/reit_list_settings_local_data_source.dart';
+import 'package:fii_app/modules/reit_list/data/datasources/local_reit_list_settings_data_source.dart';
 import 'package:fii_app/modules/reit_list/domain/entities/reit_list_sort_option.dart';
 import 'package:fii_app/modules/reit_list/domain/repositories/reit_list_settings_repository.dart';
 
 class DefaultReitListSettingsRepository implements ReitListSettingsRepository {
-  final ReitSettingsLocalDataSource reitSettingsLocalDataSource;
+  final LocalReitSettingsDataSource localDatasource;
 
   final List<ReitListSortOptionType> defaultEnabledLists = [
     ReitListSortOptionType.netWorth,
@@ -11,14 +11,16 @@ class DefaultReitListSettingsRepository implements ReitListSettingsRepository {
     ReitListSortOptionType.assetsAmount,
   ];
 
+  final int defaultLimit = 5;
+
   DefaultReitListSettingsRepository({
-    required this.reitSettingsLocalDataSource,
+    required this.localDatasource,
   });
 
   @override
   Future<List<ReitListSortOptionType>> getEnabledLists() async {
     try {
-      final lists = await reitSettingsLocalDataSource.getEnabledLists();
+      final lists = await localDatasource.getEnabledLists();
       return lists;
     } on Exception {
       return defaultEnabledLists;
@@ -27,5 +29,18 @@ class DefaultReitListSettingsRepository implements ReitListSettingsRepository {
 
   @override
   Future<bool> saveEnabledLists(List<ReitListSortOptionType> lists) =>
-      reitSettingsLocalDataSource.saveEnabledLists(lists);
+      localDatasource.saveEnabledLists(lists);
+
+  @override
+  int getLimit() {
+    try {
+      final limit = localDatasource.getListLimit();
+      return limit;
+    } on Exception {
+      return defaultLimit;
+    }
+  }
+
+  @override
+  Future<bool> saveListLimit(int limit) => localDatasource.saveListLimit(limit);
 }

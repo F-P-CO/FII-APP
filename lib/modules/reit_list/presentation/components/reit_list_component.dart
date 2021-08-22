@@ -1,6 +1,7 @@
 import 'package:fii_app/core/presentation/themes/app_colors.dart';
 import 'package:fii_app/core/presentation/themes/app_text_styles.dart';
 import 'package:fii_app/modules/reit_list/domain/entities/reit_list_sort_option.dart';
+import 'package:fii_app/modules/reit_list/presentation/stores/reit_list_settings_store.dart';
 import 'package:fii_app/modules/reit_list/presentation/stores/reit_list_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -14,6 +15,7 @@ class ReitListComponent extends StatelessWidget {
   final String sortLabel;
 
   final reitListStore = GetIt.I.get<ReitListStore>();
+  final reitListSettingsStore = GetIt.I.get<ReitListSettingsStore>();
 
   ReitListComponent({
     Key? key,
@@ -38,7 +40,7 @@ class ReitListComponent extends StatelessWidget {
               if (reitListStore.isLoading) {
                 return Column(
                   children: List.filled(
-                    reitListStore.limit,
+                    reitListSettingsStore.limit,
                     const ReitShimmerCardComponent(),
                   ),
                 );
@@ -50,7 +52,9 @@ class ReitListComponent extends StatelessWidget {
                 );
               }
 
-              final reits = reitListStore.getReitsSortedBy(sortType);
+              final reits = reitListStore
+                  .getReitsSortedBy(sortType)
+                  .take(reitListSettingsStore.limit);
 
               final reitsCards = reits
                   .map(

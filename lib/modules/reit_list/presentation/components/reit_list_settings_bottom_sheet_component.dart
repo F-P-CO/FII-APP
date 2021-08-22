@@ -1,3 +1,4 @@
+import 'package:easy_debounce/easy_debounce.dart';
 import 'package:fii_app/core/presentation/components/bottom_sheet_component.dart';
 import 'package:fii_app/core/presentation/components/filter_chip_component.dart';
 import 'package:fii_app/core/presentation/components/number_slider_component.dart';
@@ -16,6 +17,16 @@ class ReitListSettingsBottomSheetComponent extends StatelessWidget {
   ReitListSettingsBottomSheetComponent({
     Key? key,
   }) : super(key: key);
+
+  void _changeLimit(double newLimit) {
+    final int limit = newLimit.round();
+
+    EasyDebounce.debounce(
+      'reit-list-settings-change-limit',
+      const Duration(milliseconds: 500),
+      () => reitListSettingsStore.changeLimit(limit),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,11 +62,13 @@ class ReitListSettingsBottomSheetComponent extends StatelessWidget {
           style: AppTextStyles.smallHeader,
         ),
         const SizedBox(height: 10.0),
-        NumberSliderComponent(
-          initialValue: 1,
-          min: 1,
-          max: 250,
-          onChanged: (double value) {},
+        Observer(
+          builder: (_) => NumberSliderComponent(
+            initialValue: reitListSettingsStore.limit.toDouble(),
+            min: 1,
+            max: reitListStore.totalReits.toDouble(),
+            onChanged: _changeLimit,
+          ),
         ),
       ],
     );

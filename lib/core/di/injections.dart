@@ -1,9 +1,11 @@
 import 'package:dio/dio.dart';
-import 'package:fii_app/modules/reit_list/data/datasources/reit_list_settings_local_data_source.dart';
+import 'package:fii_app/modules/reit_list/data/datasources/local_reit_list_settings_data_source.dart';
 import 'package:fii_app/modules/reit_list/data/repositories/default_reit_list_settings_repository.dart';
 import 'package:fii_app/modules/reit_list/domain/repositories/reit_list_settings_repository.dart';
 import 'package:fii_app/modules/reit_list/domain/usecases/get_enabled_lists.dart';
+import 'package:fii_app/modules/reit_list/domain/usecases/get_list_limit.dart';
 import 'package:fii_app/modules/reit_list/domain/usecases/save_enabled_lists.dart';
+import 'package:fii_app/modules/reit_list/domain/usecases/save_list_limit.dart';
 import 'package:fii_app/modules/reit_list/presentation/stores/reit_list_settings_store.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
@@ -63,8 +65,8 @@ void _registerCoreServices() {
 
 void _registerFeatureServices() {
   // ! Reit List - Datasources
-  _getIt.registerSingletonWithDependencies<ReitSettingsLocalDataSource>(
-    () => ReitSettingsLocalDataSource(sharedPreferences: _getIt()),
+  _getIt.registerSingletonWithDependencies<LocalReitSettingsDataSource>(
+    () => LocalReitSettingsDataSource(sharedPreferences: _getIt()),
     dependsOn: [
       SharedPreferences,
     ],
@@ -73,10 +75,10 @@ void _registerFeatureServices() {
   // ! Reit List - Repositories
   _getIt.registerSingletonWithDependencies<ReitListSettingsRepository>(
     () => DefaultReitListSettingsRepository(
-      reitSettingsLocalDataSource: _getIt(),
+      localDatasource: _getIt(),
     ),
     dependsOn: [
-      ReitSettingsLocalDataSource,
+      LocalReitSettingsDataSource,
     ],
   );
 
@@ -99,6 +101,20 @@ void _registerFeatureServices() {
     ],
   );
 
+  _getIt.registerSingletonWithDependencies<GetListLimit>(
+    () => GetListLimit(reitListSettingsRepository: _getIt()),
+    dependsOn: [
+      ReitListSettingsRepository,
+    ],
+  );
+
+  _getIt.registerSingletonWithDependencies<SaveListLimit>(
+    () => SaveListLimit(reitListSettingsRepository: _getIt()),
+    dependsOn: [
+      ReitListSettingsRepository,
+    ],
+  );
+
   // ! Reit List - Stores
   _getIt.registerLazySingleton(
     () => ReitListStore(
@@ -110,6 +126,8 @@ void _registerFeatureServices() {
     () => ReitListSettingsStore(
       getEnabledLists: _getIt(),
       saveEnabledLists: _getIt(),
+      getListLimit: _getIt(),
+      saveListLimit: _getIt(),
     )..init(),
     dependsOn: [
       SaveEnabledLists,
