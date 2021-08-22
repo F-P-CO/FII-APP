@@ -13,8 +13,7 @@ abstract class _ReitListSettingsStoreBase with Store {
   final SaveEnabledLists saveEnabledLists;
 
   @observable
-  ObservableList<ReitListSortOptionType> enabledLists =
-      <ReitListSortOptionType>[].asObservable();
+  ObservableSet<ReitListSortOptionType> enabledLists = ObservableSet.of([]);
 
   _ReitListSettingsStoreBase({
     required this.getEnabledLists,
@@ -24,7 +23,7 @@ abstract class _ReitListSettingsStoreBase with Store {
   @action
   Future<void> init() async {
     final lists = await getEnabledLists();
-    enabledLists = lists.asObservable();
+    enabledLists = ObservableSet.of(lists);
   }
 
   bool isEnabled(ReitListSortOptionType option) =>
@@ -53,5 +52,5 @@ abstract class _ReitListSettingsStoreBase with Store {
     _persistEnabledLists();
   }
 
-  Future _persistEnabledLists() => saveEnabledLists(enabledLists);
+  Future _persistEnabledLists() => saveEnabledLists(enabledLists.toList());
 }

@@ -1,4 +1,4 @@
-import 'package:either_dart/either.dart';
+import 'package:dartz/dartz.dart';
 import 'package:fii_app/core/data/datasources/reit_data_source.dart';
 import 'package:fii_app/core/data/models/reit_model.dart';
 import 'package:fii_app/core/data/repositories/default_reit_repository.dart';
@@ -57,27 +57,29 @@ void main() {
 
     test('should return a [Reit] list with proper type and length', () async {
       final reitsOrFailure = await repository.getAll();
+      final list = reitsOrFailure.getOrElse(() => throw Exception);
 
       expect(reitsOrFailure, isA<Right>());
-      expect(reitsOrFailure.right.length, 2);
+      expect(list.length, 2);
     });
 
     test('should return a [Reit] list with proper content on the elements',
         () async {
       final reitsOrFailure = await repository.getAll();
+      final list = reitsOrFailure.getOrElse(() => throw Exception);
 
-      expect(reitsOrFailure.right.first.symbol, 'Mock Symbol');
-      expect(reitsOrFailure.right.first.name, 'Mock Name');
-      expect(reitsOrFailure.right.first.sector, 'Mock Sector');
-      expect(reitsOrFailure.right.first.currentPrice, 1);
-      expect(reitsOrFailure.right.first.dailyLiquidity, 1);
-      expect(reitsOrFailure.right.first.currentDividend, 1);
-      expect(reitsOrFailure.right.first.currentDividendYield, 1);
-      expect(reitsOrFailure.right.first.netWorth, 1);
-      expect(reitsOrFailure.right.first.vpa, 1);
-      expect(reitsOrFailure.right.first.pvpa, 1);
-      expect(reitsOrFailure.right.first.vacancy, 1);
-      expect(reitsOrFailure.right.first.assetsAmount, 1);
+      expect(list.first.symbol, 'Mock Symbol');
+      expect(list.first.name, 'Mock Name');
+      expect(list.first.sector, 'Mock Sector');
+      expect(list.first.currentPrice, 1);
+      expect(list.first.dailyLiquidity, 1);
+      expect(list.first.currentDividend, 1);
+      expect(list.first.currentDividendYield, 1);
+      expect(list.first.netWorth, 1);
+      expect(list.first.vpa, 1);
+      expect(list.first.pvpa, 1);
+      expect(list.first.vacancy, 1);
+      expect(list.first.assetsAmount, 1);
     });
   });
 }

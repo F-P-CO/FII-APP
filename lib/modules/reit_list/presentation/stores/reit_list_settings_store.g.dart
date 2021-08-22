@@ -13,13 +13,13 @@ mixin _$ReitListSettingsStore on _ReitListSettingsStoreBase, Store {
       Atom(name: '_ReitListSettingsStoreBase.enabledLists');
 
   @override
-  ObservableList<ReitListSortOptionType> get enabledLists {
+  ObservableSet<ReitListSortOptionType> get enabledLists {
     _$enabledListsAtom.reportRead();
     return super.enabledLists;
   }
 
   @override
-  set enabledLists(ObservableList<ReitListSortOptionType> value) {
+  set enabledLists(ObservableSet<ReitListSortOptionType> value) {
     _$enabledListsAtom.reportWrite(value, super.enabledLists, () {
       super.enabledLists = value;
     });
