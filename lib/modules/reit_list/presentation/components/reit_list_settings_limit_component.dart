@@ -4,7 +4,6 @@ import 'package:fii_app/core/presentation/themes/app_text_styles.dart';
 import 'package:fii_app/modules/reit_list/presentation/stores/reit_list_settings_store.dart';
 import 'package:fii_app/modules/reit_list/presentation/stores/reit_list_store.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 
 class ReitListSettingsLimitComponent extends StatefulWidget {
@@ -20,7 +19,7 @@ class _ReitListSettingsLimitComponentState
   final reitListStore = GetIt.I.get<ReitListStore>();
   final reitListSettingsStore = GetIt.I.get<ReitListSettingsStore>();
 
-  final _debouncer = Debouncer(delay: const Duration(milliseconds: 500));
+  final _debouncer = Debouncer(delay: const Duration(milliseconds: 300));
   late double _currentNumber;
 
   @override
@@ -31,7 +30,6 @@ class _ReitListSettingsLimitComponentState
 
   @override
   void dispose() {
-    _debouncer.execute();
     _debouncer.dispose();
     super.dispose();
   }
@@ -67,14 +65,12 @@ class _ReitListSettingsLimitComponentState
           ],
         ),
         const SizedBox(height: 10.0),
-        Observer(
-          builder: (_) => NumberSliderComponent(
-            initialValue: reitListSettingsStore.limit.toDouble(),
-            min: 1,
-            max: reitListStore.totalReits.toDouble(),
-            onChanged: _changeLimit,
-          ),
-        ),
+        NumberSliderComponent(
+          initialValue: reitListSettingsStore.limit.toDouble(),
+          min: 1,
+          max: reitListStore.totalReits.toDouble(),
+          onChanged: _changeLimit,
+        )
       ],
     );
   }
