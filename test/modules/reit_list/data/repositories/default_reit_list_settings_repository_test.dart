@@ -1,4 +1,4 @@
-import 'package:fii_app/modules/reit_list/data/datasources/reit_list_settings_local_data_source.dart';
+import 'package:fii_app/modules/reit_list/data/datasources/local_reit_list_settings_data_source.dart';
 import 'package:fii_app/modules/reit_list/data/repositories/default_reit_list_settings_repository.dart';
 import 'package:fii_app/modules/reit_list/domain/entities/reit_list_sort_option.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -7,16 +7,16 @@ import 'package:mockito/mockito.dart';
 
 import 'default_reit_list_settings_repository_test.mocks.dart';
 
-@GenerateMocks([ReitSettingsLocalDataSource])
+@GenerateMocks([LocalReitSettingsDataSource])
 void main() {
-  late MockReitSettingsLocalDataSource mockDatasource;
+  late MockLocalReitSettingsDataSource mockDatasource;
   late DefaultReitListSettingsRepository repository;
 
   setUp(() {
-    mockDatasource = MockReitSettingsLocalDataSource();
+    mockDatasource = MockLocalReitSettingsDataSource();
 
     repository = DefaultReitListSettingsRepository(
-      reitSettingsLocalDataSource: mockDatasource,
+      localDatasource: mockDatasource,
     );
   });
 

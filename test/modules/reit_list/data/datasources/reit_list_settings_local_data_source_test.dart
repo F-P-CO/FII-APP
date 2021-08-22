@@ -1,5 +1,5 @@
 import 'package:fii_app/core/errors/datasource_exceptions.dart';
-import 'package:fii_app/modules/reit_list/data/datasources/reit_list_settings_local_data_source.dart';
+import 'package:fii_app/modules/reit_list/data/datasources/local_reit_list_settings_data_source.dart';
 import 'package:fii_app/modules/reit_list/domain/entities/reit_list_sort_option.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
@@ -10,13 +10,13 @@ import 'reit_list_settings_local_data_source_test.mocks.dart';
 
 @GenerateMocks([SharedPreferences])
 void main() {
-  late ReitSettingsLocalDataSource datasource;
+  late LocalReitSettingsDataSource datasource;
   late MockSharedPreferences mockSharedPreferences;
 
   setUp(() {
     mockSharedPreferences = MockSharedPreferences();
 
-    datasource = ReitSettingsLocalDataSource(
+    datasource = LocalReitSettingsDataSource(
       sharedPreferences: mockSharedPreferences,
     );
   });

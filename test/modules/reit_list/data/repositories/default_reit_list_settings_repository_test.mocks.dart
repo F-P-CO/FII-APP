@@ -4,7 +4,7 @@
 
 import 'dart:async' as _i4;
 
-import 'package:fii_app/modules/reit_list/data/datasources/reit_list_settings_local_data_source.dart'
+import 'package:fii_app/modules/reit_list/data/datasources/local_reit_list_settings_data_source.dart'
     as _i3;
 import 'package:fii_app/modules/reit_list/domain/entities/reit_list_sort_option.dart'
     as _i5;
@@ -22,12 +22,12 @@ import 'package:shared_preferences/shared_preferences.dart' as _i2;
 class _FakeSharedPreferences extends _i1.Fake implements _i2.SharedPreferences {
 }
 
-/// A class which mocks [ReitSettingsLocalDataSource].
+/// A class which mocks [LocalReitSettingsDataSource].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockReitSettingsLocalDataSource extends _i1.Mock
-    implements _i3.ReitSettingsLocalDataSource {
-  MockReitSettingsLocalDataSource() {
+class MockLocalReitSettingsDataSource extends _i1.Mock
+    implements _i3.LocalReitSettingsDataSource {
+  MockLocalReitSettingsDataSource() {
     _i1.throwOnMissingStub(this);
   }
 
@@ -44,6 +44,14 @@ class MockReitSettingsLocalDataSource extends _i1.Mock
   @override
   _i4.Future<bool> saveEnabledLists(List<_i5.ReitListSortOptionType>? lists) =>
       (super.noSuchMethod(Invocation.method(#saveEnabledLists, [lists]),
+          returnValue: Future<bool>.value(false)) as _i4.Future<bool>);
+  @override
+  int getListLimit() =>
+      (super.noSuchMethod(Invocation.method(#getListLimit, []), returnValue: 0)
+          as int);
+  @override
+  _i4.Future<bool> saveListLimit(int? limit) =>
+      (super.noSuchMethod(Invocation.method(#saveListLimit, [limit]),
           returnValue: Future<bool>.value(false)) as _i4.Future<bool>);
   @override
   String toString() => super.toString();
