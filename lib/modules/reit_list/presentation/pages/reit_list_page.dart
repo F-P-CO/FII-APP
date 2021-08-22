@@ -48,17 +48,21 @@ class ReitListPage extends StatelessWidget {
               padding: const EdgeInsets.all(16.0),
               child: Observer(
                 builder: (_) {
-                  return Column(
-                    children: reitListSettingsStore.enabledLists
-                        .map(
-                          (option) => ReitListComponent(
-                            sortType: option,
-                            sortLabel: reitListStore.sortOptions
-                                .singleWhere((item) => item.type == option)
-                                .label,
-                          ),
-                        )
-                        .toList(),
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: reitListSettingsStore.enabledLists.length,
+                    itemBuilder: (_, int index) {
+                      final option =
+                          reitListSettingsStore.enabledLists.elementAt(index);
+
+                      return ReitListComponent(
+                        sortType: option,
+                        sortLabel: reitListStore.sortOptions
+                            .singleWhere((item) => item.type == option)
+                            .label,
+                      );
+                    },
                   );
                 },
               ),

@@ -38,9 +38,13 @@ class ReitListComponent extends StatelessWidget {
           Observer(
             builder: (_) {
               if (reitListStore.isLoading) {
+                final loadingCardsLimit = reitListSettingsStore.limit > 5
+                    ? 5
+                    : reitListSettingsStore.limit;
+
                 return Column(
                   children: List.filled(
-                    reitListSettingsStore.limit,
+                    loadingCardsLimit,
                     const ReitShimmerCardComponent(),
                   ),
                 );
@@ -56,18 +60,21 @@ class ReitListComponent extends StatelessWidget {
                   .getReitsSortedBy(sortType)
                   .take(reitListSettingsStore.limit);
 
-              final reitsCards = reits
-                  .map(
-                    (reit) => ReitCardComponent(
-                      reit: reit,
-                      sortType: sortType,
-                    ),
-                  )
-                  .toList();
-
               return Column(
                 children: [
-                  ...reitsCards,
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: reits.length,
+                    itemBuilder: (_, int index) {
+                      final reit = reits.elementAt(index);
+
+                      return ReitCardComponent(
+                        reit: reit,
+                        sortType: sortType,
+                      );
+                    },
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [

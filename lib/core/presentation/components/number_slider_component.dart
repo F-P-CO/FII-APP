@@ -47,7 +47,6 @@ class _NumberSliderComponentState extends State<NumberSliderComponent> {
       min: widget.min,
       max: widget.max,
       label: _currentSliderValue.round().toString(),
-      divisions: widget.divisions ?? widget.max.round(),
       onChanged: _onChanged,
     );
   }
