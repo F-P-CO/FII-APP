@@ -189,4 +189,28 @@ void main() {
       verify(mockSaveEnabledLists([]));
     });
   });
+
+  group('changeLimit', () {
+    test('should change [limit] property', () {
+      const newLimit = 5;
+      when(mockSaveListLimit(newLimit))
+          .thenAnswer((_) async => const Right(true));
+
+      store.limit = 10;
+
+      store.changeLimit(newLimit);
+      expect(store.limit, equals(newLimit));
+    });
+
+    test('should have called [SaveListLimit] usecase to persist data', () {
+      const newLimit = 5;
+      when(mockSaveListLimit(newLimit))
+          .thenAnswer((_) async => const Right(true));
+
+      store.limit = 10;
+
+      store.changeLimit(newLimit);
+      verify(mockSaveListLimit(newLimit));
+    });
+  });
 }

@@ -32,7 +32,7 @@ class DefaultReitListSettingsRepository implements ReitListSettingsRepository {
       localDatasource.saveEnabledLists(lists);
 
   @override
-  int getLimit() {
+  int getListLimit() {
     try {
       final limit = localDatasource.getListLimit();
       return limit;

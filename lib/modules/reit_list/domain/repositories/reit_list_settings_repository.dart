@@ -4,6 +4,6 @@ abstract class ReitListSettingsRepository {
   Future<List<ReitListSortOptionType>> getEnabledLists();
   Future<bool> saveEnabledLists(List<ReitListSortOptionType> lists);
 
-  int getLimit();
+  int getListLimit();
   Future<bool> saveListLimit(int limit);
 }

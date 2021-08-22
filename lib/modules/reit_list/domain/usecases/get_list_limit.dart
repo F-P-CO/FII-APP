@@ -5,5 +5,5 @@ class GetListLimit {
 
   GetListLimit({required this.reitListSettingsRepository});
 
-  int call() => reitListSettingsRepository.getLimit();
+  int call() => reitListSettingsRepository.getListLimit();
 }

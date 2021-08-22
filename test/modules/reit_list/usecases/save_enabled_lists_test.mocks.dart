@@ -38,8 +38,8 @@ class MockReitListSettingsRepository extends _i1.Mock
       (super.noSuchMethod(Invocation.method(#saveEnabledLists, [lists]),
           returnValue: Future<bool>.value(false)) as _i3.Future<bool>);
   @override
-  int getLimit() =>
-      (super.noSuchMethod(Invocation.method(#getLimit, []), returnValue: 0)
+  int getListLimit() =>
+      (super.noSuchMethod(Invocation.method(#getListLimit, []), returnValue: 0)
           as int);
   @override
   _i3.Future<bool> saveListLimit(int? limit) =>
