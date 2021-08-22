@@ -4,7 +4,7 @@
 
 import 'dart:async' as _i5;
 
-import 'package:either_dart/either.dart' as _i3;
+import 'package:dartz/dartz.dart' as _i3;
 import 'package:fii_app/core/errors/failures.dart' as _i8;
 import 'package:fii_app/modules/reit_list/domain/entities/reit_list_sort_option.dart'
     as _i6;

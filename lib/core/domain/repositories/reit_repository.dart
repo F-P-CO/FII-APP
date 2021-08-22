@@ -1,4 +1,4 @@
-import 'package:either_dart/either.dart';
+import 'package:dartz/dartz.dart';
 import 'package:fii_app/core/errors/failures.dart';
 
 import '../entities/reit.dart';

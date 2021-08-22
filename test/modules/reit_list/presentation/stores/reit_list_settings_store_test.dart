@@ -1,4 +1,4 @@
-import 'package:either_dart/either.dart';
+import 'package:dartz/dartz.dart';
 import 'package:fii_app/modules/reit_list/domain/entities/reit_list_sort_option.dart';
 import 'package:fii_app/modules/reit_list/domain/usecases/get_enabled_lists.dart';
 import 'package:fii_app/modules/reit_list/domain/usecases/save_enabled_lists.dart';
