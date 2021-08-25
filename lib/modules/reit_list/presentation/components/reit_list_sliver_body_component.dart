@@ -26,14 +26,10 @@ class ReitListSliverBodyComponent extends StatelessWidget {
       sliver: Observer(
         builder: (_) {
           if (reitListStore.isLoading) {
-            final loadingCardsLimit = reitListSettingsStore.limit > 5
-                ? 5
-                : reitListSettingsStore.limit;
-
             return SliverList(
               delegate: SliverChildBuilderDelegate(
                 (_, __) => const ReitShimmerCardComponent(),
-                childCount: loadingCardsLimit,
+                childCount: reitListSettingsStore.loadingLimit,
               ),
             );
           }

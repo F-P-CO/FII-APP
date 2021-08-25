@@ -22,6 +22,8 @@ abstract class _ReitListSettingsStoreBase with Store {
   @observable
   int limit = 5;
 
+  int maxLoadingLimit = 5;
+
   _ReitListSettingsStoreBase({
     required this.getEnabledLists,
     required this.saveEnabledLists,
@@ -46,6 +48,9 @@ abstract class _ReitListSettingsStoreBase with Store {
     final lists = await getEnabledLists();
     enabledLists = ObservableSet.of(lists);
   }
+
+  @computed
+  int get loadingLimit => limit > maxLoadingLimit ? maxLoadingLimit : limit;
 
   bool isEnabled(ReitListSortOptionType option) =>
       enabledLists.contains(option);

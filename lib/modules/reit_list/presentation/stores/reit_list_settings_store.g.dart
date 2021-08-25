@@ -9,6 +9,14 @@ part of 'reit_list_settings_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$ReitListSettingsStore on _ReitListSettingsStoreBase, Store {
+  Computed<int>? _$loadingLimitComputed;
+
+  @override
+  int get loadingLimit =>
+      (_$loadingLimitComputed ??= Computed<int>(() => super.loadingLimit,
+              name: '_ReitListSettingsStoreBase.loadingLimit'))
+          .value;
+
   final _$enabledListsAtom =
       Atom(name: '_ReitListSettingsStoreBase.enabledLists');
 
@@ -110,7 +118,8 @@ mixin _$ReitListSettingsStore on _ReitListSettingsStoreBase, Store {
   String toString() {
     return '''
 enabledLists: ${enabledLists},
-limit: ${limit}
+limit: ${limit},
+loadingLimit: ${loadingLimit}
     ''';
   }
 }
