@@ -16,6 +16,13 @@ mixin _$ReitListStore on _ReitListStoreBase, Store {
       (_$hasErrorComputed ??= Computed<bool>(() => super.hasError,
               name: '_ReitListStoreBase.hasError'))
           .value;
+  Computed<int>? _$totalReitsComputed;
+
+  @override
+  int get totalReits =>
+      (_$totalReitsComputed ??= Computed<int>(() => super.totalReits,
+              name: '_ReitListStoreBase.totalReits'))
+          .value;
   Computed<List<Reit>>? _$reitsSortedByNetWorthComputed;
 
   @override
@@ -85,21 +92,6 @@ mixin _$ReitListStore on _ReitListStoreBase, Store {
     });
   }
 
-  final _$limitAtom = Atom(name: '_ReitListStoreBase.limit');
-
-  @override
-  int get limit {
-    _$limitAtom.reportRead();
-    return super.limit;
-  }
-
-  @override
-  set limit(int value) {
-    _$limitAtom.reportWrite(value, super.limit, () {
-      super.limit = value;
-    });
-  }
-
   final _$loadReitListAsyncAction =
       AsyncAction('_ReitListStoreBase.loadReitList');
 
@@ -114,8 +106,8 @@ mixin _$ReitListStore on _ReitListStoreBase, Store {
 isLoading: ${isLoading},
 errorMessage: ${errorMessage},
 reits: ${reits},
-limit: ${limit},
 hasError: ${hasError},
+totalReits: ${totalReits},
 reitsSortedByNetWorth: ${reitsSortedByNetWorth},
 reitsSortedByAssetsAmount: ${reitsSortedByAssetsAmount},
 reitsSortedByCurrentDividendYield: ${reitsSortedByCurrentDividendYield}

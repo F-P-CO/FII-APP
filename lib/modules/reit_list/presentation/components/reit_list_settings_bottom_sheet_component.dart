@@ -1,7 +1,7 @@
 import 'package:fii_app/core/presentation/components/bottom_sheet_component.dart';
 import 'package:fii_app/core/presentation/components/filter_chip_component.dart';
-import 'package:fii_app/core/presentation/components/number_slider_component.dart';
 import 'package:fii_app/core/presentation/themes/app_text_styles.dart';
+import 'package:fii_app/modules/reit_list/presentation/components/reit_list_settings_limit_component.dart';
 import 'package:fii_app/modules/reit_list/presentation/stores/reit_list_settings_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -46,17 +46,7 @@ class ReitListSettingsBottomSheetComponent extends StatelessWidget {
           },
         ),
         const SizedBox(height: 32.0),
-        Text(
-          "Quantidade de fundos a exibir",
-          style: AppTextStyles.smallHeader,
-        ),
-        const SizedBox(height: 10.0),
-        NumberSliderComponent(
-          initialValue: 1,
-          min: 1,
-          max: 250,
-          onChanged: (double value) {},
-        ),
+        const ReitListSettingsLimitComponent(),
       ],
     );
   }

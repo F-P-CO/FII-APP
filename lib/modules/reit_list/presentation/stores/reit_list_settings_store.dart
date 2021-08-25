@@ -1,6 +1,8 @@
 import 'package:fii_app/modules/reit_list/domain/entities/reit_list_sort_option.dart';
 import 'package:fii_app/modules/reit_list/domain/usecases/get_enabled_lists.dart';
+import 'package:fii_app/modules/reit_list/domain/usecases/get_list_limit.dart';
 import 'package:fii_app/modules/reit_list/domain/usecases/save_enabled_lists.dart';
+import 'package:fii_app/modules/reit_list/domain/usecases/save_list_limit.dart';
 import 'package:mobx/mobx.dart';
 
 part 'reit_list_settings_store.g.dart';
@@ -11,20 +13,44 @@ class ReitListSettingsStore = _ReitListSettingsStoreBase
 abstract class _ReitListSettingsStoreBase with Store {
   final GetEnabledLists getEnabledLists;
   final SaveEnabledLists saveEnabledLists;
+  final GetListLimit getListLimit;
+  final SaveListLimit saveListLimit;
 
   @observable
   ObservableSet<ReitListSortOptionType> enabledLists = ObservableSet.of([]);
 
+  @observable
+  int limit = 5;
+
+  int maxLoadingLimit = 5;
+
   _ReitListSettingsStoreBase({
     required this.getEnabledLists,
     required this.saveEnabledLists,
+    required this.getListLimit,
+    required this.saveListLimit,
   });
 
-  @action
   Future<void> init() async {
+    _initListLimit();
+    await _initEnabledLists();
+
+    return Future.value();
+  }
+
+  @action
+  void _initListLimit() {
+    limit = getListLimit();
+  }
+
+  @action
+  Future<void> _initEnabledLists() async {
     final lists = await getEnabledLists();
     enabledLists = ObservableSet.of(lists);
   }
+
+  @computed
+  int get loadingLimit => limit > maxLoadingLimit ? maxLoadingLimit : limit;
 
   bool isEnabled(ReitListSortOptionType option) =>
       enabledLists.contains(option);
@@ -53,4 +79,10 @@ abstract class _ReitListSettingsStoreBase with Store {
   }
 
   Future _persistEnabledLists() => saveEnabledLists(enabledLists.toList());
+
+  @action
+  void changeLimit(int newLimit) {
+    limit = newLimit;
+    saveListLimit(newLimit);
+  }
 }

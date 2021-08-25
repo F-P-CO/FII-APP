@@ -111,16 +111,5 @@ void main() {
       expect(store.reitsSortedByNetWorth.first.netWorth, 3);
       expect(store.reitsSortedByNetWorth.last.netWorth, 1);
     });
-
-    test("should return a [Reit] list limited by [limit]", () async {
-      _mockLoadReitList();
-      await store.loadReitList();
-
-      store.limit = 1;
-      expect(store.reitsSortedByNetWorth.length, store.limit);
-
-      store.limit = 2;
-      expect(store.reitsSortedByNetWorth.length, store.limit);
-    });
   });
 }

@@ -26,8 +26,8 @@ abstract class _ReitListStoreBase with Store {
   @observable
   List<Reit> reits = [];
 
-  @observable
-  int limit = 5;
+  @computed
+  int get totalReits => reits.length;
 
   final sortOptions = [
     const ReitListSortOption(
@@ -72,11 +72,7 @@ abstract class _ReitListStoreBase with Store {
     final List<Reit> localReits = reits;
     localReits.sort((a, b) => b.netWorth?.compareTo(a.netWorth ?? 0) ?? 0);
 
-    if (limit == 0) {
-      return localReits;
-    } else {
-      return localReits.take(limit).toList();
-    }
+    return localReits;
   }
 
   @computed
@@ -84,11 +80,7 @@ abstract class _ReitListStoreBase with Store {
     final List<Reit> localReits = reits;
     localReits.sort((a, b) => b.assetsAmount.compareTo(a.assetsAmount));
 
-    if (limit == 0) {
-      return localReits;
-    } else {
-      return localReits.take(limit).toList();
-    }
+    return localReits;
   }
 
   @computed
@@ -97,11 +89,7 @@ abstract class _ReitListStoreBase with Store {
     localReits.sort((a, b) =>
         b.currentDividendYield?.compareTo(a.currentDividendYield ?? 0) ?? 0);
 
-    if (limit == 0) {
-      return localReits;
-    } else {
-      return localReits.take(limit).toList();
-    }
+    return localReits;
   }
 
   List<Reit> getReitsSortedBy(ReitListSortOptionType sortType) {

@@ -1,8 +1,11 @@
 import 'package:fii_app/core/presentation/components/header_app_bar_component.dart';
 import 'package:fii_app/core/presentation/themes/app_colors.dart';
+
 import 'package:fii_app/core/presentation/themes/no_scroll_glow_behavior.dart';
-import 'package:fii_app/modules/reit_list/presentation/components/reit_list_component.dart';
+
 import 'package:fii_app/modules/reit_list/presentation/components/reit_list_settings_bottom_sheet_component.dart';
+import 'package:fii_app/modules/reit_list/presentation/components/reit_list_sliver_body_component.dart';
+import 'package:fii_app/modules/reit_list/presentation/components/reit_list_sliver_header_component.dart';
 import 'package:fii_app/modules/reit_list/presentation/stores/reit_list_settings_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -43,26 +46,33 @@ class ReitListPage extends StatelessWidget {
         ),
         child: ScrollConfiguration(
           behavior: NoScrollGlowBehavior(),
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Observer(
-                builder: (_) {
-                  return Column(
-                    children: reitListSettingsStore.enabledLists
-                        .map(
-                          (option) => ReitListComponent(
-                            sortType: option,
-                            sortLabel: reitListStore.sortOptions
-                                .singleWhere((item) => item.type == option)
-                                .label,
-                          ),
-                        )
-                        .toList(),
+          child: Observer(
+            builder: (_) {
+              if (reitListSettingsStore.enabledLists.isEmpty) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+
+              return CustomScrollView(
+                slivers: reitListSettingsStore.enabledLists
+                    .map<List<Widget>>((enabledList) {
+                  final sortOption = reitListStore.sortOptions.singleWhere(
+                    (item) => item.type == enabledList,
                   );
-                },
-              ),
-            ),
+
+                  return <Widget>[
+                    ReitListSliverHeaderComponent(sortOption: sortOption),
+                    ReitListSliverBodyComponent(
+                      sortOption: sortOption,
+                    )
+                  ];
+                }).reduce((value, element) {
+                  value.addAll(element);
+                  return value;
+                }),
+              );
+            },
           ),
         ),
       ),

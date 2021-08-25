@@ -12,8 +12,12 @@ import 'package:fii_app/modules/reit_list/domain/repositories/reit_list_settings
     as _i2;
 import 'package:fii_app/modules/reit_list/domain/usecases/get_enabled_lists.dart'
     as _i4;
+import 'package:fii_app/modules/reit_list/domain/usecases/get_list_limit.dart'
+    as _i9;
 import 'package:fii_app/modules/reit_list/domain/usecases/save_enabled_lists.dart'
     as _i7;
+import 'package:fii_app/modules/reit_list/domain/usecases/save_list_limit.dart'
+    as _i10;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: avoid_redundant_argument_values
@@ -69,6 +73,49 @@ class MockSaveEnabledLists extends _i1.Mock implements _i7.SaveEnabledLists {
   _i5.Future<_i3.Either<_i8.Failure, bool>> call(
           List<_i6.ReitListSortOptionType>? lists) =>
       (super.noSuchMethod(Invocation.method(#call, [lists]),
+              returnValue: Future<_i3.Either<_i8.Failure, bool>>.value(
+                  _FakeEither<_i8.Failure, bool>()))
+          as _i5.Future<_i3.Either<_i8.Failure, bool>>);
+  @override
+  String toString() => super.toString();
+}
+
+/// A class which mocks [GetListLimit].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockGetListLimit extends _i1.Mock implements _i9.GetListLimit {
+  MockGetListLimit() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i2.ReitListSettingsRepository get reitListSettingsRepository =>
+      (super.noSuchMethod(Invocation.getter(#reitListSettingsRepository),
+              returnValue: _FakeReitListSettingsRepository())
+          as _i2.ReitListSettingsRepository);
+  @override
+  int call() =>
+      (super.noSuchMethod(Invocation.method(#call, []), returnValue: 0) as int);
+  @override
+  String toString() => super.toString();
+}
+
+/// A class which mocks [SaveListLimit].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockSaveListLimit extends _i1.Mock implements _i10.SaveListLimit {
+  MockSaveListLimit() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i2.ReitListSettingsRepository get reitListSettingsRepository =>
+      (super.noSuchMethod(Invocation.getter(#reitListSettingsRepository),
+              returnValue: _FakeReitListSettingsRepository())
+          as _i2.ReitListSettingsRepository);
+  @override
+  _i5.Future<_i3.Either<_i8.Failure, bool>> call(int? limit) =>
+      (super.noSuchMethod(Invocation.method(#call, [limit]),
               returnValue: Future<_i3.Either<_i8.Failure, bool>>.value(
                   _FakeEither<_i8.Failure, bool>()))
           as _i5.Future<_i3.Either<_i8.Failure, bool>>);
