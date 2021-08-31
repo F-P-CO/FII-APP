@@ -12,13 +12,13 @@ import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../modules/reit_list/domain/usecases/get_all_reits.dart';
-import '../../modules/reit_list/presentation/stores/reit_list_store.dart';
 import '../data/datasources/funds_explorer_reit_data_source.dart';
 import '../data/datasources/reit_data_source.dart';
 import '../data/repositories/default_reit_repository.dart';
 import '../domain/repositories/reit_repository.dart';
 import '../navigation/navigator_service.dart';
 import '../network/http_client.dart';
+import '../presentation/stores/reit_list_store.dart';
 
 GetIt _getIt = GetIt.instance;
 
@@ -60,6 +60,13 @@ void _registerCoreServices() {
     () => DefaultReitRepository(
       datasource: _getIt(),
     ),
+  );
+
+  // ! Stores
+  _getIt.registerLazySingleton(
+    () => ReitListStore(
+      getAllReits: _getIt(),
+    )..loadReitList(),
   );
 }
 
@@ -116,12 +123,6 @@ void _registerFeatureServices() {
   );
 
   // ! Reit List - Stores
-  _getIt.registerLazySingleton(
-    () => ReitListStore(
-      getAllReits: _getIt(),
-    )..loadReitList(),
-  );
-
   _getIt.registerSingletonWithDependencies(
     () => ReitListSettingsStore(
       getEnabledLists: _getIt(),

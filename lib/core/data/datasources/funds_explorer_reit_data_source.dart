@@ -81,6 +81,11 @@ class FundsExplorerReitDataSource implements ReitDataSource {
     return reits;
   }
 
-  double? _formatDouble(String? str) =>
-      str == '-9999999999' ? null : double.parse(str ?? '');
+  double? _formatDouble(String? str) {
+    if (str != null && str.contains('9999999999')) {
+      return null;
+    }
+
+    return double.parse(str ?? '');
+  }
 }

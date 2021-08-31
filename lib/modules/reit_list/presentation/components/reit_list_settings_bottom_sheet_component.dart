@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 
-import '../stores/reit_list_store.dart';
+import '../../../../core/presentation/stores/reit_list_store.dart';
 
 class ReitListSettingsBottomSheetComponent extends StatelessWidget {
   final reitListStore = GetIt.I.get<ReitListStore>();

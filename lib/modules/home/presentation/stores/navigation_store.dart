@@ -11,7 +11,7 @@ abstract class _NavigationStoreBase with Store {
   @observable
   List<AppPage> pages = [
     AppPage(page: () => ReitListPage()),
-    AppPage(page: () => const ComparatorPage()),
+    AppPage(page: () => ComparatorPage()),
   ];
 
   @observable
