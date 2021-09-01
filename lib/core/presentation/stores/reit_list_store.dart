@@ -29,21 +29,6 @@ abstract class _ReitListStoreBase with Store {
   @computed
   int get totalReits => reits.length;
 
-  final sortOptions = [
-    const ReitListSortOption(
-      label: "Patrimônio Liquído",
-      type: ReitListSortOptionType.netWorth,
-    ),
-    const ReitListSortOption(
-      label: "Dividend Yield Atual",
-      type: ReitListSortOptionType.currentDividendYield,
-    ),
-    const ReitListSortOption(
-      label: "Quantidade de Ativos",
-      type: ReitListSortOptionType.assetsAmount,
-    ),
-  ];
-
   @action
   Future<void> loadReitList() async {
     try {
