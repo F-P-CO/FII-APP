@@ -3,6 +3,7 @@ import 'package:fii_app/core/presentation/stores/reit_list_store.dart';
 import 'package:fii_app/core/presentation/themes/app_colors.dart';
 import 'package:fii_app/core/presentation/themes/no_scroll_glow_behavior.dart';
 import 'package:fii_app/modules/comparator/presentation/components/comparator_table_component.dart';
+import 'package:fii_app/modules/comparator/presentation/stores/comparator_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
@@ -11,6 +12,7 @@ import 'package:intl/intl.dart';
 class ComparatorPage extends StatelessWidget {
   final currencyFormatter = GetIt.I.get<NumberFormat>();
   final reitListStore = GetIt.I.get<ReitListStore>();
+  final comparatorStore = GetIt.I.get<ComparatorStore>();
 
   ComparatorPage({Key? key}) : super(key: key);
 
@@ -21,7 +23,7 @@ class ComparatorPage extends StatelessWidget {
       appBar: HeaderAppBarComponent(
         title: 'Comparador',
         settingsOnPressed: () {},
-        searchOnPressed: () {},
+        searchOnChange: comparatorStore.changeSearchFilter,
       ),
       body: ScrollConfiguration(
         behavior: NoScrollGlowBehavior(),
@@ -33,8 +35,14 @@ class ComparatorPage extends StatelessWidget {
               );
             }
 
+            if (comparatorStore.currentReits.isEmpty) {
+              return const Center(
+                child: Text("Nenhum fundo encontrado com os filtros atuais."),
+              );
+            }
+
             return ComparatorTableComponent(
-              reits: reitListStore.reits,
+              reits: comparatorStore.currentReits,
             );
           },
         ),

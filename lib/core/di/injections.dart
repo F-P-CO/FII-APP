@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:fii_app/modules/comparator/presentation/stores/comparator_store.dart';
 import 'package:fii_app/modules/home/presentation/stores/navigation_store.dart';
 import 'package:fii_app/modules/reit_list/data/datasources/local_reit_list_settings_data_source.dart';
 import 'package:fii_app/modules/reit_list/data/repositories/default_reit_list_settings_repository.dart';
@@ -135,6 +136,13 @@ void _registerFeatureServices() {
     dependsOn: [
       SaveEnabledLists,
     ],
+  );
+
+  // ! Comparator - Stores
+  _getIt.registerLazySingleton(
+    () => ComparatorStore(
+      reitListStore: _getIt(),
+    ),
   );
 }
 
