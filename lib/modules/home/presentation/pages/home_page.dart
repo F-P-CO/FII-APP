@@ -3,9 +3,10 @@ import 'package:fii_app/core/presentation/themes/app_text_styles.dart';
 import 'package:fii_app/modules/home/presentation/stores/navigation_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:get_it/get_it.dart';
 
 class HomePage extends StatelessWidget {
-  final navigationStore = NavigationStore();
+  final navigationStore = GetIt.I.get<NavigationStore>();
 
   HomePage({Key? key}) : super(key: key);
 

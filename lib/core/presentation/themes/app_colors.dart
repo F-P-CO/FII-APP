@@ -6,6 +6,7 @@ abstract class AppColors {
   static const scaffoldBackground = Color(0xFFF7F7F7);
 
   static const cardBackground = Colors.white;
+  static const textFieldBackground = Color(0xFFE3E3E3);
 
   static const primaryText = Colors.white;
   static const black = Colors.black;

@@ -7,22 +7,7 @@ import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 import 'package:lazy_data_table/lazy_data_table.dart';
 
-class ComparatorTableComponent extends StatefulWidget {
-  final List<Reit> reits;
-  final List<String> symbols;
-
-  ComparatorTableComponent({
-    Key? key,
-    required this.reits,
-  })  : symbols = reits.map((reit) => reit.symbol).toList(),
-        super(key: key);
-
-  @override
-  _ComparatorTableComponentState createState() =>
-      _ComparatorTableComponentState();
-}
-
-class _ComparatorTableComponentState extends State<ComparatorTableComponent> {
+class ComparatorTableComponent extends StatelessWidget {
   final currencyFormatter = GetIt.I.get<NumberFormat>();
   final fixedHeader = "Código";
   final headers = [
@@ -38,20 +23,23 @@ class _ComparatorTableComponentState extends State<ComparatorTableComponent> {
   ];
 
   final Map<String, String> cachedCells = {};
-  Map<int, double> cellWidthMap = {};
+  final Map<int, double> cellWidthMap = {};
 
-  @override
-  void initState() {
-    super.initState();
-    calculateCellsWidth();
-  }
+  final List<Reit> reits;
+  final List<String> symbols;
+
+  ComparatorTableComponent({
+    Key? key,
+    required this.reits,
+  })  : symbols = reits.map((reit) => reit.symbol).toList(),
+        super(key: key);
 
   void calculateCellsWidth() {
     final totalColumns = headers.length;
 
     for (var column = 0; column < totalColumns; column++) {
       final biggestCellLength = getBiggestCellLength(column);
-      final columnWidth = biggestCellLength * 10.0;
+      final columnWidth = biggestCellLength * 12.0;
 
       cellWidthMap[column] = columnWidth;
     }
@@ -60,7 +48,7 @@ class _ComparatorTableComponentState extends State<ComparatorTableComponent> {
   int getBiggestCellLength(int column) {
     int biggestLength = headers[column].length;
 
-    for (var row = 0; row < widget.reits.length; row++) {
+    for (var row = 0; row < reits.length; row++) {
       final cell = getCell(row, column);
 
       if (cell.length > biggestLength) {
@@ -85,7 +73,7 @@ class _ComparatorTableComponentState extends State<ComparatorTableComponent> {
 
     if (!cachedCells.containsKey(key)) {
       final String cell;
-      final reit = widget.reits.elementAt(row);
+      final reit = reits.elementAt(row);
 
       switch (column) {
         case 0:
@@ -129,8 +117,10 @@ class _ComparatorTableComponentState extends State<ComparatorTableComponent> {
 
   @override
   Widget build(BuildContext context) {
+    calculateCellsWidth();
+
     return LazyDataTable(
-      rows: widget.reits.length,
+      rows: reits.length,
       columns: headers.length,
       tableTheme: const LazyDataTableTheme(
         columnHeaderColor: Colors.transparent,
@@ -173,7 +163,7 @@ class _ComparatorTableComponentState extends State<ComparatorTableComponent> {
         text: headers.elementAt(column),
       ),
       leftHeaderBuilder: (row) => ComparatorTableBodyComponent(
-        text: widget.symbols.elementAt(row),
+        text: symbols.elementAt(row),
       ),
       dataCellBuilder: (row, column) => ComparatorTableBodyComponent(
         text: getCell(row, column),
