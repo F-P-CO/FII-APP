@@ -47,4 +47,10 @@ abstract class AppTextStyles {
     fontWeight: primaryFontWeightSemibold,
     color: AppColors.blackGrey,
   );
+
+  static final textFieldHint = primaryFont.copyWith(
+    fontSize: 16.0,
+    fontWeight: primaryFontWeightMedium,
+    color: AppColors.grey,
+  );
 }

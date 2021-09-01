@@ -34,7 +34,7 @@ class ReitListPage extends StatelessWidget {
         title: 'Fundos Imobiliários',
         settingsOnPressed: () => _openListSettingsBottomSheet(context),
         favoritesOnPressed: () {},
-        searchOnPressed: () {},
+        searchButtonOnPressed: () {},
       ),
       body: Container(
         decoration: const BoxDecoration(
