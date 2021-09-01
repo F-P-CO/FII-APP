@@ -8,13 +8,6 @@ class SaveEnabledLists {
 
   SaveEnabledLists({required this.reitListSettingsRepository});
 
-  Future<Either<Failure, bool>> call(List<ReitListSortOptionType> lists) async {
-    final save = await reitListSettingsRepository.saveEnabledLists(lists);
-
-    if (save) {
-      return const Right(true);
-    } else {
-      return Left(LocalStorageFailure());
-    }
-  }
+  Future<Either<Failure, bool>> call(List<ReitListSortOptionType> lists) =>
+      reitListSettingsRepository.saveEnabledLists(lists);
 }

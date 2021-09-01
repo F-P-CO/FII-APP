@@ -1,3 +1,4 @@
+import 'package:dartz/dartz.dart';
 import 'package:fii_app/modules/reit_list/data/datasources/local_reit_list_settings_data_source.dart';
 import 'package:fii_app/modules/reit_list/data/repositories/default_reit_list_settings_repository.dart';
 import 'package:fii_app/modules/reit_list/domain/entities/reit_list_sort_option.dart';
@@ -53,7 +54,7 @@ void main() {
           .thenAnswer((_) => Future.value(true));
 
       final save = await repository.saveEnabledLists(mockList);
-      expect(save, equals(true));
+      expect(save, equals(const Right(true)));
       verify(mockDatasource.saveEnabledLists(mockList));
     });
   });
@@ -88,7 +89,7 @@ void main() {
 
       final save = await repository.saveListLimit(mockLimit);
 
-      expect(save, equals(true));
+      expect(save, equals(const Right(true)));
       verify(mockDatasource.saveListLimit(mockLimit));
     });
   });

@@ -7,13 +7,6 @@ class SaveListLimit {
 
   SaveListLimit({required this.reitListSettingsRepository});
 
-  Future<Either<Failure, bool>> call(int limit) async {
-    final save = await reitListSettingsRepository.saveListLimit(limit);
-
-    if (save) {
-      return const Right(true);
-    } else {
-      return Left(LocalStorageFailure());
-    }
-  }
+  Future<Either<Failure, bool>> call(int limit) =>
+      reitListSettingsRepository.saveListLimit(limit);
 }
