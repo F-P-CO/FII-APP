@@ -1,3 +1,4 @@
+import 'package:fii_app/core/navigation/navigator_service.dart';
 import 'package:fii_app/core/presentation/components/header_app_bar_component.dart';
 import 'package:fii_app/core/presentation/stores/reit_list_store.dart';
 import 'package:fii_app/core/presentation/themes/app_colors.dart';
@@ -10,6 +11,7 @@ import 'package:intl/intl.dart';
 
 class ComparatorPage extends StatelessWidget {
   final currencyFormatter = GetIt.I.get<NumberFormat>();
+  final navigatorService = GetIt.I.get<NavigatorService>().currentState!;
   final reitListStore = GetIt.I.get<ReitListStore>();
 
   ComparatorPage({Key? key}) : super(key: key);
@@ -20,7 +22,8 @@ class ComparatorPage extends StatelessWidget {
       backgroundColor: AppColors.scaffoldBackground,
       appBar: HeaderAppBarComponent(
         title: 'Comparador',
-        settingsOnPressed: () {},
+        settingsOnPressed: () =>
+            navigatorService.pushNamed('/comparator-settings'),
         searchOnPressed: () {},
       ),
       body: ScrollConfiguration(
