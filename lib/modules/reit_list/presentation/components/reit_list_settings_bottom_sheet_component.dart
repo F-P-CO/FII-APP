@@ -32,7 +32,7 @@ class ReitListSettingsBottomSheetComponent extends StatelessWidget {
             return Wrap(
               spacing: 5,
               runSpacing: 10,
-              children: reitListStore.sortOptions
+              children: reitListSettingsStore.sortOptions
                   .map(
                     (option) => FilterChipComponent(
                       label: option.label,

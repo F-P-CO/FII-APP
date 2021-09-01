@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 
-abstract class Failure extends Equatable {
+class Failure extends Equatable {
   final String? message;
   final Exception? exception;
 

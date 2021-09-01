@@ -24,7 +24,7 @@ void main() {
 
   test('should save enabled lists on the repository', () async {
     when(mockReitListSettingsRepository.saveEnabledLists(mockList))
-        .thenAnswer((_) => Future.value(true));
+        .thenAnswer((_) async => const Right(true));
 
     final lists = await usecase(mockList);
 
@@ -35,11 +35,11 @@ void main() {
 
   test('should return a Failure when repository fails to save list', () async {
     when(mockReitListSettingsRepository.saveEnabledLists(any))
-        .thenAnswer((_) => Future.value(false));
+        .thenAnswer((_) async => Left(Failure()));
 
     final lists = await usecase(mockList);
 
-    expect(lists, equals(Left(LocalStorageFailure())));
+    expect(lists, equals(Left(Failure())));
     verify(mockReitListSettingsRepository.saveEnabledLists(mockList));
     verifyNoMoreInteractions(mockReitListSettingsRepository);
   });

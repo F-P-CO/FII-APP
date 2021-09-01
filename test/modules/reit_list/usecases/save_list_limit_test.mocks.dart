@@ -2,12 +2,14 @@
 // in fii_app/test/modules/reit_list/usecases/save_list_limit_test.dart.
 // Do not manually edit this file.
 
-import 'dart:async' as _i3;
+import 'dart:async' as _i4;
 
+import 'package:dartz/dartz.dart' as _i2;
+import 'package:fii_app/core/errors/failures.dart' as _i6;
 import 'package:fii_app/modules/reit_list/domain/entities/reit_list_sort_option.dart'
-    as _i4;
+    as _i5;
 import 'package:fii_app/modules/reit_list/domain/repositories/reit_list_settings_repository.dart'
-    as _i2;
+    as _i3;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: avoid_redundant_argument_values
@@ -18,33 +20,40 @@ import 'package:mockito/mockito.dart' as _i1;
 // ignore_for_file: prefer_const_constructors
 // ignore_for_file: unnecessary_parenthesis
 
+class _FakeEither<L, R> extends _i1.Fake implements _i2.Either<L, R> {}
+
 /// A class which mocks [ReitListSettingsRepository].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockReitListSettingsRepository extends _i1.Mock
-    implements _i2.ReitListSettingsRepository {
+    implements _i3.ReitListSettingsRepository {
   MockReitListSettingsRepository() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i3.Future<List<_i4.ReitListSortOptionType>> getEnabledLists() =>
+  _i4.Future<List<_i5.ReitListSortOptionType>> getEnabledLists() =>
       (super.noSuchMethod(Invocation.method(#getEnabledLists, []),
-              returnValue: Future<List<_i4.ReitListSortOptionType>>.value(
-                  <_i4.ReitListSortOptionType>[]))
-          as _i3.Future<List<_i4.ReitListSortOptionType>>);
+              returnValue: Future<List<_i5.ReitListSortOptionType>>.value(
+                  <_i5.ReitListSortOptionType>[]))
+          as _i4.Future<List<_i5.ReitListSortOptionType>>);
   @override
-  _i3.Future<bool> saveEnabledLists(List<_i4.ReitListSortOptionType>? lists) =>
+  _i4.Future<_i2.Either<_i6.Failure, bool>> saveEnabledLists(
+          List<_i5.ReitListSortOptionType>? lists) =>
       (super.noSuchMethod(Invocation.method(#saveEnabledLists, [lists]),
-          returnValue: Future<bool>.value(false)) as _i3.Future<bool>);
+              returnValue: Future<_i2.Either<_i6.Failure, bool>>.value(
+                  _FakeEither<_i6.Failure, bool>()))
+          as _i4.Future<_i2.Either<_i6.Failure, bool>>);
   @override
   int getListLimit() =>
       (super.noSuchMethod(Invocation.method(#getListLimit, []), returnValue: 0)
           as int);
   @override
-  _i3.Future<bool> saveListLimit(int? limit) =>
+  _i4.Future<_i2.Either<_i6.Failure, bool>> saveListLimit(int? limit) =>
       (super.noSuchMethod(Invocation.method(#saveListLimit, [limit]),
-          returnValue: Future<bool>.value(false)) as _i3.Future<bool>);
+              returnValue: Future<_i2.Either<_i6.Failure, bool>>.value(
+                  _FakeEither<_i6.Failure, bool>()))
+          as _i4.Future<_i2.Either<_i6.Failure, bool>>);
   @override
   String toString() => super.toString();
 }

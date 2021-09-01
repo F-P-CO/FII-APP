@@ -24,6 +24,21 @@ abstract class _ReitListSettingsStoreBase with Store {
 
   int maxLoadingLimit = 5;
 
+  final sortOptions = [
+    const ReitListSortOption(
+      label: "Patrimônio Liquído",
+      type: ReitListSortOptionType.netWorth,
+    ),
+    const ReitListSortOption(
+      label: "Dividend Yield Atual",
+      type: ReitListSortOptionType.currentDividendYield,
+    ),
+    const ReitListSortOption(
+      label: "Quantidade de Ativos",
+      type: ReitListSortOptionType.assetsAmount,
+    ),
+  ];
+
   _ReitListSettingsStoreBase({
     required this.getEnabledLists,
     required this.saveEnabledLists,

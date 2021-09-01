@@ -57,7 +57,8 @@ class ReitListPage extends StatelessWidget {
               return CustomScrollView(
                 slivers: reitListSettingsStore.enabledLists
                     .map<List<Widget>>((enabledList) {
-                  final sortOption = reitListStore.sortOptions.singleWhere(
+                  final sortOption =
+                      reitListSettingsStore.sortOptions.singleWhere(
                     (item) => item.type == enabledList,
                   );
 

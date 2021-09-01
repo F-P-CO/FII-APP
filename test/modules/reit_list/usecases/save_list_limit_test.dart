@@ -23,7 +23,7 @@ void main() {
 
   test('should save list limit on the repository', () async {
     when(mockReitListSettingsRepository.saveListLimit(mockLimit))
-        .thenAnswer((_) => Future.value(true));
+        .thenAnswer((_) async => const Right(true));
 
     final save = await usecase(mockLimit);
 
@@ -35,11 +35,11 @@ void main() {
   test('should return a Failure when repository fails to save list limit',
       () async {
     when(mockReitListSettingsRepository.saveListLimit(any))
-        .thenAnswer((_) => Future.value(false));
+        .thenAnswer((_) async => Left(Failure()));
 
     final lists = await usecase(mockLimit);
 
-    expect(lists, equals(Left(LocalStorageFailure())));
+    expect(lists, equals(Left(Failure())));
     verify(mockReitListSettingsRepository.saveListLimit(mockLimit));
     verifyNoMoreInteractions(mockReitListSettingsRepository);
   });
