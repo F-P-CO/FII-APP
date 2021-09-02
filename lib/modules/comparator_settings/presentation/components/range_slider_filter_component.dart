@@ -5,11 +5,12 @@ import 'package:flutter/material.dart';
 
 class RangeSliderFilterComponent extends StatelessWidget {
   final String title;
-  final int min;
-  final int max;
-  final RangeValues currentRange;
+  final double min;
+  final double max;
+  final List<double> currentRange;
   final bool disable;
-  final void Function(RangeValues)? onChanged;
+  final void Function(double, double)? onChange;
+  final void Function()? onToggle;
 
   const RangeSliderFilterComponent({
     Key? key,
@@ -18,7 +19,8 @@ class RangeSliderFilterComponent extends StatelessWidget {
     required this.min,
     required this.max,
     required this.currentRange,
-    this.onChanged,
+    this.onChange,
+    this.onToggle,
   }) : super(key: key);
 
   @override
@@ -33,6 +35,7 @@ class RangeSliderFilterComponent extends StatelessWidget {
       child: Column(
         children: [
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
                 title,
@@ -40,13 +43,26 @@ class RangeSliderFilterComponent extends StatelessWidget {
                     ? AppTextStyles.header.copyWith(color: AppColors.mediumGrey)
                     : AppTextStyles.header,
               ),
+              Radio(
+                groupValue: title,
+                value: disable ? 'disabled' : title,
+                toggleable: true,
+                onChanged: (String? value) {
+                  if (onToggle != null) {
+                    onToggle!();
+                  }
+                },
+              ),
             ],
           ),
+          const SizedBox(height: 45.0),
           RangeSliderComponent(
-            min: 0,
-            max: 100,
-            initialValues: currentRange,
+            min: min,
+            max: max,
+            lowerValue: currentRange.first,
+            upperValue: currentRange.last,
             disable: disable,
+            onChange: onChange,
           ),
         ],
       ),

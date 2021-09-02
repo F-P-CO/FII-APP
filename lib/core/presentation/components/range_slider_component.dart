@@ -1,22 +1,26 @@
 import 'package:fii_app/core/presentation/themes/app_colors.dart';
+import 'package:fii_app/core/presentation/themes/app_text_styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_xlider/flutter_xlider.dart';
 
 class RangeSliderComponent extends StatefulWidget {
   final double min;
   final double max;
-  final RangeValues initialValues;
+  final double lowerValue;
+  final double upperValue;
   final int? divisions;
   final bool disable;
-  final void Function(RangeValues)? onChanged;
+  final void Function(double, double)? onChange;
 
   const RangeSliderComponent({
     Key? key,
     required this.min,
     required this.max,
-    required this.initialValues,
+    required this.lowerValue,
+    required this.upperValue,
     this.divisions,
     this.disable = false,
-    this.onChanged,
+    this.onChange,
   }) : super(key: key);
 
   @override
@@ -24,23 +28,26 @@ class RangeSliderComponent extends StatefulWidget {
 }
 
 class _RangeSliderComponentState extends State<RangeSliderComponent> {
-  late RangeValues _currentRangeValues;
+  late double _lowerValue;
+  late double _upperValue;
 
   @override
   void initState() {
-    _currentRangeValues = widget.initialValues;
+    _lowerValue = widget.lowerValue;
+    _upperValue = widget.upperValue;
 
     super.initState();
   }
 
-  void _onChanged(RangeValues values) {
+  void _onChange(handlerIndex, lowerValue, upperValue) {
     if (!widget.disable) {
       setState(() {
-        _currentRangeValues = values;
+        _lowerValue = lowerValue as double;
+        _upperValue = upperValue as double;
       });
 
-      if (widget.onChanged != null) {
-        widget.onChanged!(values);
+      if (widget.onChange != null) {
+        widget.onChange!(_lowerValue, _upperValue);
       }
     }
   }
@@ -49,18 +56,45 @@ class _RangeSliderComponentState extends State<RangeSliderComponent> {
   Widget build(BuildContext context) {
     return AbsorbPointer(
       absorbing: widget.disable,
-      child: RangeSlider(
-        activeColor: widget.disable ? AppColors.lightgrey : null,
-        inactiveColor: widget.disable ? AppColors.lightgrey : null,
-        values: _currentRangeValues,
-        min: widget.min,
+      child: FlutterSlider(
+        values: [_lowerValue, _upperValue],
+        rangeSlider: true,
         max: widget.max,
-        divisions: 5,
-        labels: RangeLabels(
-          _currentRangeValues.start.round().toString(),
-          _currentRangeValues.end.round().toString(),
+        min: widget.min,
+        onDragging: _onChange,
+        handlerWidth: 25,
+        handlerHeight: 25,
+        handlerAnimation: const FlutterSliderHandlerAnimation(
+          scale: 1,
         ),
-        onChanged: _onChanged,
+        handler: FlutterSliderHandler(
+          child: Container(),
+        ),
+        rightHandler: FlutterSliderHandler(
+          child: Container(),
+        ),
+        trackBar: FlutterSliderTrackBar(
+          activeTrackBar: BoxDecoration(
+            borderRadius: BorderRadius.circular(4),
+            color: Theme.of(context).primaryColor,
+          ),
+        ),
+        tooltip: FlutterSliderTooltip(
+          alwaysShowTooltip: true,
+          positionOffset: FlutterSliderTooltipPositionOffset(top: -30),
+          format: (String value) => double.parse(value).toInt().toString(),
+          textStyle: AppTextStyles.primaryFont.copyWith(
+            fontSize: 16,
+            fontWeight: AppTextStyles.primaryFontWeightSemibold,
+            color: AppColors.primaryText,
+          ),
+          boxStyle: FlutterSliderTooltipBox(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(4.0),
+              color: AppColors.blackGrey,
+            ),
+          ),
+        ),
       ),
     );
   }

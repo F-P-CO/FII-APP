@@ -26,7 +26,7 @@ class ComparatorPage extends StatelessWidget {
         title: 'Comparador',
         settingsOnPressed: () =>
             navigatorService.pushNamed('/comparator-settings'),
-        searchOnChange: comparatorStore.changeSearchFilter,
+        searchOnChange: (String value) => comparatorStore.searchText = value,
       ),
       body: ScrollConfiguration(
         behavior: NoScrollGlowBehavior(),
