@@ -1,7 +1,7 @@
 import 'package:fii_app/core/navigation/navigator_service.dart';
 import 'package:fii_app/core/presentation/components/page_app_bar_component.dart';
 import 'package:fii_app/core/presentation/themes/app_colors.dart';
-import 'package:fii_app/modules/comparator/presentation/stores/comparator_store.dart';
+import 'package:fii_app/core/presentation/stores/comparator_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
@@ -31,8 +31,8 @@ class ComparatorSettingsPage extends StatelessWidget {
                 builder: (_) {
                   final min = comparatorStore.minAssetsAmount.toDouble();
                   final max = comparatorStore.maxAssetsAmount.toDouble();
-                  final disable = !comparatorStore.isAssetsAmountFilterEnabled;
                   const filter = Filter.assetsAmount;
+                  final disable = !comparatorStore.isFilterEnabled(filter);
 
                   return RangeSliderFilterComponent(
                     title: "Número de ativos",

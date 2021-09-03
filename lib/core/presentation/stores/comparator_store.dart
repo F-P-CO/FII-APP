@@ -15,13 +15,13 @@ abstract class _ComparatorStoreBase with Store {
   String? searchText;
 
   @observable
-  List<double>? dividendYieldRange;
-
-  @observable
-  List<double>? assetsAmountRange;
-
-  @observable
   ObservableList<Filter> enabledFilters = <Filter>[].asObservable();
+
+  @observable
+  late List<double> assetsAmountRange = [
+    minAssetsAmount.toDouble(),
+    maxAssetsAmount.toDouble()
+  ];
 
   _ComparatorStoreBase({
     required ReitListStore reitListStore,
@@ -41,6 +41,16 @@ abstract class _ComparatorStoreBase with Store {
           .toList();
     }
 
+    if (isFilterEnabled(Filter.assetsAmount)) {
+      reits = reits
+          .where(
+            (reit) =>
+                reit.assetsAmount >= assetsAmountRange.first &&
+                reit.assetsAmount <= assetsAmountRange.last,
+          )
+          .toList();
+    }
+
     return reits;
   }
 
@@ -56,27 +66,7 @@ abstract class _ComparatorStoreBase with Store {
   @computed
   bool get isSearchEnabled => searchText != null;
 
-  @computed
-  bool get isDividendYieldFilterEnabled =>
-      enabledFilters.contains(Filter.dividendYield);
-
-  @computed
-  bool get isAssetsAmountFilterEnabled =>
-      enabledFilters.contains(Filter.assetsAmount);
-
-  @computed
-  double get minDividendYield =>
-      _reitListStore.reitsSortedByCurrentDividendYield
-          .where((reit) => reit.currentDividendYield != null)
-          .last
-          .currentDividendYield!;
-
-  @computed
-  double get maxDividendYield =>
-      _reitListStore.reitsSortedByCurrentDividendYield
-          .where((reit) => reit.currentDividendYield != null)
-          .first
-          .currentDividendYield!;
+  bool isFilterEnabled(Filter filter) => enabledFilters.contains(filter);
 
   @computed
   int get minAssetsAmount =>

@@ -23,36 +23,6 @@ mixin _$ComparatorStore on _ComparatorStoreBase, Store {
       (_$isSearchEnabledComputed ??= Computed<bool>(() => super.isSearchEnabled,
               name: '_ComparatorStoreBase.isSearchEnabled'))
           .value;
-  Computed<bool>? _$isDividendYieldFilterEnabledComputed;
-
-  @override
-  bool get isDividendYieldFilterEnabled =>
-      (_$isDividendYieldFilterEnabledComputed ??= Computed<bool>(
-              () => super.isDividendYieldFilterEnabled,
-              name: '_ComparatorStoreBase.isDividendYieldFilterEnabled'))
-          .value;
-  Computed<bool>? _$isAssetsAmountFilterEnabledComputed;
-
-  @override
-  bool get isAssetsAmountFilterEnabled =>
-      (_$isAssetsAmountFilterEnabledComputed ??= Computed<bool>(
-              () => super.isAssetsAmountFilterEnabled,
-              name: '_ComparatorStoreBase.isAssetsAmountFilterEnabled'))
-          .value;
-  Computed<double>? _$minDividendYieldComputed;
-
-  @override
-  double get minDividendYield => (_$minDividendYieldComputed ??=
-          Computed<double>(() => super.minDividendYield,
-              name: '_ComparatorStoreBase.minDividendYield'))
-      .value;
-  Computed<double>? _$maxDividendYieldComputed;
-
-  @override
-  double get maxDividendYield => (_$maxDividendYieldComputed ??=
-          Computed<double>(() => super.maxDividendYield,
-              name: '_ComparatorStoreBase.maxDividendYield'))
-      .value;
   Computed<int>? _$minAssetsAmountComputed;
 
   @override
@@ -83,38 +53,6 @@ mixin _$ComparatorStore on _ComparatorStoreBase, Store {
     });
   }
 
-  final _$dividendYieldRangeAtom =
-      Atom(name: '_ComparatorStoreBase.dividendYieldRange');
-
-  @override
-  List<double>? get dividendYieldRange {
-    _$dividendYieldRangeAtom.reportRead();
-    return super.dividendYieldRange;
-  }
-
-  @override
-  set dividendYieldRange(List<double>? value) {
-    _$dividendYieldRangeAtom.reportWrite(value, super.dividendYieldRange, () {
-      super.dividendYieldRange = value;
-    });
-  }
-
-  final _$assetsAmountRangeAtom =
-      Atom(name: '_ComparatorStoreBase.assetsAmountRange');
-
-  @override
-  List<double>? get assetsAmountRange {
-    _$assetsAmountRangeAtom.reportRead();
-    return super.assetsAmountRange;
-  }
-
-  @override
-  set assetsAmountRange(List<double>? value) {
-    _$assetsAmountRangeAtom.reportWrite(value, super.assetsAmountRange, () {
-      super.assetsAmountRange = value;
-    });
-  }
-
   final _$enabledFiltersAtom =
       Atom(name: '_ComparatorStoreBase.enabledFilters');
 
@@ -128,6 +66,22 @@ mixin _$ComparatorStore on _ComparatorStoreBase, Store {
   set enabledFilters(ObservableList<Filter> value) {
     _$enabledFiltersAtom.reportWrite(value, super.enabledFilters, () {
       super.enabledFilters = value;
+    });
+  }
+
+  final _$assetsAmountRangeAtom =
+      Atom(name: '_ComparatorStoreBase.assetsAmountRange');
+
+  @override
+  List<double> get assetsAmountRange {
+    _$assetsAmountRangeAtom.reportRead();
+    return super.assetsAmountRange;
+  }
+
+  @override
+  set assetsAmountRange(List<double> value) {
+    _$assetsAmountRangeAtom.reportWrite(value, super.assetsAmountRange, () {
+      super.assetsAmountRange = value;
     });
   }
 
@@ -149,15 +103,10 @@ mixin _$ComparatorStore on _ComparatorStoreBase, Store {
   String toString() {
     return '''
 searchText: ${searchText},
-dividendYieldRange: ${dividendYieldRange},
-assetsAmountRange: ${assetsAmountRange},
 enabledFilters: ${enabledFilters},
+assetsAmountRange: ${assetsAmountRange},
 currentReits: ${currentReits},
 isSearchEnabled: ${isSearchEnabled},
-isDividendYieldFilterEnabled: ${isDividendYieldFilterEnabled},
-isAssetsAmountFilterEnabled: ${isAssetsAmountFilterEnabled},
-minDividendYield: ${minDividendYield},
-maxDividendYield: ${maxDividendYield},
 minAssetsAmount: ${minAssetsAmount},
 maxAssetsAmount: ${maxAssetsAmount}
     ''';
