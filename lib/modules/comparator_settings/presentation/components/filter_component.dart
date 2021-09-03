@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 class FilterComponent extends StatelessWidget {
   final String title;
+  final double spacing;
   final bool disable;
   final void Function()? onToggle;
   final Widget child;
@@ -11,6 +12,7 @@ class FilterComponent extends StatelessWidget {
   const FilterComponent({
     Key? key,
     required this.title,
+    required this.spacing,
     required this.disable,
     this.onToggle,
     required this.child,
@@ -44,7 +46,7 @@ class FilterComponent extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 45.0),
+          SizedBox(height: spacing),
           child,
         ],
       ),
