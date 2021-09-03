@@ -62,20 +62,134 @@ void main() {
     store = ComparatorStore(reitListStore: mockReitListStore);
   });
 
-  test('should return entire reit list by default', () {
-    when(mockReitListStore.reits).thenReturn(mockReitList);
+  group('currentReits', () {
+    test('should return entire reit list by default', () {
+      when(mockReitListStore.reits).thenReturn(mockReitList);
 
-    expect(store.currentReits, equals(mockReitList));
+      expect(store.currentReits, equals(mockReitList));
+    });
+
+    test('should return filtered reit list when filtering by search text', () {
+      when(mockReitListStore.reits).thenReturn(mockReitList);
+
+      store.searchText = 'MOCK1';
+
+      final mockedReit =
+          mockReitList.singleWhere((element) => element.symbol == 'MOCK1');
+      expect(store.currentReits.length, equals(1));
+      expect(store.currentReits.single, equals(mockedReit));
+    });
+
+    group('dividend yield filter', () {
+      const filter = Filter.dividendYield;
+
+      test(
+        'should return unfiltered reit list when filter is disabled',
+        () {
+          when(mockReitListStore.reits).thenReturn(mockReitList);
+
+          const double min = 2;
+          const double max = 2;
+
+          store.dividendYieldRange = [min, max];
+
+          final list = store.currentReits;
+          expect(list.first.currentDividendYield, equals(1));
+          expect(list.last.currentDividendYield, equals(3));
+        },
+      );
+
+      test(
+        'should return filtered reit list when min and max are provided',
+        () {
+          when(mockReitListStore.reits).thenReturn(mockReitList);
+
+          const double min = 2;
+          const double max = 3;
+
+          store.dividendYieldRange = [min, max];
+          store.enabledFilters.add(filter);
+
+          final list = store.currentReits;
+          expect(list.first.currentDividendYield, equals(min));
+          expect(list.last.currentDividendYield, equals(max));
+        },
+      );
+
+      test(
+        'should return filtered reit list when only min is provided',
+        () {
+          when(mockReitListStore.reits).thenReturn(mockReitList);
+
+          const double min = 2;
+          const double? max = null;
+
+          store.dividendYieldRange = [min, max];
+          store.enabledFilters.add(filter);
+
+          final list = store.currentReits;
+          expect(list.first.currentDividendYield, equals(min));
+          expect(list.last.currentDividendYield, equals(3));
+        },
+      );
+
+      test(
+        'should return filtered reit list when only max is provided',
+        () {
+          when(mockReitListStore.reits).thenReturn(mockReitList);
+
+          const double? min = null;
+          const double max = 2;
+
+          store.dividendYieldRange = [min, max];
+          store.enabledFilters.add(filter);
+
+          final list = store.currentReits;
+          expect(list.first.currentDividendYield, equals(1));
+          expect(list.last.currentDividendYield, equals(2));
+        },
+      );
+    });
   });
 
-  test('should return filtered reit list when filtering by search text', () {
-    when(mockReitListStore.reits).thenReturn(mockReitList);
+  group('toggle', () {
+    test('should enable a filter when the filter is disabled', () {
+      const mockFilter = Filter.dividendYield;
 
-    store.searchText = 'MOCK1';
+      store.toggle(mockFilter);
 
-    final mockedReit =
-        mockReitList.singleWhere((element) => element.symbol == 'MOCK1');
-    expect(store.currentReits.length, equals(1));
-    expect(store.currentReits.single, equals(mockedReit));
+      expect(store.enabledFilters, contains(mockFilter));
+    });
+
+    test('should disable a filter when the filter is enabled', () {
+      const mockFilter = Filter.dividendYield;
+      store.enabledFilters.add(mockFilter);
+
+      store.toggle(mockFilter);
+
+      expect(store.enabledFilters, isNot(contains(mockFilter)));
+    });
+  });
+
+  group('minAssetsAmount', () {
+    test('should return minimum assets amount from reits list', () {
+      when(mockReitListStore.reitsSortedByAssetsAmount)
+          .thenReturn(mockReitList.reversed.toList());
+
+      final min = store.minAssetsAmount;
+
+      expect(min, equals(1));
+    });
+  });
+
+  group('maxAssetsAmount', () {
+    test('should return maximum assets amount from reits list', () {
+      when(mockReitListStore.reitsSortedByAssetsAmount)
+          .thenReturn(mockReitList.reversed.toList());
+
+      final max = store.maxAssetsAmount;
+
+      expect(max, equals(3));
+    });
   });
 }

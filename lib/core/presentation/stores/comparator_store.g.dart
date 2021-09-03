@@ -69,6 +69,22 @@ mixin _$ComparatorStore on _ComparatorStoreBase, Store {
     });
   }
 
+  final _$dividendYieldRangeAtom =
+      Atom(name: '_ComparatorStoreBase.dividendYieldRange');
+
+  @override
+  List<double?> get dividendYieldRange {
+    _$dividendYieldRangeAtom.reportRead();
+    return super.dividendYieldRange;
+  }
+
+  @override
+  set dividendYieldRange(List<double?> value) {
+    _$dividendYieldRangeAtom.reportWrite(value, super.dividendYieldRange, () {
+      super.dividendYieldRange = value;
+    });
+  }
+
   final _$assetsAmountRangeAtom =
       Atom(name: '_ComparatorStoreBase.assetsAmountRange');
 
@@ -104,6 +120,7 @@ mixin _$ComparatorStore on _ComparatorStoreBase, Store {
     return '''
 searchText: ${searchText},
 enabledFilters: ${enabledFilters},
+dividendYieldRange: ${dividendYieldRange},
 assetsAmountRange: ${assetsAmountRange},
 currentReits: ${currentReits},
 isSearchEnabled: ${isSearchEnabled},

@@ -18,6 +18,9 @@ abstract class _ComparatorStoreBase with Store {
   ObservableList<Filter> enabledFilters = <Filter>[].asObservable();
 
   @observable
+  List<double?> dividendYieldRange = List.filled(2, null);
+
+  @observable
   late List<double> assetsAmountRange = [
     minAssetsAmount.toDouble(),
     maxAssetsAmount.toDouble()
@@ -39,6 +42,32 @@ abstract class _ComparatorStoreBase with Store {
                 reit.sector.toLowerCase().contains(searchText!.toLowerCase()),
           )
           .toList();
+    }
+
+    if (isFilterEnabled(Filter.dividendYield)) {
+      final min = dividendYieldRange.first;
+      final max = dividendYieldRange.last;
+
+      if (min != null) {
+        reits = reits
+            .where(
+              (reit) =>
+                  reit.currentDividendYield != null &&
+                  reit.currentDividendYield != 0 &&
+                  reit.currentDividendYield! >= min,
+            )
+            .toList();
+      }
+
+      if (max != null) {
+        reits = reits
+            .where(
+              (reit) =>
+                  reit.currentDividendYield != null &&
+                  reit.currentDividendYield! <= max,
+            )
+            .toList();
+      }
     }
 
     if (isFilterEnabled(Filter.assetsAmount)) {
