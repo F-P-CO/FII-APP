@@ -71,11 +71,11 @@ void main() {
   test('should return filtered reit list when filtering by search text', () {
     when(mockReitListStore.reits).thenReturn(mockReitList);
 
-    //store.changeSearchFilter('MOCK1');
+    store.searchText = 'MOCK1';
 
     final mockedReit =
         mockReitList.singleWhere((element) => element.symbol == 'MOCK1');
     expect(store.currentReits.length, equals(1));
     expect(store.currentReits.single, equals(mockedReit));
-  }, skip: true);
+  });
 }
