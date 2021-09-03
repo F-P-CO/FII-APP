@@ -8,7 +8,6 @@ class RangeSliderComponent extends StatefulWidget {
   final double max;
   final double lowerValue;
   final double upperValue;
-  final int? divisions;
   final bool disable;
   final void Function(double, double)? onChange;
 
@@ -18,7 +17,6 @@ class RangeSliderComponent extends StatefulWidget {
     required this.max,
     required this.lowerValue,
     required this.upperValue,
-    this.divisions,
     this.disable = false,
     this.onChange,
   }) : super(key: key);
@@ -46,9 +44,7 @@ class _RangeSliderComponentState extends State<RangeSliderComponent> {
         _upperValue = upperValue as double;
       });
 
-      if (widget.onChange != null) {
-        widget.onChange!(_lowerValue, _upperValue);
-      }
+      widget.onChange?.call(_lowerValue, _upperValue);
     }
   }
 
@@ -76,7 +72,9 @@ class _RangeSliderComponentState extends State<RangeSliderComponent> {
         trackBar: FlutterSliderTrackBar(
           activeTrackBar: BoxDecoration(
             borderRadius: BorderRadius.circular(4),
-            color: Theme.of(context).primaryColor,
+            color: widget.disable
+                ? AppColors.mediumGrey
+                : Theme.of(context).primaryColor,
           ),
         ),
         tooltip: FlutterSliderTooltip(
@@ -91,7 +89,8 @@ class _RangeSliderComponentState extends State<RangeSliderComponent> {
           boxStyle: FlutterSliderTooltipBox(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(4.0),
-              color: AppColors.blackGrey,
+              color:
+                  widget.disable ? AppColors.mediumGrey : AppColors.blackGrey,
             ),
           ),
         ),

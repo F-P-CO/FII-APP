@@ -7,7 +7,7 @@ class RangeSliderFilterComponent extends StatelessWidget {
   final String title;
   final double min;
   final double max;
-  final List<double> currentRange;
+  final List<double>? currentRange;
   final bool disable;
   final void Function(double, double)? onChange;
   final void Function()? onToggle;
@@ -47,11 +47,7 @@ class RangeSliderFilterComponent extends StatelessWidget {
                 groupValue: title,
                 value: disable ? 'disabled' : title,
                 toggleable: true,
-                onChanged: (String? value) {
-                  if (onToggle != null) {
-                    onToggle!();
-                  }
-                },
+                onChanged: (String? value) => onToggle?.call(),
               ),
             ],
           ),
@@ -59,8 +55,8 @@ class RangeSliderFilterComponent extends StatelessWidget {
           RangeSliderComponent(
             min: min,
             max: max,
-            lowerValue: currentRange.first,
-            upperValue: currentRange.last,
+            lowerValue: currentRange != null ? currentRange!.first : min,
+            upperValue: currentRange != null ? currentRange!.last : max,
             disable: disable,
             onChange: onChange,
           ),

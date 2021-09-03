@@ -29,21 +29,20 @@ class ComparatorSettingsPage extends StatelessWidget {
             children: [
               Observer(
                 builder: (_) {
+                  final min = comparatorStore.minAssetsAmount.toDouble();
+                  final max = comparatorStore.maxAssetsAmount.toDouble();
+                  final disable = !comparatorStore.isAssetsAmountFilterEnabled;
+                  const filter = Filter.assetsAmount;
+
                   return RangeSliderFilterComponent(
                     title: "Número de ativos",
-                    min: comparatorStore.minAssetsAmount.toDouble(),
-                    max: comparatorStore.maxAssetsAmount.toDouble(),
-                    disable: !comparatorStore.isAssetsAmountFilterEnabled,
-                    currentRange: comparatorStore.assetsAmountRange ??
-                        [
-                          comparatorStore.minAssetsAmount.toDouble(),
-                          comparatorStore.maxAssetsAmount.toDouble()
-                        ],
-                    onChange: (double lower, double upper) =>
+                    min: min,
+                    max: max,
+                    disable: disable,
+                    currentRange: comparatorStore.assetsAmountRange,
+                    onChange: (lower, upper) =>
                         comparatorStore.assetsAmountRange = [lower, upper],
-                    onToggle: () {
-                      comparatorStore.toggle(Filter.assetsAmount);
-                    },
+                    onToggle: () => comparatorStore.toggle(filter),
                   );
                 },
               ),
