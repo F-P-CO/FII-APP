@@ -81,7 +81,7 @@ void main() {
     });
 
     group('dividend yield filter', () {
-      const filter = Filter.dividendYield;
+      const filter = ReitFilter.dividendYield;
 
       test(
         'should return unfiltered reit list when filter is disabled',
@@ -152,20 +152,20 @@ void main() {
     });
   });
 
-  group('toggle', () {
+  group('toggleFilter', () {
     test('should enable a filter when the filter is disabled', () {
-      const mockFilter = Filter.dividendYield;
+      const mockFilter = ReitFilter.dividendYield;
 
-      store.toggle(mockFilter);
+      store.toggleFilter(mockFilter);
 
       expect(store.enabledFilters, contains(mockFilter));
     });
 
     test('should disable a filter when the filter is enabled', () {
-      const mockFilter = Filter.dividendYield;
+      const mockFilter = ReitFilter.dividendYield;
       store.enabledFilters.add(mockFilter);
 
-      store.toggle(mockFilter);
+      store.toggleFilter(mockFilter);
 
       expect(store.enabledFilters, isNot(contains(mockFilter)));
     });

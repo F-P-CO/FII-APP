@@ -16,9 +16,9 @@ class ComparatorSettingsPage extends StatelessWidget {
 
   ComparatorSettingsPage({Key? key}) : super(key: key);
 
-  static const Map<Filter, String> filtersTitle = {
-    Filter.dividendYield: "Dividend Yield",
-    Filter.assetsAmount: "Número de ativos",
+  static const Map<ReitFilter, String> filtersTitle = {
+    ReitFilter.dividendYield: "Dividend Yield",
+    ReitFilter.assetsAmount: "Número de ativos",
   };
 
   void closePage() => navigatorService.pop();
@@ -69,7 +69,7 @@ class ComparatorSettingsPage extends StatelessWidget {
                 const SizedBox(height: 12.0),
                 Observer(
                   builder: (_) {
-                    const filter = Filter.dividendYield;
+                    const filter = ReitFilter.dividendYield;
                     final disable = !comparatorStore.isFilterEnabled(filter);
 
                     return RangeInputFilterComponent(
@@ -81,7 +81,7 @@ class ComparatorSettingsPage extends StatelessWidget {
                       maxLength: 6,
                       onChange: (min, max) =>
                           comparatorStore.dividendYieldRange = [min, max],
-                      onToggle: () => comparatorStore.toggle(filter),
+                      onToggle: () => comparatorStore.toggleFilter(filter),
                     );
                   },
                 ),
@@ -89,7 +89,7 @@ class ComparatorSettingsPage extends StatelessWidget {
                   builder: (_) {
                     final min = comparatorStore.minAssetsAmount.toDouble();
                     final max = comparatorStore.maxAssetsAmount.toDouble();
-                    const filter = Filter.assetsAmount;
+                    const filter = ReitFilter.assetsAmount;
                     final disable = !comparatorStore.isFilterEnabled(filter);
 
                     return RangeSliderFilterComponent(
@@ -100,7 +100,7 @@ class ComparatorSettingsPage extends StatelessWidget {
                       currentRange: comparatorStore.assetsAmountRange,
                       onChange: (min, max) =>
                           comparatorStore.assetsAmountRange = [min, max],
-                      onToggle: () => comparatorStore.toggle(filter),
+                      onToggle: () => comparatorStore.toggleFilter(filter),
                     );
                   },
                 ),
