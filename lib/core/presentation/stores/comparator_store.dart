@@ -148,7 +148,9 @@ abstract class _ComparatorStoreBase with Store {
     final type = column.type;
 
     if (enabledColumns.contains(type)) {
-      enabledColumns.remove(type);
+      if (enabledColumns.length > 1) {
+        enabledColumns.remove(type);
+      }
     } else {
       enabledColumns.add(type);
     }
