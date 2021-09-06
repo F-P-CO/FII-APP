@@ -57,6 +57,51 @@ void main() {
     )
   ];
 
+  final mockReitListSortedByAssetsAmount = [
+    Reit(
+      symbol: 'MOCK3',
+      name: 'Mock Name 3',
+      sector: 'Mock Sector 3',
+      currentPrice: 3,
+      dailyLiquidity: 3,
+      currentDividend: 3,
+      currentDividendYield: 3,
+      netWorth: 3,
+      vpa: 3,
+      pvpa: 3,
+      vacancy: 3,
+      assetsAmount: 3,
+    ),
+    Reit(
+      symbol: 'MOCK2',
+      name: 'Mock Name 2',
+      sector: 'Mock Sector 2',
+      currentPrice: 2,
+      dailyLiquidity: 2,
+      currentDividend: 2,
+      currentDividendYield: 2,
+      netWorth: 2,
+      vpa: 2,
+      pvpa: 2,
+      vacancy: 2,
+      assetsAmount: 2,
+    ),
+    Reit(
+      symbol: 'MOCK1',
+      name: 'Mock Name',
+      sector: 'Mock Sector',
+      currentPrice: 1,
+      dailyLiquidity: 1,
+      currentDividend: 1,
+      currentDividendYield: 1,
+      netWorth: 1,
+      vpa: 1,
+      pvpa: 1,
+      vacancy: 1,
+      assetsAmount: 1,
+    ),
+  ];
+
   setUp(() {
     mockReitListStore = MockReitListStore();
     store = ComparatorStore(reitListStore: mockReitListStore);
@@ -87,11 +132,6 @@ void main() {
         'should return unfiltered reit list when filter is disabled',
         () {
           when(mockReitListStore.reits).thenReturn(mockReitList);
-
-          const double min = 2;
-          const double max = 2;
-
-          store.dividendYieldRange = [min, max];
 
           final list = store.currentReits;
           expect(list.first.currentDividendYield, equals(1));
@@ -147,6 +187,40 @@ void main() {
           final list = store.currentReits;
           expect(list.first.currentDividendYield, equals(1));
           expect(list.last.currentDividendYield, equals(2));
+        },
+      );
+    });
+
+    group('assets amount filter', () {
+      const filter = ReitFilter.assetsAmount;
+
+      test(
+        'should return unfiltered reit list when filter is disabled',
+        () {
+          when(mockReitListStore.reits).thenReturn(mockReitList);
+
+          final list = store.currentReits;
+          expect(list.first.assetsAmount, equals(1));
+          expect(list.last.assetsAmount, equals(3));
+        },
+      );
+
+      test(
+        'should return filtered reit list when min and max are provided',
+        () {
+          when(mockReitListStore.reits).thenReturn(mockReitList);
+          when(mockReitListStore.reitsSortedByAssetsAmount)
+              .thenReturn(mockReitListSortedByAssetsAmount);
+
+          const double min = 2;
+          const double max = 3;
+
+          store.assetsAmountRange = [min, max];
+          store.enabledFilters.add(filter);
+
+          final list = store.currentReits;
+          expect(list.first.assetsAmount, equals(min));
+          expect(list.last.assetsAmount, equals(max));
         },
       );
     });
