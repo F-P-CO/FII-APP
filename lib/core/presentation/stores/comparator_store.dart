@@ -31,16 +31,16 @@ abstract class _ComparatorStoreBase with Store {
   // Columns
   @observable
   ObservableList<ReitColumn> tableColumns = [
-    ReitColumn(type: ReitColumnType.sector),
-    ReitColumn(type: ReitColumnType.currentPrice),
-    ReitColumn(type: ReitColumnType.dailyLiquidity),
-    ReitColumn(type: ReitColumnType.currentDividend),
-    ReitColumn(type: ReitColumnType.currentDividendYield),
-    ReitColumn(type: ReitColumnType.netWorth),
-    ReitColumn(type: ReitColumnType.vpa),
-    ReitColumn(type: ReitColumnType.pvpa),
-    ReitColumn(type: ReitColumnType.vacancy),
-    ReitColumn(type: ReitColumnType.assetsAmount),
+    const ReitColumn(type: ReitColumnType.sector),
+    const ReitColumn(type: ReitColumnType.currentPrice),
+    const ReitColumn(type: ReitColumnType.dailyLiquidity),
+    const ReitColumn(type: ReitColumnType.currentDividend),
+    const ReitColumn(type: ReitColumnType.currentDividendYield),
+    const ReitColumn(type: ReitColumnType.netWorth),
+    const ReitColumn(type: ReitColumnType.vpa),
+    const ReitColumn(type: ReitColumnType.pvpa),
+    const ReitColumn(type: ReitColumnType.vacancy),
+    const ReitColumn(type: ReitColumnType.assetsAmount),
   ].asObservable();
 
   @observable

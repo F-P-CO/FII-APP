@@ -1,3 +1,5 @@
+import 'package:equatable/equatable.dart';
+
 enum ReitColumnType {
   sector,
   currentPrice,
@@ -11,10 +13,10 @@ enum ReitColumnType {
   assetsAmount
 }
 
-class ReitColumn {
+class ReitColumn extends Equatable {
   final ReitColumnType type;
 
-  ReitColumn({
+  const ReitColumn({
     required this.type,
   });
 
@@ -40,4 +42,7 @@ class ReitColumn {
 
     return label;
   }
+
+  @override
+  List<Object> get props => [type];
 }
