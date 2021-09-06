@@ -33,8 +33,20 @@ class ComparatorTableComponent extends StatelessWidget {
 
     for (var column = 0; column < totalColumns; column++) {
       final biggestCellLength = getBiggestCellLength(column);
-      final columnWidth = biggestCellLength * 12.0;
+      double factor = 12.0;
 
+      if (comparatorStore.enabledColumnsInOrder[column].type ==
+              ReitColumnType.sector ||
+          comparatorStore.enabledColumnsInOrder[column].type ==
+              ReitColumnType.currentDividend ||
+          comparatorStore.enabledColumnsInOrder[column].type ==
+              ReitColumnType.currentDividendYield ||
+          comparatorStore.enabledColumnsInOrder[column].type ==
+              ReitColumnType.assetsAmount) {
+        factor = 9;
+      }
+
+      final columnWidth = biggestCellLength * factor;
       cellWidthMap[column] = columnWidth;
     }
   }
