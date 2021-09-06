@@ -1,4 +1,5 @@
 import 'package:fii_app/core/domain/entities/reit.dart';
+import 'package:fii_app/core/domain/entities/reit_column.dart';
 import 'package:fii_app/core/presentation/stores/reit_list_store.dart';
 import 'package:fii_app/core/presentation/stores/comparator_store.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -264,6 +265,59 @@ void main() {
       final max = store.maxAssetsAmount;
 
       expect(max, equals(3));
+    });
+  });
+
+  group('enabledColumnsInOrder', () {
+    test('should return all available columns by default', () {
+      final columns = store.enabledColumnsInOrder;
+
+      final totalColumns = store.tableColumns.length;
+      expect(columns.length, equals(totalColumns));
+    });
+
+    test('should return only enabled columns when some columns are disabled',
+        () {
+      store.toggleColumn(const ReitColumn(type: ReitColumnType.currentPrice));
+      store
+          .toggleColumn(const ReitColumn(type: ReitColumnType.currentDividend));
+      store.toggleColumn(const ReitColumn(type: ReitColumnType.netWorth));
+
+      final columns = store.enabledColumnsInOrder;
+
+      final totalColumns = store.tableColumns.length - 3;
+      expect(columns.length, equals(totalColumns));
+      expect(
+        columns,
+        orderedEquals([
+          const ReitColumn(type: ReitColumnType.sector),
+          const ReitColumn(type: ReitColumnType.dailyLiquidity),
+          const ReitColumn(type: ReitColumnType.currentDividendYield),
+          const ReitColumn(type: ReitColumnType.vpa),
+          const ReitColumn(type: ReitColumnType.pvpa),
+          const ReitColumn(type: ReitColumnType.vacancy),
+          const ReitColumn(type: ReitColumnType.assetsAmount),
+        ]),
+      );
+    });
+  });
+
+  group('toggleColumn', () {
+    test('should enable a column when the column is disabled', () {
+      const mockColumn = ReitColumn(type: ReitColumnType.currentDividendYield);
+      store.enabledColumns.remove(mockColumn.type);
+
+      store.toggleColumn(mockColumn);
+
+      expect(store.enabledColumns, contains(mockColumn.type));
+    });
+
+    test('should disable a column when the column is enabled', () {
+      const mockColumn = ReitColumn(type: ReitColumnType.currentDividendYield);
+
+      store.toggleColumn(mockColumn);
+
+      expect(store.enabledColumns, isNot(contains(mockColumn)));
     });
   });
 }
