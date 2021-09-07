@@ -96,11 +96,11 @@ mixin _$ComparatorStore on _ComparatorStoreBase, Store {
       ActionController(name: '_ComparatorStoreBase');
 
   @override
-  void toggle(Filter filter) {
+  void toggleFilter(Filter filter) {
     final _$actionInfo = _$_ComparatorStoreBaseActionController.startAction(
-        name: '_ComparatorStoreBase.toggle');
+        name: '_ComparatorStoreBase.toggleFilter');
     try {
-      return super.toggle(filter);
+      return super.toggleFilter(filter);
     } finally {
       _$_ComparatorStoreBaseActionController.endAction(_$actionInfo);
     }

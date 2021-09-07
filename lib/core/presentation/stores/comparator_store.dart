@@ -54,7 +54,7 @@ abstract class _ComparatorStoreBase with Store {
   }
 
   @action
-  void toggle(Filter filter) {
+  void toggleFilter(Filter filter) {
     if (enabledFilters.contains(filter)) {
       enabledFilters.remove(filter);
     } else {
