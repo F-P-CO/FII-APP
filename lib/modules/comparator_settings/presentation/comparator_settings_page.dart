@@ -1,7 +1,7 @@
 import 'package:fii_app/core/navigation/navigator_service.dart';
 import 'package:fii_app/core/presentation/components/page_app_bar_component.dart';
-import 'package:fii_app/core/presentation/themes/app_colors.dart';
 import 'package:fii_app/core/presentation/stores/comparator_store.dart';
+import 'package:fii_app/core/presentation/themes/app_colors.dart';
 import 'package:fii_app/core/presentation/themes/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';

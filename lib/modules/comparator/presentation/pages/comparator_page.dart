@@ -1,12 +1,12 @@
 import 'package:fii_app/core/navigation/navigator_service.dart';
 import 'package:fii_app/core/presentation/components/filter_chip_component.dart';
 import 'package:fii_app/core/presentation/components/header_app_bar_component.dart';
+import 'package:fii_app/core/presentation/stores/comparator_store.dart';
 import 'package:fii_app/core/presentation/stores/reit_list_store.dart';
 import 'package:fii_app/core/presentation/themes/app_colors.dart';
 import 'package:fii_app/core/presentation/themes/app_text_styles.dart';
 import 'package:fii_app/core/presentation/themes/no_scroll_glow_behavior.dart';
 import 'package:fii_app/modules/comparator/presentation/components/comparator_table_component.dart';
-import 'package:fii_app/core/presentation/stores/comparator_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
