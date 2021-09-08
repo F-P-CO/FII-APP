@@ -1,6 +1,6 @@
+import 'package:fii_app/core/domain/entities/reit_column.dart';
 import 'package:fii_app/core/errors/datasource_exceptions.dart';
 import 'package:fii_app/modules/reit_list/data/datasources/reit_list_settings_data_source.dart';
-import 'package:fii_app/core/domain/entities/reit_column.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LocalReitSettingsDataSource implements ReitListSettingsDataSource {

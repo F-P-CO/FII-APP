@@ -1,8 +1,8 @@
-import 'package:fii_app/core/errors/failures.dart';
+import 'package:fii_app/core/domain/entities/reit.dart';
 import 'package:fii_app/core/domain/entities/reit_column.dart';
+import 'package:fii_app/core/errors/failures.dart';
 import 'package:mobx/mobx.dart';
 
-import 'package:fii_app/core/domain/entities/reit.dart';
 import '../../../modules/reit_list/domain/usecases/get_all_reits.dart';
 
 part 'reit_list_store.g.dart';

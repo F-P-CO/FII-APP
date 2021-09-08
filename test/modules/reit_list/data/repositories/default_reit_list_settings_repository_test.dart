@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
+import 'package:fii_app/core/domain/entities/reit_column.dart';
 import 'package:fii_app/modules/reit_list/data/datasources/local_reit_list_settings_data_source.dart';
 import 'package:fii_app/modules/reit_list/data/repositories/default_reit_list_settings_repository.dart';
-import 'package:fii_app/core/domain/entities/reit_column.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';

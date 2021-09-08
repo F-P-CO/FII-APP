@@ -1,8 +1,8 @@
-import 'package:fii_app/core/domain/entities/reit_column.dart';
-import 'package:flutter/material.dart';
 import 'package:fii_app/core/domain/entities/reit.dart';
+import 'package:fii_app/core/domain/entities/reit_column.dart';
 import 'package:fii_app/core/presentation/themes/app_colors.dart';
 import 'package:fii_app/core/presentation/themes/app_text_styles.dart';
+import 'package:flutter/material.dart';
 
 class ReitCardComponent extends StatelessWidget {
   final Reit reit;

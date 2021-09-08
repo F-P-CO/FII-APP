@@ -1,8 +1,8 @@
 import 'package:fii_app/core/presentation/components/number_slider_component.dart';
 import 'package:fii_app/core/presentation/helpers/debouncer.dart';
+import 'package:fii_app/core/presentation/stores/reit_list_store.dart';
 import 'package:fii_app/core/presentation/themes/app_text_styles.dart';
 import 'package:fii_app/modules/reit_list/presentation/stores/reit_list_settings_store.dart';
-import 'package:fii_app/core/presentation/stores/reit_list_store.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
