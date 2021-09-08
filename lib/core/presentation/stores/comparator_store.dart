@@ -63,7 +63,7 @@ abstract class _ComparatorStoreBase with Store {
   }
 
   @computed
-  bool get isSearchEnabled => searchText != null;
+  bool get isSearchEnabled => searchText != '';
 
   bool isFilterEnabled(Filter filter) => enabledFilters.contains(filter);
 

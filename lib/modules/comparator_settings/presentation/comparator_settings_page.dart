@@ -42,7 +42,7 @@ class ComparatorSettingsPage extends StatelessWidget {
                     currentRange: comparatorStore.assetsAmountRange,
                     onChange: (lower, upper) =>
                         comparatorStore.assetsAmountRange = [lower, upper],
-                    onToggle: () => comparatorStore.toggle(filter),
+                    onToggle: () => comparatorStore.toggleFilter(filter),
                   );
                 },
               ),
