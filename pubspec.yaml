@@ -23,6 +23,10 @@ dependencies:
   shared_preferences: ^2.0.6
   shimmer: ^2.0.0
   lazy_data_table: ^0.3.0
+  flutter_xlider:
+    git:
+      url: https://github.com/Ali-Azmoud/flutter_xlider.git
+      ref: master
 
 dev_dependencies:
   flutter_test:

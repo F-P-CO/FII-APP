@@ -1,6 +1,6 @@
 import 'package:fii_app/core/domain/entities/reit.dart';
 import 'package:fii_app/core/presentation/stores/reit_list_store.dart';
-import 'package:fii_app/modules/comparator/presentation/stores/comparator_store.dart';
+import 'package:fii_app/core/presentation/stores/comparator_store.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
@@ -71,7 +71,7 @@ void main() {
   test('should return filtered reit list when filtering by search text', () {
     when(mockReitListStore.reits).thenReturn(mockReitList);
 
-    store.changeSearchFilter('MOCK1');
+    store.searchText = 'MOCK1';
 
     final mockedReit =
         mockReitList.singleWhere((element) => element.symbol == 'MOCK1');
