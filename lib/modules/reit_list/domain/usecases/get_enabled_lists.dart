@@ -1,4 +1,4 @@
-import 'package:fii_app/modules/reit_list/domain/entities/reit_list_sort_option.dart';
+import 'package:fii_app/core/domain/entities/reit_column.dart';
 import 'package:fii_app/modules/reit_list/domain/repositories/reit_list_settings_repository.dart';
 
 class GetEnabledLists {
@@ -6,6 +6,6 @@ class GetEnabledLists {
 
   GetEnabledLists({required this.reitListSettingsRepository});
 
-  Future<List<ReitListSortOptionType>> call() =>
+  Future<List<ReitColumnType>> call() =>
       reitListSettingsRepository.getEnabledLists();
 }

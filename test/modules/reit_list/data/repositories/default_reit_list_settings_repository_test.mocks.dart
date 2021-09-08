@@ -4,10 +4,9 @@
 
 import 'dart:async' as _i4;
 
+import 'package:fii_app/core/domain/entities/reit_column.dart' as _i5;
 import 'package:fii_app/modules/reit_list/data/datasources/local_reit_list_settings_data_source.dart'
     as _i3;
-import 'package:fii_app/modules/reit_list/domain/entities/reit_list_sort_option.dart'
-    as _i5;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:shared_preferences/shared_preferences.dart' as _i2;
 
@@ -36,13 +35,13 @@ class MockLocalReitSettingsDataSource extends _i1.Mock
       (super.noSuchMethod(Invocation.getter(#sharedPreferences),
           returnValue: _FakeSharedPreferences()) as _i2.SharedPreferences);
   @override
-  _i4.Future<List<_i5.ReitListSortOptionType>> getEnabledLists() =>
-      (super.noSuchMethod(Invocation.method(#getEnabledLists, []),
-              returnValue: Future<List<_i5.ReitListSortOptionType>>.value(
-                  <_i5.ReitListSortOptionType>[]))
-          as _i4.Future<List<_i5.ReitListSortOptionType>>);
+  _i4.Future<List<_i5.ReitColumnType>> getEnabledLists() => (super.noSuchMethod(
+          Invocation.method(#getEnabledLists, []),
+          returnValue:
+              Future<List<_i5.ReitColumnType>>.value(<_i5.ReitColumnType>[]))
+      as _i4.Future<List<_i5.ReitColumnType>>);
   @override
-  _i4.Future<bool> saveEnabledLists(List<_i5.ReitListSortOptionType>? lists) =>
+  _i4.Future<bool> saveEnabledLists(List<_i5.ReitColumnType>? lists) =>
       (super.noSuchMethod(Invocation.method(#saveEnabledLists, [lists]),
           returnValue: Future<bool>.value(false)) as _i4.Future<bool>);
   @override

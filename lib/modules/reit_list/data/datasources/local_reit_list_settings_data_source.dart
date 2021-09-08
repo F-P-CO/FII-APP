@@ -1,6 +1,6 @@
+import 'package:fii_app/core/domain/entities/reit_column.dart';
 import 'package:fii_app/core/errors/datasource_exceptions.dart';
 import 'package:fii_app/modules/reit_list/data/datasources/reit_list_settings_data_source.dart';
-import 'package:fii_app/modules/reit_list/domain/entities/reit_list_sort_option.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LocalReitSettingsDataSource implements ReitListSettingsDataSource {
@@ -12,12 +12,12 @@ class LocalReitSettingsDataSource implements ReitListSettingsDataSource {
   LocalReitSettingsDataSource({required this.sharedPreferences});
 
   @override
-  Future<List<ReitListSortOptionType>> getEnabledLists() async {
+  Future<List<ReitColumnType>> getEnabledLists() async {
     final stringList = sharedPreferences.getStringList(enabledListsStorageKey);
 
     if (stringList != null) {
       final enabledLists = stringList
-          .map((item) => ReitListSortOptionType.values[int.parse(item)])
+          .map((item) => ReitColumnType.values[int.parse(item)])
           .toList();
       return enabledLists;
     } else {
@@ -26,7 +26,7 @@ class LocalReitSettingsDataSource implements ReitListSettingsDataSource {
   }
 
   @override
-  Future<bool> saveEnabledLists(List<ReitListSortOptionType> lists) async {
+  Future<bool> saveEnabledLists(List<ReitColumnType> lists) async {
     final stringList = lists.map((type) => type.index.toString()).toList();
     return sharedPreferences.setStringList(enabledListsStorageKey, stringList);
   }

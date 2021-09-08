@@ -21,13 +21,13 @@ mixin _$ReitListSettingsStore on _ReitListSettingsStoreBase, Store {
       Atom(name: '_ReitListSettingsStoreBase.enabledLists');
 
   @override
-  ObservableSet<ReitListSortOptionType> get enabledLists {
+  ObservableSet<ReitColumnType> get enabledLists {
     _$enabledListsAtom.reportRead();
     return super.enabledLists;
   }
 
   @override
-  set enabledLists(ObservableSet<ReitListSortOptionType> value) {
+  set enabledLists(ObservableSet<ReitColumnType> value) {
     _$enabledListsAtom.reportWrite(value, super.enabledLists, () {
       super.enabledLists = value;
     });
@@ -71,7 +71,7 @@ mixin _$ReitListSettingsStore on _ReitListSettingsStoreBase, Store {
   }
 
   @override
-  void toggleList(ReitListSortOptionType option) {
+  void toggleList(ReitColumnType option) {
     final _$actionInfo = _$_ReitListSettingsStoreBaseActionController
         .startAction(name: '_ReitListSettingsStoreBase.toggleList');
     try {
@@ -82,7 +82,7 @@ mixin _$ReitListSettingsStore on _ReitListSettingsStoreBase, Store {
   }
 
   @override
-  void enableList(ReitListSortOptionType option) {
+  void enableList(ReitColumnType option) {
     final _$actionInfo = _$_ReitListSettingsStoreBaseActionController
         .startAction(name: '_ReitListSettingsStoreBase.enableList');
     try {
@@ -93,7 +93,7 @@ mixin _$ReitListSettingsStore on _ReitListSettingsStoreBase, Store {
   }
 
   @override
-  void disableList(ReitListSortOptionType option) {
+  void disableList(ReitColumnType option) {
     final _$actionInfo = _$_ReitListSettingsStoreBaseActionController
         .startAction(name: '_ReitListSettingsStoreBase.disableList');
     try {

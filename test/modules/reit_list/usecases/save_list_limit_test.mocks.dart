@@ -5,9 +5,8 @@
 import 'dart:async' as _i4;
 
 import 'package:dartz/dartz.dart' as _i2;
+import 'package:fii_app/core/domain/entities/reit_column.dart' as _i5;
 import 'package:fii_app/core/errors/failures.dart' as _i6;
-import 'package:fii_app/modules/reit_list/domain/entities/reit_list_sort_option.dart'
-    as _i5;
 import 'package:fii_app/modules/reit_list/domain/repositories/reit_list_settings_repository.dart'
     as _i3;
 import 'package:mockito/mockito.dart' as _i1;
@@ -32,14 +31,14 @@ class MockReitListSettingsRepository extends _i1.Mock
   }
 
   @override
-  _i4.Future<List<_i5.ReitListSortOptionType>> getEnabledLists() =>
-      (super.noSuchMethod(Invocation.method(#getEnabledLists, []),
-              returnValue: Future<List<_i5.ReitListSortOptionType>>.value(
-                  <_i5.ReitListSortOptionType>[]))
-          as _i4.Future<List<_i5.ReitListSortOptionType>>);
+  _i4.Future<List<_i5.ReitColumnType>> getEnabledLists() => (super.noSuchMethod(
+          Invocation.method(#getEnabledLists, []),
+          returnValue:
+              Future<List<_i5.ReitColumnType>>.value(<_i5.ReitColumnType>[]))
+      as _i4.Future<List<_i5.ReitColumnType>>);
   @override
   _i4.Future<_i2.Either<_i6.Failure, bool>> saveEnabledLists(
-          List<_i5.ReitListSortOptionType>? lists) =>
+          List<_i5.ReitColumnType>? lists) =>
       (super.noSuchMethod(Invocation.method(#saveEnabledLists, [lists]),
               returnValue: Future<_i2.Either<_i6.Failure, bool>>.value(
                   _FakeEither<_i6.Failure, bool>()))

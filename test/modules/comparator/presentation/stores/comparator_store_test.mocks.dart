@@ -5,9 +5,8 @@
 import 'dart:async' as _i5;
 
 import 'package:fii_app/core/domain/entities/reit.dart' as _i4;
+import 'package:fii_app/core/domain/entities/reit_column.dart' as _i6;
 import 'package:fii_app/core/presentation/stores/reit_list_store.dart' as _i3;
-import 'package:fii_app/modules/reit_list/domain/entities/reit_list_sort_option.dart'
-    as _i6;
 import 'package:fii_app/modules/reit_list/domain/usecases/get_all_reits.dart'
     as _i2;
 import 'package:mockito/mockito.dart' as _i1;
@@ -84,7 +83,7 @@ class MockReitListStore extends _i1.Mock implements _i3.ReitListStore {
           returnValue: Future<void>.value(),
           returnValueForMissingStub: Future<void>.value()) as _i5.Future<void>);
   @override
-  List<_i4.Reit> getReitsSortedBy(_i6.ReitListSortOptionType? sortType) =>
+  List<_i4.Reit> getReitsSortedBy(_i6.ReitColumnType? sortType) =>
       (super.noSuchMethod(Invocation.method(#getReitsSortedBy, [sortType]),
           returnValue: <_i4.Reit>[]) as List<_i4.Reit>);
   @override

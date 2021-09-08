@@ -1,16 +1,16 @@
 import 'package:dartz/dartz.dart';
+import 'package:fii_app/core/domain/entities/reit_column.dart';
 import 'package:fii_app/core/errors/failures.dart';
 import 'package:fii_app/modules/reit_list/data/datasources/local_reit_list_settings_data_source.dart';
-import 'package:fii_app/modules/reit_list/domain/entities/reit_list_sort_option.dart';
 import 'package:fii_app/modules/reit_list/domain/repositories/reit_list_settings_repository.dart';
 
 class DefaultReitListSettingsRepository implements ReitListSettingsRepository {
   final LocalReitSettingsDataSource localDatasource;
 
-  final List<ReitListSortOptionType> defaultEnabledLists = [
-    ReitListSortOptionType.netWorth,
-    ReitListSortOptionType.currentDividendYield,
-    ReitListSortOptionType.assetsAmount,
+  final List<ReitColumnType> defaultEnabledLists = [
+    ReitColumnType.netWorth,
+    ReitColumnType.currentDividendYield,
+    ReitColumnType.assetsAmount,
   ];
 
   final int defaultLimit = 5;
@@ -20,7 +20,7 @@ class DefaultReitListSettingsRepository implements ReitListSettingsRepository {
   });
 
   @override
-  Future<List<ReitListSortOptionType>> getEnabledLists() async {
+  Future<List<ReitColumnType>> getEnabledLists() async {
     try {
       final lists = await localDatasource.getEnabledLists();
       return lists;
@@ -31,7 +31,7 @@ class DefaultReitListSettingsRepository implements ReitListSettingsRepository {
 
   @override
   Future<Either<Failure, bool>> saveEnabledLists(
-      List<ReitListSortOptionType> lists) async {
+      List<ReitColumnType> lists) async {
     try {
       final saved = await localDatasource.saveEnabledLists(lists);
 
