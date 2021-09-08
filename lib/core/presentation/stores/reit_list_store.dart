@@ -1,5 +1,5 @@
 import 'package:fii_app/core/errors/failures.dart';
-import 'package:fii_app/modules/reit_list/domain/entities/reit_list_sort_option.dart';
+import 'package:fii_app/core/domain/entities/reit_column.dart';
 import 'package:mobx/mobx.dart';
 
 import 'package:fii_app/core/domain/entities/reit.dart';
@@ -77,7 +77,7 @@ abstract class _ReitListStoreBase with Store {
     return localReits;
   }
 
-  List<Reit> getReitsSortedBy(ReitListSortOptionType sortType) {
+  List<Reit> getReitsSortedBy(ReitColumnType sortType) {
     final key = sortType;
 
     if (_mapSortTypeToReitList.containsKey(key)) {
@@ -87,10 +87,9 @@ abstract class _ReitListStoreBase with Store {
     throw ArgumentError('Sort option not found on Sort Map.');
   }
 
-  Map<ReitListSortOptionType, List<Reit>> get _mapSortTypeToReitList => {
-        ReitListSortOptionType.netWorth: reitsSortedByNetWorth,
-        ReitListSortOptionType.currentDividendYield:
-            reitsSortedByCurrentDividendYield,
-        ReitListSortOptionType.assetsAmount: reitsSortedByAssetsAmount,
+  Map<ReitColumnType, List<Reit>> get _mapSortTypeToReitList => {
+        ReitColumnType.netWorth: reitsSortedByNetWorth,
+        ReitColumnType.currentDividendYield: reitsSortedByCurrentDividendYield,
+        ReitColumnType.assetsAmount: reitsSortedByAssetsAmount,
       };
 }

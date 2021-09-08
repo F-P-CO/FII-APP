@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:fii_app/modules/reit_list/domain/entities/reit_list_sort_option.dart';
+import 'package:fii_app/core/domain/entities/reit_column.dart';
 import 'package:fii_app/modules/reit_list/domain/usecases/get_enabled_lists.dart';
 import 'package:fii_app/modules/reit_list/domain/usecases/get_list_limit.dart';
 import 'package:fii_app/modules/reit_list/domain/usecases/save_enabled_lists.dart';
@@ -38,10 +38,8 @@ void main() {
     test('should set [enabledLists] to enabled lists fetched from usecase',
         () async {
       when(mockGetListLimit()).thenReturn(0);
-      final mockList = mobx.ObservableSet.of([
-        ReitListSortOptionType.assetsAmount,
-        ReitListSortOptionType.netWorth
-      ]);
+      final mockList = mobx.ObservableSet.of(
+          [ReitColumnType.assetsAmount, ReitColumnType.netWorth]);
       when(mockGetEnabledLists()).thenAnswer((_) async => mockList.toList());
 
       await store.init();
@@ -51,7 +49,7 @@ void main() {
     });
 
     test('should set [limit] to limit fetched from usecase', () async {
-      final mockList = mobx.ObservableSet.of(<ReitListSortOptionType>[]);
+      final mockList = mobx.ObservableSet.of(<ReitColumnType>[]);
       when(mockGetEnabledLists()).thenAnswer((_) async => mockList.toList());
       const mockLimit = 5;
       when(mockGetListLimit()).thenReturn(mockLimit);
@@ -64,10 +62,10 @@ void main() {
   });
 
   group('isEnabled', () {
-    late ReitListSortOptionType option;
+    late ReitColumnType option;
 
     setUp(() {
-      option = ReitListSortOptionType.assetsAmount;
+      option = ReitColumnType.assetsAmount;
     });
     test('should return true when list is enabled', () {
       when(mockSaveEnabledLists([option]))
@@ -87,10 +85,10 @@ void main() {
   });
 
   group('toggleList', () {
-    late ReitListSortOptionType option;
+    late ReitColumnType option;
 
     setUp(() {
-      option = ReitListSortOptionType.assetsAmount;
+      option = ReitColumnType.assetsAmount;
     });
 
     test('should enable list when list is disabled', () {
@@ -104,10 +102,7 @@ void main() {
     });
 
     test('should disable list when list is enabled', () async {
-      const mockList = [
-        ReitListSortOptionType.assetsAmount,
-        ReitListSortOptionType.netWorth
-      ];
+      const mockList = [ReitColumnType.assetsAmount, ReitColumnType.netWorth];
       when(mockGetEnabledLists()).thenAnswer((_) async => mockList);
       when(mockGetListLimit()).thenReturn(0);
       await store.init();
@@ -135,10 +130,10 @@ void main() {
   });
 
   group('enableList', () {
-    late ReitListSortOptionType option;
+    late ReitColumnType option;
 
     setUp(() {
-      option = ReitListSortOptionType.assetsAmount;
+      option = ReitColumnType.assetsAmount;
 
       when(mockSaveEnabledLists([option]))
           .thenAnswer((_) async => const Right(true));
@@ -168,10 +163,10 @@ void main() {
   });
 
   group('disableList', () {
-    late ReitListSortOptionType option;
+    late ReitColumnType option;
 
     setUp(() {
-      option = ReitListSortOptionType.assetsAmount;
+      option = ReitColumnType.assetsAmount;
 
       when(mockSaveEnabledLists([])).thenAnswer((_) async => const Right(true));
     });

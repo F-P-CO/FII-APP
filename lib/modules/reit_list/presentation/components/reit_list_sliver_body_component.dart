@@ -1,4 +1,4 @@
-import 'package:fii_app/modules/reit_list/domain/entities/reit_list_sort_option.dart';
+import 'package:fii_app/core/domain/entities/reit_column.dart';
 import 'package:fii_app/modules/reit_list/presentation/stores/reit_list_settings_store.dart';
 import 'package:fii_app/core/presentation/stores/reit_list_store.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +12,7 @@ class ReitListSliverBodyComponent extends StatelessWidget {
   final reitListStore = GetIt.I.get<ReitListStore>();
   final reitListSettingsStore = GetIt.I.get<ReitListSettingsStore>();
 
-  final ReitListSortOption sortOption;
+  final ReitColumn sortOption;
 
   ReitListSliverBodyComponent({
     Key? key,

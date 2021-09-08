@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:fii_app/modules/reit_list/data/datasources/local_reit_list_settings_data_source.dart';
 import 'package:fii_app/modules/reit_list/data/repositories/default_reit_list_settings_repository.dart';
-import 'package:fii_app/modules/reit_list/domain/entities/reit_list_sort_option.dart';
+import 'package:fii_app/core/domain/entities/reit_column.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
@@ -24,7 +24,7 @@ void main() {
   group('getEnabledLists', () {
     test('should return enabled lists when datasource returns a list',
         () async {
-      final mockList = [ReitListSortOptionType.netWorth];
+      final mockList = [ReitColumnType.netWorth];
 
       when(mockDatasource.getEnabledLists())
           .thenAnswer((_) => Future.value(mockList));
@@ -49,7 +49,7 @@ void main() {
 
   group('saveEnabledLists', () {
     test('should save lists on datasource', () async {
-      final mockList = [ReitListSortOptionType.netWorth];
+      final mockList = [ReitColumnType.netWorth];
       when(mockDatasource.saveEnabledLists(mockList))
           .thenAnswer((_) => Future.value(true));
 

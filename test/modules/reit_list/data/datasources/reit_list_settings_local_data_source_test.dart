@@ -1,6 +1,6 @@
 import 'package:fii_app/core/errors/datasource_exceptions.dart';
 import 'package:fii_app/modules/reit_list/data/datasources/local_reit_list_settings_data_source.dart';
-import 'package:fii_app/modules/reit_list/domain/entities/reit_list_sort_option.dart';
+import 'package:fii_app/core/domain/entities/reit_column.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
@@ -25,13 +25,13 @@ void main() {
     test('should get list from shared preferences when there is a list saved',
         () async {
       final List<String> stringList = [
-        ReitListSortOptionType.assetsAmount.index.toString()
+        ReitColumnType.assetsAmount.index.toString()
       ];
       when(mockSharedPreferences.getStringList(any)).thenReturn(stringList);
 
       final list = await datasource.getEnabledLists();
 
-      final expectedList = [ReitListSortOptionType.assetsAmount];
+      final expectedList = [ReitColumnType.assetsAmount];
       expect(list, equals(expectedList));
       verify(mockSharedPreferences.getStringList(any));
     });
@@ -51,7 +51,7 @@ void main() {
       when(mockSharedPreferences.setStringList(any, any))
           .thenAnswer((_) => Future.value(true));
 
-      final list = [ReitListSortOptionType.assetsAmount];
+      final list = [ReitColumnType.assetsAmount];
       final save = await datasource.saveEnabledLists(list);
 
       expect(save, true);

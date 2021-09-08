@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:fii_app/core/errors/failures.dart';
-import 'package:fii_app/modules/reit_list/domain/entities/reit_list_sort_option.dart';
+import 'package:fii_app/core/domain/entities/reit_column.dart';
 import 'package:fii_app/modules/reit_list/domain/repositories/reit_list_settings_repository.dart';
 import 'package:fii_app/modules/reit_list/domain/usecases/save_enabled_lists.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -14,7 +14,7 @@ void main() {
   late MockReitListSettingsRepository mockReitListSettingsRepository;
   late SaveEnabledLists usecase;
 
-  final mockList = [ReitListSortOptionType.assetsAmount];
+  final mockList = [ReitColumnType.assetsAmount];
 
   setUp(() {
     mockReitListSettingsRepository = MockReitListSettingsRepository();

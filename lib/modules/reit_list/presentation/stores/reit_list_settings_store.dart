@@ -1,4 +1,4 @@
-import 'package:fii_app/modules/reit_list/domain/entities/reit_list_sort_option.dart';
+import 'package:fii_app/core/domain/entities/reit_column.dart';
 import 'package:fii_app/modules/reit_list/domain/usecases/get_enabled_lists.dart';
 import 'package:fii_app/modules/reit_list/domain/usecases/get_list_limit.dart';
 import 'package:fii_app/modules/reit_list/domain/usecases/save_enabled_lists.dart';
@@ -17,25 +17,22 @@ abstract class _ReitListSettingsStoreBase with Store {
   final SaveListLimit saveListLimit;
 
   @observable
-  ObservableSet<ReitListSortOptionType> enabledLists = ObservableSet.of([]);
+  ObservableSet<ReitColumnType> enabledLists = ObservableSet.of([]);
 
   @observable
   int limit = 5;
 
   int maxLoadingLimit = 5;
 
-  final sortOptions = [
-    const ReitListSortOption(
-      label: "Patrimônio Liquído",
-      type: ReitListSortOptionType.netWorth,
+  final sortOptions = const [
+    ReitColumn(
+      type: ReitColumnType.netWorth,
     ),
-    const ReitListSortOption(
-      label: "Dividend Yield Atual",
-      type: ReitListSortOptionType.currentDividendYield,
+    ReitColumn(
+      type: ReitColumnType.currentDividendYield,
     ),
-    const ReitListSortOption(
-      label: "Quantidade de Ativos",
-      type: ReitListSortOptionType.assetsAmount,
+    ReitColumn(
+      type: ReitColumnType.assetsAmount,
     ),
   ];
 
@@ -67,11 +64,10 @@ abstract class _ReitListSettingsStoreBase with Store {
   @computed
   int get loadingLimit => limit > maxLoadingLimit ? maxLoadingLimit : limit;
 
-  bool isEnabled(ReitListSortOptionType option) =>
-      enabledLists.contains(option);
+  bool isEnabled(ReitColumnType option) => enabledLists.contains(option);
 
   @action
-  void toggleList(ReitListSortOptionType option) {
+  void toggleList(ReitColumnType option) {
     if (isEnabled(option)) {
       if (enabledLists.length > 1) {
         disableList(option);
@@ -82,13 +78,13 @@ abstract class _ReitListSettingsStoreBase with Store {
   }
 
   @action
-  void enableList(ReitListSortOptionType option) {
+  void enableList(ReitColumnType option) {
     enabledLists.add(option);
     _persistEnabledLists();
   }
 
   @action
-  void disableList(ReitListSortOptionType option) {
+  void disableList(ReitColumnType option) {
     enabledLists.remove(option);
     _persistEnabledLists();
   }

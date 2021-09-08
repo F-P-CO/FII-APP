@@ -1,4 +1,4 @@
-import 'package:fii_app/modules/reit_list/domain/entities/reit_list_sort_option.dart';
+import 'package:fii_app/core/domain/entities/reit_column.dart';
 import 'package:flutter/material.dart';
 import 'package:fii_app/core/domain/entities/reit.dart';
 import 'package:fii_app/core/presentation/themes/app_colors.dart';
@@ -6,7 +6,7 @@ import 'package:fii_app/core/presentation/themes/app_text_styles.dart';
 
 class ReitCardComponent extends StatelessWidget {
   final Reit reit;
-  final ReitListSortOptionType sortType;
+  final ReitColumnType sortType;
 
   const ReitCardComponent({
     Key? key,
@@ -46,7 +46,7 @@ class ReitCardComponent extends StatelessWidget {
                     ),
                   ),
                 ),
-                if (sortType == ReitListSortOptionType.netWorth)
+                if (sortType == ReitColumnType.netWorth)
                   Text(
                     reit.formattedNetWorth,
                     style: AppTextStyles.primaryFont.copyWith(
@@ -55,7 +55,7 @@ class ReitCardComponent extends StatelessWidget {
                       color: AppColors.blackGrey,
                     ),
                   ),
-                if (sortType == ReitListSortOptionType.currentDividendYield)
+                if (sortType == ReitColumnType.currentDividendYield)
                   Text(
                     reit.currentDividendYield != null
                         ? "${reit.currentDividendYield!.toStringAsFixed(2)}%"
@@ -66,7 +66,7 @@ class ReitCardComponent extends StatelessWidget {
                       color: AppColors.blackGrey,
                     ),
                   ),
-                if (sortType == ReitListSortOptionType.assetsAmount)
+                if (sortType == ReitColumnType.assetsAmount)
                   Text(
                     "${reit.assetsAmount} ativos",
                     style: AppTextStyles.primaryFont.copyWith(
