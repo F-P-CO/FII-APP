@@ -9,6 +9,13 @@ part of 'comparator_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$ComparatorStore on _ComparatorStoreBase, Store {
+  Computed<List<Reit>>? _$textFilteredReitsComputed;
+
+  @override
+  List<Reit> get textFilteredReits => (_$textFilteredReitsComputed ??=
+          Computed<List<Reit>>(() => super.textFilteredReits,
+              name: '_ComparatorStoreBase.textFilteredReits'))
+      .value;
   Computed<List<Reit>>? _$currentReitsComputed;
 
   @override
@@ -41,13 +48,13 @@ mixin _$ComparatorStore on _ComparatorStoreBase, Store {
   final _$searchTextAtom = Atom(name: '_ComparatorStoreBase.searchText');
 
   @override
-  String? get searchText {
+  String get searchText {
     _$searchTextAtom.reportRead();
     return super.searchText;
   }
 
   @override
-  set searchText(String? value) {
+  set searchText(String value) {
     _$searchTextAtom.reportWrite(value, super.searchText, () {
       super.searchText = value;
     });
@@ -105,11 +112,11 @@ mixin _$ComparatorStore on _ComparatorStoreBase, Store {
       ActionController(name: '_ComparatorStoreBase');
 
   @override
-  void toggle(Filter filter) {
+  void toggleFilter(Filter filter) {
     final _$actionInfo = _$_ComparatorStoreBaseActionController.startAction(
-        name: '_ComparatorStoreBase.toggle');
+        name: '_ComparatorStoreBase.toggleFilter');
     try {
-      return super.toggle(filter);
+      return super.toggleFilter(filter);
     } finally {
       _$_ComparatorStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -122,6 +129,7 @@ searchText: ${searchText},
 enabledFilters: ${enabledFilters},
 dividendYieldRange: ${dividendYieldRange},
 assetsAmountRange: ${assetsAmountRange},
+textFilteredReits: ${textFilteredReits},
 currentReits: ${currentReits},
 isSearchEnabled: ${isSearchEnabled},
 minAssetsAmount: ${minAssetsAmount},

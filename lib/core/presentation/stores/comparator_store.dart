@@ -12,7 +12,7 @@ abstract class _ComparatorStoreBase with Store {
   final ReitListStore _reitListStore;
 
   @observable
-  String? searchText;
+  String searchText = '';
 
   @observable
   ObservableList<Filter> enabledFilters = <Filter>[].asObservable();
@@ -31,18 +31,17 @@ abstract class _ComparatorStoreBase with Store {
   }) : _reitListStore = reitListStore;
 
   @computed
-  List<Reit> get currentReits {
-    List<Reit> reits = _reitListStore.reits;
+  List<Reit> get textFilteredReits {
+    return _reitListStore.reits
+        .where((reit) =>
+            reit.symbol.toLowerCase().contains(searchText.toLowerCase()) ||
+            reit.sector.toLowerCase().contains(searchText.toLowerCase()))
+        .toList();
+  }
 
-    if (isSearchEnabled) {
-      reits = reits
-          .where(
-            (reit) =>
-                reit.symbol.toLowerCase().contains(searchText!.toLowerCase()) ||
-                reit.sector.toLowerCase().contains(searchText!.toLowerCase()),
-          )
-          .toList();
-    }
+  @computed
+  List<Reit> get currentReits {
+    List<Reit> reits = textFilteredReits;
 
     if (isFilterEnabled(Filter.dividendYield)) {
       final min = dividendYieldRange.first;
@@ -84,7 +83,7 @@ abstract class _ComparatorStoreBase with Store {
   }
 
   @action
-  void toggle(Filter filter) {
+  void toggleFilter(Filter filter) {
     if (enabledFilters.contains(filter)) {
       enabledFilters.remove(filter);
     } else {
@@ -93,7 +92,7 @@ abstract class _ComparatorStoreBase with Store {
   }
 
   @computed
-  bool get isSearchEnabled => searchText != null;
+  bool get isSearchEnabled => searchText != '';
 
   bool isFilterEnabled(Filter filter) => enabledFilters.contains(filter);
 

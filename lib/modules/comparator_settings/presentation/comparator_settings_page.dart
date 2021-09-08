@@ -81,7 +81,7 @@ class ComparatorSettingsPage extends StatelessWidget {
                       maxLength: 6,
                       onChange: (min, max) =>
                           comparatorStore.dividendYieldRange = [min, max],
-                      onToggle: () => comparatorStore.toggle(filter),
+                      onToggle: () => comparatorStore.toggleFilter(filter),
                     );
                   },
                 ),
@@ -100,7 +100,7 @@ class ComparatorSettingsPage extends StatelessWidget {
                       currentRange: comparatorStore.assetsAmountRange,
                       onChange: (min, max) =>
                           comparatorStore.assetsAmountRange = [min, max],
-                      onToggle: () => comparatorStore.toggle(filter),
+                      onToggle: () => comparatorStore.toggleFilter(filter),
                     );
                   },
                 ),

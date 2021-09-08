@@ -156,7 +156,7 @@ void main() {
     test('should enable a filter when the filter is disabled', () {
       const mockFilter = Filter.dividendYield;
 
-      store.toggle(mockFilter);
+      store.toggleFilter(mockFilter);
 
       expect(store.enabledFilters, contains(mockFilter));
     });
@@ -165,7 +165,7 @@ void main() {
       const mockFilter = Filter.dividendYield;
       store.enabledFilters.add(mockFilter);
 
-      store.toggle(mockFilter);
+      store.toggleFilter(mockFilter);
 
       expect(store.enabledFilters, isNot(contains(mockFilter)));
     });
