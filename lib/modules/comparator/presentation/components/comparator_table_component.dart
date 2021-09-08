@@ -7,11 +7,9 @@ import 'package:fii_app/modules/comparator/presentation/components/comparator_ta
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
-import 'package:intl/intl.dart';
 import 'package:lazy_data_table/lazy_data_table.dart';
 
 class ComparatorTableComponent extends StatelessWidget {
-  final currencyFormatter = GetIt.I.get<NumberFormat>();
   final comparatorStore = GetIt.I.get<ComparatorStore>();
 
   final fixedHeader = "Código";
@@ -68,59 +66,15 @@ class ComparatorTableComponent extends StatelessWidget {
   String _getColumnLabel(int index) =>
       comparatorStore.enabledColumnsInOrder.elementAt(index).label;
 
-  String _formatCurrency(double? value) =>
-      value != null ? currencyFormatter.format(value) : 'N/A';
-
-  String _formatPercentage(double? value) =>
-      value != null ? "${value.toStringAsFixed(2)}%" : '-';
-
-  String _formatDecimal(double? value) =>
-      value != null ? value.toStringAsFixed(2) : '-';
-
   String getCell(int rowIndex, int columnIndex) {
     final column = comparatorStore.enabledColumnsInOrder.elementAt(columnIndex);
 
     final key = "$rowIndex-${column.label}";
 
     if (!cachedCells.containsKey(key)) {
-      final String cell;
       final reit = reits.elementAt(rowIndex);
 
-      switch (column.type) {
-        case ReitColumnType.sector:
-          cell = reit.sector;
-          break;
-        case ReitColumnType.currentPrice:
-          cell = _formatCurrency(reit.currentPrice);
-          break;
-        case ReitColumnType.dailyLiquidity:
-          cell = _formatCurrency(reit.dailyLiquidity);
-          break;
-        case ReitColumnType.currentDividend:
-          cell = _formatPercentage(reit.currentDividend);
-          break;
-        case ReitColumnType.currentDividendYield:
-          cell = _formatPercentage(reit.currentDividendYield);
-          break;
-        case ReitColumnType.netWorth:
-          cell = _formatCurrency(reit.netWorth);
-          break;
-        case ReitColumnType.pvpa:
-          cell = _formatDecimal(reit.pvpa);
-          break;
-        case ReitColumnType.vpa:
-          cell = _formatCurrency(reit.vpa);
-          break;
-        case ReitColumnType.vacancy:
-          cell = _formatPercentage(reit.vacancy);
-          break;
-        case ReitColumnType.assetsAmount:
-          cell = reit.assetsAmount.toString();
-          break;
-        default:
-          throw Exception("Column $columnIndex is invalid");
-      }
-
+      final String cell = reit.getPropertyByType(column.type);
       cachedCells[key] = cell;
 
       return cell;

@@ -1,18 +1,14 @@
 import 'package:fii_app/modules/reit_list/domain/entities/reit_list_sort_option.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
-import 'package:intl/intl.dart';
 import 'package:fii_app/core/domain/entities/reit.dart';
 import 'package:fii_app/core/presentation/themes/app_colors.dart';
 import 'package:fii_app/core/presentation/themes/app_text_styles.dart';
 
 class ReitCardComponent extends StatelessWidget {
-  final currencyFormatter = GetIt.I.get<NumberFormat>();
-
   final Reit reit;
   final ReitListSortOptionType sortType;
 
-  ReitCardComponent({
+  const ReitCardComponent({
     Key? key,
     required this.reit,
     required this.sortType,
@@ -52,7 +48,7 @@ class ReitCardComponent extends StatelessWidget {
                 ),
                 if (sortType == ReitListSortOptionType.netWorth)
                   Text(
-                    currencyFormatter.format(reit.netWorth),
+                    reit.formattedNetWorth,
                     style: AppTextStyles.primaryFont.copyWith(
                       fontSize: 22,
                       fontWeight: AppTextStyles.primaryFontWeightSemibold,
@@ -85,7 +81,7 @@ class ReitCardComponent extends StatelessWidget {
           if (reit.currentPrice != null) ...[
             const SizedBox(height: 8),
             Text(
-              currencyFormatter.format(reit.currentPrice),
+              reit.formattedCurrentPrice,
               style: AppTextStyles.primaryFont.copyWith(
                 fontSize: 14,
                 color: AppColors.blackGrey,
