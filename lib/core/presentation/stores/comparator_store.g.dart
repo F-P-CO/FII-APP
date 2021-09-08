@@ -44,6 +44,14 @@ mixin _$ComparatorStore on _ComparatorStoreBase, Store {
       (_$maxAssetsAmountComputed ??= Computed<int>(() => super.maxAssetsAmount,
               name: '_ComparatorStoreBase.maxAssetsAmount'))
           .value;
+  Computed<List<ReitColumn>>? _$enabledColumnsInOrderComputed;
+
+  @override
+  List<ReitColumn> get enabledColumnsInOrder =>
+      (_$enabledColumnsInOrderComputed ??= Computed<List<ReitColumn>>(
+              () => super.enabledColumnsInOrder,
+              name: '_ComparatorStoreBase.enabledColumnsInOrder'))
+          .value;
 
   final _$searchTextAtom = Atom(name: '_ComparatorStoreBase.searchText');
 
@@ -64,13 +72,13 @@ mixin _$ComparatorStore on _ComparatorStoreBase, Store {
       Atom(name: '_ComparatorStoreBase.enabledFilters');
 
   @override
-  ObservableList<Filter> get enabledFilters {
+  ObservableList<ReitFilter> get enabledFilters {
     _$enabledFiltersAtom.reportRead();
     return super.enabledFilters;
   }
 
   @override
-  set enabledFilters(ObservableList<Filter> value) {
+  set enabledFilters(ObservableList<ReitFilter> value) {
     _$enabledFiltersAtom.reportWrite(value, super.enabledFilters, () {
       super.enabledFilters = value;
     });
@@ -108,15 +116,57 @@ mixin _$ComparatorStore on _ComparatorStoreBase, Store {
     });
   }
 
+  final _$tableColumnsAtom = Atom(name: '_ComparatorStoreBase.tableColumns');
+
+  @override
+  ObservableList<ReitColumn> get tableColumns {
+    _$tableColumnsAtom.reportRead();
+    return super.tableColumns;
+  }
+
+  @override
+  set tableColumns(ObservableList<ReitColumn> value) {
+    _$tableColumnsAtom.reportWrite(value, super.tableColumns, () {
+      super.tableColumns = value;
+    });
+  }
+
+  final _$enabledColumnsAtom =
+      Atom(name: '_ComparatorStoreBase.enabledColumns');
+
+  @override
+  ObservableList<ReitColumnType> get enabledColumns {
+    _$enabledColumnsAtom.reportRead();
+    return super.enabledColumns;
+  }
+
+  @override
+  set enabledColumns(ObservableList<ReitColumnType> value) {
+    _$enabledColumnsAtom.reportWrite(value, super.enabledColumns, () {
+      super.enabledColumns = value;
+    });
+  }
+
   final _$_ComparatorStoreBaseActionController =
       ActionController(name: '_ComparatorStoreBase');
 
   @override
-  void toggleFilter(Filter filter) {
+  void toggleFilter(ReitFilter filter) {
     final _$actionInfo = _$_ComparatorStoreBaseActionController.startAction(
         name: '_ComparatorStoreBase.toggleFilter');
     try {
       return super.toggleFilter(filter);
+    } finally {
+      _$_ComparatorStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void toggleColumn(ReitColumn column) {
+    final _$actionInfo = _$_ComparatorStoreBaseActionController.startAction(
+        name: '_ComparatorStoreBase.toggleColumn');
+    try {
+      return super.toggleColumn(column);
     } finally {
       _$_ComparatorStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -129,11 +179,14 @@ searchText: ${searchText},
 enabledFilters: ${enabledFilters},
 dividendYieldRange: ${dividendYieldRange},
 assetsAmountRange: ${assetsAmountRange},
+tableColumns: ${tableColumns},
+enabledColumns: ${enabledColumns},
 textFilteredReits: ${textFilteredReits},
 currentReits: ${currentReits},
 isSearchEnabled: ${isSearchEnabled},
 minAssetsAmount: ${minAssetsAmount},
-maxAssetsAmount: ${maxAssetsAmount}
+maxAssetsAmount: ${maxAssetsAmount},
+enabledColumnsInOrder: ${enabledColumnsInOrder}
     ''';
   }
 }

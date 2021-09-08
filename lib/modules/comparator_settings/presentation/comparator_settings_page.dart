@@ -1,7 +1,7 @@
 import 'package:fii_app/core/navigation/navigator_service.dart';
 import 'package:fii_app/core/presentation/components/page_app_bar_component.dart';
-import 'package:fii_app/core/presentation/themes/app_colors.dart';
 import 'package:fii_app/core/presentation/stores/comparator_store.dart';
+import 'package:fii_app/core/presentation/themes/app_colors.dart';
 import 'package:fii_app/core/presentation/themes/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -16,9 +16,9 @@ class ComparatorSettingsPage extends StatelessWidget {
 
   ComparatorSettingsPage({Key? key}) : super(key: key);
 
-  static const Map<Filter, String> filtersTitle = {
-    Filter.dividendYield: "Dividend Yield",
-    Filter.assetsAmount: "Número de ativos",
+  static const Map<ReitFilter, String> filtersTitle = {
+    ReitFilter.dividendYield: "Dividend Yield",
+    ReitFilter.assetsAmount: "Número de ativos",
   };
 
   void closePage() => navigatorService.pop();
@@ -69,7 +69,7 @@ class ComparatorSettingsPage extends StatelessWidget {
                 const SizedBox(height: 12.0),
                 Observer(
                   builder: (_) {
-                    const filter = Filter.dividendYield;
+                    const filter = ReitFilter.dividendYield;
                     final disable = !comparatorStore.isFilterEnabled(filter);
 
                     return RangeInputFilterComponent(
@@ -89,7 +89,7 @@ class ComparatorSettingsPage extends StatelessWidget {
                   builder: (_) {
                     final min = comparatorStore.minAssetsAmount.toDouble();
                     final max = comparatorStore.maxAssetsAmount.toDouble();
-                    const filter = Filter.assetsAmount;
+                    const filter = ReitFilter.assetsAmount;
                     final disable = !comparatorStore.isFilterEnabled(filter);
 
                     return RangeSliderFilterComponent(
