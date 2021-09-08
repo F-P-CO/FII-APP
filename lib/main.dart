@@ -1,6 +1,7 @@
 import 'package:fii_app/modules/splash_screen/presentation/pages/splash_screen_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'core/di/injections.dart' as di;
 import 'core/navigation/navigator_service.dart';
@@ -27,6 +28,14 @@ class MyApp extends StatelessWidget {
             ),
             navigatorKey: GetIt.I.get<NavigatorService>().navigatorKey,
             routes: routes.list,
+            localizationsDelegates: const [
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: const [
+              Locale('pt', ''),
+            ],
           );
         } else {
           return const SplashScreenPage();
