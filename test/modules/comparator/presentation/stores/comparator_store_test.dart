@@ -127,7 +127,7 @@ void main() {
     });
 
     group('dividend yield filter', () {
-      const filter = ReitFilter.dividendYield;
+      const filter = ReitColumn(type: ReitColumnType.currentDividendYield);
 
       test(
         'should return unfiltered reit list when filter is disabled',
@@ -193,7 +193,7 @@ void main() {
     });
 
     group('assets amount filter', () {
-      const filter = ReitFilter.assetsAmount;
+      const filter = ReitColumn(type: ReitColumnType.assetsAmount);
 
       test(
         'should return unfiltered reit list when filter is disabled',
@@ -229,7 +229,7 @@ void main() {
 
   group('toggleFilter', () {
     test('should enable a filter when the filter is disabled', () {
-      const mockFilter = ReitFilter.dividendYield;
+      const mockFilter = ReitColumn(type: ReitColumnType.currentDividendYield);
 
       store.toggleFilter(mockFilter);
 
@@ -237,7 +237,7 @@ void main() {
     });
 
     test('should disable a filter when the filter is enabled', () {
-      const mockFilter = ReitFilter.dividendYield;
+      const mockFilter = ReitColumn(type: ReitColumnType.currentDividendYield);
       store.enabledFilters.add(mockFilter);
 
       store.toggleFilter(mockFilter);
@@ -305,11 +305,11 @@ void main() {
   group('toggleColumn', () {
     test('should enable a column when the column is disabled', () {
       const mockColumn = ReitColumn(type: ReitColumnType.currentDividendYield);
-      store.enabledColumns.remove(mockColumn.type);
+      store.enabledColumns.remove(mockColumn);
 
       store.toggleColumn(mockColumn);
 
-      expect(store.enabledColumns, contains(mockColumn.type));
+      expect(store.enabledColumns, contains(mockColumn));
     });
 
     test('should disable a column when the column is enabled', () {
