@@ -56,7 +56,7 @@ class Reit {
   String get formattedNetWorth => formatCurrency(netWorth);
   String get formattedPvpa => formatDecimal(pvpa);
   String get formattedVpa => formatCurrency(vpa);
-  String get formattedVacancy => formatPercentage(vpa);
+  String get formattedVacancy => formatPercentage(vacancy);
 
   String getPropertyByType(ReitColumnType type) {
     final valueGetter = _typeToValueMap[type];
