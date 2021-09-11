@@ -58,7 +58,7 @@ void main() {
     )
   ];
 
-  final mockReitListSortedByAssetsAmount = [
+  final mockReitListSorted = [
     Reit(
       symbol: 'MOCK3',
       name: 'Mock Name 3',
@@ -211,7 +211,7 @@ void main() {
         () {
           when(mockReitListStore.reits).thenReturn(mockReitList);
           when(mockReitListStore.reitsSortedByAssetsAmount)
-              .thenReturn(mockReitListSortedByAssetsAmount);
+              .thenReturn(mockReitListSorted);
 
           const double min = 2;
           const double max = 3;
@@ -222,6 +222,40 @@ void main() {
           final list = store.currentReits;
           expect(list.first.assetsAmount, equals(min));
           expect(list.last.assetsAmount, equals(max));
+        },
+      );
+    });
+
+    group('vacancy filter', () {
+      const filter = ReitColumn(type: ReitColumnType.vacancy);
+
+      test(
+        'should return unfiltered reit list when filter is disabled',
+        () {
+          when(mockReitListStore.reits).thenReturn(mockReitList);
+
+          final list = store.currentReits;
+          expect(list.first.vacancy, equals(1));
+          expect(list.last.vacancy, equals(3));
+        },
+      );
+
+      test(
+        'should return filtered reit list when min and max are provided',
+        () {
+          when(mockReitListStore.reits).thenReturn(mockReitList);
+          when(mockReitListStore.reitsSortedByVacancy)
+              .thenReturn(mockReitListSorted);
+
+          const double min = 2;
+          const double max = 3;
+
+          store.vacancyRange = [min, max];
+          store.enabledFilters.add(filter);
+
+          final list = store.currentReits;
+          expect(list.first.vacancy, equals(min));
+          expect(list.last.vacancy, equals(max));
         },
       );
     });
@@ -263,6 +297,28 @@ void main() {
           .thenReturn(mockReitList.reversed.toList());
 
       final max = store.maxAssetsAmount;
+
+      expect(max, equals(3));
+    });
+  });
+
+  group('minVacancy', () {
+    test('should return minimum vacancy from reits list', () {
+      when(mockReitListStore.reitsSortedByVacancy)
+          .thenReturn(mockReitList.reversed.toList());
+
+      final min = store.minVacancy;
+
+      expect(min, equals(1));
+    });
+  });
+
+  group('maxVacancy', () {
+    test('should return maximum vacancy from reits list', () {
+      when(mockReitListStore.reitsSortedByVacancy)
+          .thenReturn(mockReitList.reversed.toList());
+
+      final max = store.maxVacancy;
 
       expect(max, equals(3));
     });

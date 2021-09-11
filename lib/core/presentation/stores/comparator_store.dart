@@ -27,6 +27,12 @@ abstract class _ComparatorStoreBase with Store {
     maxAssetsAmount.toDouble()
   ];
 
+  @observable
+  late List<double> vacancyRange = [
+    minVacancy.toDouble(),
+    maxVacancy.toDouble()
+  ];
+
   // Columns
   @observable
   ObservableList<ReitColumn> tableColumns = [
@@ -84,7 +90,6 @@ abstract class _ComparatorStoreBase with Store {
             .where(
               (reit) =>
                   reit.currentDividendYield != null &&
-                  reit.currentDividendYield != 0 &&
                   reit.currentDividendYield! >= min,
             )
             .toList();
@@ -109,6 +114,19 @@ abstract class _ComparatorStoreBase with Store {
             (reit) =>
                 reit.assetsAmount >= assetsAmountRange.first &&
                 reit.assetsAmount <= assetsAmountRange.last,
+          )
+          .toList();
+    }
+
+    if (isFilterEnabled(
+      const ReitColumn(type: ReitColumnType.vacancy),
+    )) {
+      reits = reits
+          .where(
+            (reit) =>
+                reit.vacancy != null &&
+                reit.vacancy! >= vacancyRange.first &&
+                reit.vacancy! <= vacancyRange.last,
           )
           .toList();
     }
@@ -138,6 +156,14 @@ abstract class _ComparatorStoreBase with Store {
   @computed
   int get maxAssetsAmount =>
       _reitListStore.reitsSortedByAssetsAmount.first.assetsAmount;
+
+  @computed
+  double get minVacancy =>
+      _reitListStore.reitsSortedByVacancy.last.vacancy ?? 0;
+
+  @computed
+  double get maxVacancy =>
+      _reitListStore.reitsSortedByVacancy.first.vacancy ?? 100;
 
   // Columns
   @computed

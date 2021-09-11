@@ -47,6 +47,23 @@ class FilterListComponent extends StatelessWidget {
         ),
       ),
     ),
+    ReitSettingsSliderFilter(
+      column: const ReitColumn(type: ReitColumnType.vacancy),
+      min: () => comparatorStore.minVacancy.toDouble(),
+      max: () => comparatorStore.maxVacancy.toDouble(),
+      disable: () => !comparatorStore.isFilterEnabled(
+        const ReitColumn(
+          type: ReitColumnType.vacancy,
+        ),
+      ),
+      currentRange: () => comparatorStore.vacancyRange,
+      onChange: (min, max) => comparatorStore.vacancyRange = [min, max],
+      onToggle: () => comparatorStore.toggleFilter(
+        const ReitColumn(
+          type: ReitColumnType.vacancy,
+        ),
+      ),
+    ),
   ];
 
   FilterListComponent({Key? key}) : super(key: key);

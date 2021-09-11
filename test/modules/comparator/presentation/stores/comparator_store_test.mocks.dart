@@ -78,6 +78,10 @@ class MockReitListStore extends _i1.Mock implements _i3.ReitListStore {
       (super.noSuchMethod(Invocation.getter(#reitsSortedByCurrentDividendYield),
           returnValue: <_i4.Reit>[]) as List<_i4.Reit>);
   @override
+  List<_i4.Reit> get reitsSortedByVacancy =>
+      (super.noSuchMethod(Invocation.getter(#reitsSortedByVacancy),
+          returnValue: <_i4.Reit>[]) as List<_i4.Reit>);
+  @override
   _i5.Future<void> loadReitList() =>
       (super.noSuchMethod(Invocation.method(#loadReitList, []),
           returnValue: Future<void>.value(),

@@ -54,7 +54,7 @@ abstract class _ReitListStoreBase with Store {
 
   @computed
   List<Reit> get reitsSortedByNetWorth {
-    final List<Reit> localReits = reits;
+    final List<Reit> localReits = [...reits];
     localReits.sort((a, b) => b.netWorth?.compareTo(a.netWorth ?? 0) ?? 0);
 
     return localReits;
@@ -62,7 +62,7 @@ abstract class _ReitListStoreBase with Store {
 
   @computed
   List<Reit> get reitsSortedByAssetsAmount {
-    final List<Reit> localReits = reits;
+    final List<Reit> localReits = [...reits];
     localReits.sort((a, b) => b.assetsAmount.compareTo(a.assetsAmount));
 
     return localReits;
@@ -70,9 +70,17 @@ abstract class _ReitListStoreBase with Store {
 
   @computed
   List<Reit> get reitsSortedByCurrentDividendYield {
-    final List<Reit> localReits = reits;
+    final List<Reit> localReits = [...reits];
     localReits.sort((a, b) =>
         b.currentDividendYield?.compareTo(a.currentDividendYield ?? 0) ?? 0);
+
+    return localReits;
+  }
+
+  @computed
+  List<Reit> get reitsSortedByVacancy {
+    final List<Reit> localReits = [...reits];
+    localReits.sort((a, b) => b.vacancy?.compareTo(a.vacancy ?? 0) ?? 0);
 
     return localReits;
   }
@@ -91,5 +99,6 @@ abstract class _ReitListStoreBase with Store {
         ReitColumnType.netWorth: reitsSortedByNetWorth,
         ReitColumnType.currentDividendYield: reitsSortedByCurrentDividendYield,
         ReitColumnType.assetsAmount: reitsSortedByAssetsAmount,
+        ReitColumnType.vacancy: reitsSortedByVacancy,
       };
 }

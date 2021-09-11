@@ -44,6 +44,20 @@ mixin _$ComparatorStore on _ComparatorStoreBase, Store {
       (_$maxAssetsAmountComputed ??= Computed<int>(() => super.maxAssetsAmount,
               name: '_ComparatorStoreBase.maxAssetsAmount'))
           .value;
+  Computed<double>? _$minVacancyComputed;
+
+  @override
+  double get minVacancy =>
+      (_$minVacancyComputed ??= Computed<double>(() => super.minVacancy,
+              name: '_ComparatorStoreBase.minVacancy'))
+          .value;
+  Computed<double>? _$maxVacancyComputed;
+
+  @override
+  double get maxVacancy =>
+      (_$maxVacancyComputed ??= Computed<double>(() => super.maxVacancy,
+              name: '_ComparatorStoreBase.maxVacancy'))
+          .value;
   Computed<List<ReitColumn>>? _$enabledColumnsInOrderComputed;
 
   @override
@@ -116,6 +130,21 @@ mixin _$ComparatorStore on _ComparatorStoreBase, Store {
     });
   }
 
+  final _$vacancyRangeAtom = Atom(name: '_ComparatorStoreBase.vacancyRange');
+
+  @override
+  List<double> get vacancyRange {
+    _$vacancyRangeAtom.reportRead();
+    return super.vacancyRange;
+  }
+
+  @override
+  set vacancyRange(List<double> value) {
+    _$vacancyRangeAtom.reportWrite(value, super.vacancyRange, () {
+      super.vacancyRange = value;
+    });
+  }
+
   final _$tableColumnsAtom = Atom(name: '_ComparatorStoreBase.tableColumns');
 
   @override
@@ -179,6 +208,7 @@ searchText: ${searchText},
 enabledFilters: ${enabledFilters},
 dividendYieldRange: ${dividendYieldRange},
 assetsAmountRange: ${assetsAmountRange},
+vacancyRange: ${vacancyRange},
 tableColumns: ${tableColumns},
 enabledColumns: ${enabledColumns},
 textFilteredReits: ${textFilteredReits},
@@ -186,6 +216,8 @@ currentReits: ${currentReits},
 isSearchEnabled: ${isSearchEnabled},
 minAssetsAmount: ${minAssetsAmount},
 maxAssetsAmount: ${maxAssetsAmount},
+minVacancy: ${minVacancy},
+maxVacancy: ${maxVacancy},
 enabledColumnsInOrder: ${enabledColumnsInOrder}
     ''';
   }

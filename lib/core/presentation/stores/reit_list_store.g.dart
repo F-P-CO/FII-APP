@@ -46,6 +46,13 @@ mixin _$ReitListStore on _ReitListStoreBase, Store {
               () => super.reitsSortedByCurrentDividendYield,
               name: '_ReitListStoreBase.reitsSortedByCurrentDividendYield'))
           .value;
+  Computed<List<Reit>>? _$reitsSortedByVacancyComputed;
+
+  @override
+  List<Reit> get reitsSortedByVacancy => (_$reitsSortedByVacancyComputed ??=
+          Computed<List<Reit>>(() => super.reitsSortedByVacancy,
+              name: '_ReitListStoreBase.reitsSortedByVacancy'))
+      .value;
 
   final _$isLoadingAtom = Atom(name: '_ReitListStoreBase.isLoading');
 
@@ -110,7 +117,8 @@ hasError: ${hasError},
 totalReits: ${totalReits},
 reitsSortedByNetWorth: ${reitsSortedByNetWorth},
 reitsSortedByAssetsAmount: ${reitsSortedByAssetsAmount},
-reitsSortedByCurrentDividendYield: ${reitsSortedByCurrentDividendYield}
+reitsSortedByCurrentDividendYield: ${reitsSortedByCurrentDividendYield},
+reitsSortedByVacancy: ${reitsSortedByVacancy}
     ''';
   }
 }
