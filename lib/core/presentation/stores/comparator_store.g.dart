@@ -72,13 +72,13 @@ mixin _$ComparatorStore on _ComparatorStoreBase, Store {
       Atom(name: '_ComparatorStoreBase.enabledFilters');
 
   @override
-  ObservableList<ReitFilter> get enabledFilters {
+  ObservableList<ReitColumn> get enabledFilters {
     _$enabledFiltersAtom.reportRead();
     return super.enabledFilters;
   }
 
   @override
-  set enabledFilters(ObservableList<ReitFilter> value) {
+  set enabledFilters(ObservableList<ReitColumn> value) {
     _$enabledFiltersAtom.reportWrite(value, super.enabledFilters, () {
       super.enabledFilters = value;
     });
@@ -135,13 +135,13 @@ mixin _$ComparatorStore on _ComparatorStoreBase, Store {
       Atom(name: '_ComparatorStoreBase.enabledColumns');
 
   @override
-  ObservableList<ReitColumnType> get enabledColumns {
+  ObservableList<ReitColumn> get enabledColumns {
     _$enabledColumnsAtom.reportRead();
     return super.enabledColumns;
   }
 
   @override
-  set enabledColumns(ObservableList<ReitColumnType> value) {
+  set enabledColumns(ObservableList<ReitColumn> value) {
     _$enabledColumnsAtom.reportWrite(value, super.enabledColumns, () {
       super.enabledColumns = value;
     });
@@ -151,7 +151,7 @@ mixin _$ComparatorStore on _ComparatorStoreBase, Store {
       ActionController(name: '_ComparatorStoreBase');
 
   @override
-  void toggleFilter(ReitFilter filter) {
+  void toggleFilter(ReitColumn filter) {
     final _$actionInfo = _$_ComparatorStoreBaseActionController.startAction(
         name: '_ComparatorStoreBase.toggleFilter');
     try {

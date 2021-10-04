@@ -1,11 +1,10 @@
-import 'package:fii_app/core/domain/entities/reit.dart';
-import 'package:fii_app/core/domain/entities/reit_column.dart';
-import 'package:fii_app/core/presentation/stores/reit_list_store.dart';
 import 'package:mobx/mobx.dart';
 
-part 'comparator_store.g.dart';
+import '../../domain/entities/reit.dart';
+import '../../domain/entities/reit_column.dart';
+import 'reit_list_store.dart';
 
-enum ReitFilter { dividendYield, assetsAmount }
+part 'comparator_store.g.dart';
 
 class ComparatorStore = _ComparatorStoreBase with _$ComparatorStore;
 
@@ -17,7 +16,7 @@ abstract class _ComparatorStoreBase with Store {
 
   // Filters
   @observable
-  ObservableList<ReitFilter> enabledFilters = <ReitFilter>[].asObservable();
+  ObservableList<ReitColumn> enabledFilters = <ReitColumn>[].asObservable();
 
   @observable
   List<double?> dividendYieldRange = List.filled(2, null);
@@ -44,17 +43,17 @@ abstract class _ComparatorStoreBase with Store {
   ].asObservable();
 
   @observable
-  ObservableList<ReitColumnType> enabledColumns = [
-    ReitColumnType.sector,
-    ReitColumnType.currentPrice,
-    ReitColumnType.dailyLiquidity,
-    ReitColumnType.currentDividend,
-    ReitColumnType.currentDividendYield,
-    ReitColumnType.netWorth,
-    ReitColumnType.vpa,
-    ReitColumnType.pvpa,
-    ReitColumnType.vacancy,
-    ReitColumnType.assetsAmount
+  ObservableList<ReitColumn> enabledColumns = [
+    const ReitColumn(type: ReitColumnType.sector),
+    const ReitColumn(type: ReitColumnType.currentPrice),
+    const ReitColumn(type: ReitColumnType.dailyLiquidity),
+    const ReitColumn(type: ReitColumnType.currentDividend),
+    const ReitColumn(type: ReitColumnType.currentDividendYield),
+    const ReitColumn(type: ReitColumnType.netWorth),
+    const ReitColumn(type: ReitColumnType.vpa),
+    const ReitColumn(type: ReitColumnType.pvpa),
+    const ReitColumn(type: ReitColumnType.vacancy),
+    const ReitColumn(type: ReitColumnType.assetsAmount),
   ].asObservable();
 
   _ComparatorStoreBase({
@@ -74,7 +73,9 @@ abstract class _ComparatorStoreBase with Store {
   List<Reit> get currentReits {
     List<Reit> reits = textFilteredReits;
 
-    if (isFilterEnabled(ReitFilter.dividendYield)) {
+    if (isFilterEnabled(
+      const ReitColumn(type: ReitColumnType.currentDividendYield),
+    )) {
       final min = dividendYieldRange.first;
       final max = dividendYieldRange.last;
 
@@ -100,7 +101,9 @@ abstract class _ComparatorStoreBase with Store {
       }
     }
 
-    if (isFilterEnabled(ReitFilter.assetsAmount)) {
+    if (isFilterEnabled(
+      const ReitColumn(type: ReitColumnType.assetsAmount),
+    )) {
       reits = reits
           .where(
             (reit) =>
@@ -118,7 +121,7 @@ abstract class _ComparatorStoreBase with Store {
 
   // Filters
   @action
-  void toggleFilter(ReitFilter filter) {
+  void toggleFilter(ReitColumn filter) {
     if (enabledFilters.contains(filter)) {
       enabledFilters.remove(filter);
     } else {
@@ -126,7 +129,7 @@ abstract class _ComparatorStoreBase with Store {
     }
   }
 
-  bool isFilterEnabled(ReitFilter filter) => enabledFilters.contains(filter);
+  bool isFilterEnabled(ReitColumn filter) => enabledFilters.contains(filter);
 
   @computed
   int get minAssetsAmount =>
@@ -138,23 +141,19 @@ abstract class _ComparatorStoreBase with Store {
 
   // Columns
   @computed
-  List<ReitColumn> get enabledColumnsInOrder => tableColumns
-      .where((column) => enabledColumns.contains(column.type))
-      .toList();
+  List<ReitColumn> get enabledColumnsInOrder =>
+      tableColumns.where((column) => enabledColumns.contains(column)).toList();
 
   @action
   void toggleColumn(ReitColumn column) {
-    final type = column.type;
-
-    if (enabledColumns.contains(type)) {
+    if (enabledColumns.contains(column)) {
       if (enabledColumns.length > 1) {
-        enabledColumns.remove(type);
+        enabledColumns.remove(column);
       }
     } else {
-      enabledColumns.add(type);
+      enabledColumns.add(column);
     }
   }
 
-  bool isColumnEnabled(ReitColumn column) =>
-      enabledColumns.contains(column.type);
+  bool isColumnEnabled(ReitColumn column) => enabledColumns.contains(column);
 }
